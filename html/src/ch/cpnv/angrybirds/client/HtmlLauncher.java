@@ -3,7 +3,7 @@ package ch.cpnv.angrybirds.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import ch.cpnv.angrybirds.AngryBirds;
+import ch.cpnv.angrybirds.AngryWirds;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new AngryBirds();
+                return new AngryWirds();
         }
 }
