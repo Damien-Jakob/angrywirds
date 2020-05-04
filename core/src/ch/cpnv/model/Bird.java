@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public final class Bird extends MovingObject {
-    static protected Texture texture = new Texture("bird.png");
-    static protected Vector2 g = new Vector2(0, (float) -9.81);
+    static private Texture texture = new Texture("bird.png");
+    static private Vector2 g = new Vector2(0, (float) -9.81);
 
     public Bird(int x, int y, int width, int height) {
         super(texture, x, y, width, height);
+        //setScale((float)0.1);
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class PhysicalObject extends Sprite {
+    
+    // TODO find way to draw the entire picture
     public PhysicalObject(Texture texture, int x, int y, int width, int height) {
         super(texture, x, y, width, height);
     }
