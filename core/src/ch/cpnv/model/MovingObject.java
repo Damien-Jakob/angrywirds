@@ -9,11 +9,11 @@ public abstract class MovingObject extends PhysicalObject {
     protected Vector2 speed;
     protected boolean frozen; // Allows to temporarily freeze the movement
 
-    public MovingObject(Vector2 position, int width, int height, String pictureName) {
+    public MovingObject(Vector2 position, float width, float height, String pictureName) {
         this(position, width, height, pictureName, new Vector2(0, 0));
     }
 
-    public MovingObject(Vector2 position, int width, int height, String pictureName, Vector2 speed) {
+    public MovingObject(Vector2 position, float width, float height, String pictureName, Vector2 speed) {
         super(position, width, height, pictureName);
         this.speed = speed;
         this.frozen = false;
