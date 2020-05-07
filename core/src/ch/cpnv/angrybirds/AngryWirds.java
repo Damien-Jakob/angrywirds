@@ -19,8 +19,8 @@ public class AngryWirds extends ApplicationAdapter {
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
-    public static final int BIRD_START_X = 100;
-    public static final int BIRD_START_Y = 100;
+    public static final int BIRD_START_X = 200;
+    public static final int BIRD_START_Y = 200;
 
     private Texture background;
 
