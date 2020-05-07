@@ -2,6 +2,8 @@ package ch.cpnv.model;
 
 import com.badlogic.gdx.math.Vector2;
 
+import ch.cpnv.angrybirds.AngryWirds;
+
 public final class Wasp extends MovingObject {
 
     private static final int AGITATION = 15; // How sharply speed changes
@@ -16,5 +18,9 @@ public final class Wasp extends MovingObject {
     @Override
     public void accelerate(float dt) {
         // The wasp only slightly alters its speed at random. It is subject to gravity, but it counters it with its flight
+        if (!frozen) {
+            int rotationAngle = AngryWirds.alea.nextInt(AGITATION * 2 + 1) - 15;
+            speed.rotate(rotationAngle);
+        }
     }
 }

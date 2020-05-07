@@ -2,7 +2,6 @@ package ch.cpnv.angrybirds;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 
 import ch.cpnv.model.Bird;
+import ch.cpnv.model.Wasp;
 
 
 public class AngryWirds extends ApplicationAdapter {
@@ -26,7 +26,7 @@ public class AngryWirds extends ApplicationAdapter {
     private Texture background;
 
     private Bird bird;
-    //private Wasp wasp;
+    private Wasp wasp;
 
     private OrthographicCamera camera;
 
@@ -45,7 +45,7 @@ public class AngryWirds extends ApplicationAdapter {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
-        //wasp = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
+        wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(20, 20));
         bird = new Bird();
         bird.setSpeed(new Vector2(150, 200));
 
@@ -64,6 +64,9 @@ public class AngryWirds extends ApplicationAdapter {
         bird.move(dt);
         bird.accelerate(dt);
 
+        wasp.move(dt);
+        wasp.accelerate(dt);
+
         // --------- Wasp
         // Apply changes to the wasp...
     }
@@ -75,10 +78,11 @@ public class AngryWirds extends ApplicationAdapter {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         bird.draw(batch);
-        //wasp.draw(batch);
+        wasp.draw(batch);
 
         // debug
-        font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
+        // draw bird speed
+        //font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
 
         batch.end();
     }
