@@ -3,18 +3,34 @@ package ch.cpnv.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-public final class Bird extends MovingObject {
-    static private Texture texture = new Texture("bird.png");
-    static private Vector2 g = new Vector2(0, (float) -9.81);
+import ch.cpnv.angrybirds.AngryWirds;
 
-    public Bird(int x, int y, int width, int height) {
-        super(texture, x, y, width, height);
-        //setScale((float)0.1);
+// TODO WASP random movements
+
+public final class Bird extends MovingObject {
+    private enum BirdState {init, aim, fly}
+
+    private static final String PICTURE_NAME = "bird.png";
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = 60;
+
+    private BirdState state = BirdState.init;
+
+    public Bird() {
+        super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
+    }
+
+    @Override
+    public void unFreeze() {
+        super.unFreeze();
+        state = BirdState.fly;
     }
 
     @Override
     public void accelerate(float dt) {
-        // v = v0 + a * t
-        speed = speed.add(g.scl(dt));
+        if (!isFrozen()) {
+            // y = y0 - g * t
+            speed.y -= GRAVITY * dt;
+        }
     }
 }

@@ -1,13 +1,12 @@
 package ch.cpnv.model;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 public class PhysicalObject extends Sprite {
-    
-    // TODO find way to draw the entire picture
-    public PhysicalObject(Texture texture, int x, int y, int width, int height) {
-        super(texture, x, y, width, height);
+    public PhysicalObject(Vector2 position, int width, int height, String pictureName) {
+        super(new Texture(pictureName), width, height, (int)position.x, (int)position.y);
+        //setBounds(position.x, position.y, width, height);
     }
 }
