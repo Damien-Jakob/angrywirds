@@ -1,10 +1,10 @@
 package ch.cpnv.model;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class MovingObject extends PhysicalObject {
-    public final static float GRAVITY = 250f; // Gravity, for objects that fall
+    public final static float GRAVITY = 50f; // Gravity, for objects that fall
+    // 250f
 
     protected Vector2 speed;
     protected boolean frozen; // Allows to temporarily freeze the movement
@@ -31,12 +31,20 @@ public abstract class MovingObject extends PhysicalObject {
         return frozen;
     }
 
+    // met la position égale à la vitesse
     public void move(float dt) {
         if (!isFrozen()) {
+            /*
             Vector2 position = new Vector2(getX(), getY());
             // x = x0 + v * t
             position = position.add(speed.scl(dt));
             setPosition(position);
+
+             */
+
+            float position_x = getX() + speed.x * dt;
+            float position_y = getY() + speed.y * dt;
+            setPosition(position_x, position_y);
         }
     }
 

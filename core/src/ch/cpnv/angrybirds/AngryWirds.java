@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -31,6 +32,8 @@ public class AngryWirds extends ApplicationAdapter {
 
     private SpriteBatch batch;
 
+    private BitmapFont font;
+
     @Override
     public void create() {
         alea = new Random();
@@ -44,8 +47,13 @@ public class AngryWirds extends ApplicationAdapter {
 
         //wasp = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
         bird = new Bird();
+        bird.setSpeed(new Vector2(150, 200));
 
         batch = new SpriteBatch();
+
+
+        // For debugging
+        font = new BitmapFont();
     }
 
     public void update() {
@@ -53,6 +61,8 @@ public class AngryWirds extends ApplicationAdapter {
 
         // --------- Bird
         // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
+        bird.move(dt);
+        bird.accelerate(dt);
 
         // --------- Wasp
         // Apply changes to the wasp...
@@ -66,6 +76,10 @@ public class AngryWirds extends ApplicationAdapter {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         bird.draw(batch);
         //wasp.draw(batch);
+
+        // debug
+        font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
+
         batch.end();
     }
 

@@ -1,6 +1,5 @@
 package ch.cpnv.model;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.AngryWirds;
@@ -18,6 +17,14 @@ public final class Bird extends MovingObject {
 
     public Bird() {
         super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
+    }
+
+    public void setSpeed(Vector2 speed) {
+        this.speed = speed;
+    }
+
+    public Vector2 getSpeed() {
+        return speed;
     }
 
     @Override
