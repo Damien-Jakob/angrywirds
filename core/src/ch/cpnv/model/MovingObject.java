@@ -34,26 +34,10 @@ public abstract class MovingObject extends PhysicalObject {
     // met la position égale à la vitesse
     public void move(float dt) {
         if (!isFrozen()) {
-            /*
-            Vector2 position = new Vector2(getX(), getY());
-            // x = x0 + v * t
-            position = position.add(speed.scl(dt));
-            setPosition(position);
-
-             */
-
-            float position_x = getX() + speed.x * dt;
-            float position_y = getY() + speed.y * dt;
-            setPosition(position_x, position_y);
+            translate(speed.x * dt, speed.y * dt);
         }
     }
 
     // the accelerate method implements the speed change, which depends on the physics of the derived object, reason why it is abstract here
     public abstract void accelerate(float dt);
-
-    protected void setPosition(Vector2 position) {
-        if (!isFrozen()) {
-            setPosition(position.x, position.y);
-        }
-    }
 }
