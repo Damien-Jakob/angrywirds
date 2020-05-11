@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.model.Bird;
@@ -23,10 +24,12 @@ public class AngryWirds extends ApplicationAdapter {
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
 
+    private static final int SWARM_SIZE = 3;
+
     private Texture background;
 
     private Bird bird;
-    private Wasp wasp;
+    private ArrayList<Wasp> swarm;
 
     private OrthographicCamera camera;
 
@@ -45,12 +48,16 @@ public class AngryWirds extends ApplicationAdapter {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
-        wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(20, 20));
         bird = new Bird();
         bird.setSpeed(new Vector2(150, 200));
 
-        batch = new SpriteBatch();
+        swarm = new ArrayList<Wasp>();
+        for (int i = 0; i < SWARM_SIZE; i++) {
+            Wasp wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(0, 0));
+            swarm.add(wasp);
+        }
 
+        batch = new SpriteBatch();
 
         // For debugging
         font = new BitmapFont();
@@ -64,11 +71,12 @@ public class AngryWirds extends ApplicationAdapter {
         bird.move(dt);
         bird.accelerate(dt);
 
-        wasp.move(dt);
-        wasp.accelerate(dt);
-
         // --------- Wasp
         // Apply changes to the wasp...
+        for (Wasp wasp : swarm) {
+            wasp.move(dt);
+            wasp.accelerate(dt);
+        }
     }
 
     @Override
@@ -77,8 +85,11 @@ public class AngryWirds extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
+
+        for (Wasp wasp : swarm) {
+            wasp.draw(batch);
+        }
         bird.draw(batch);
-        wasp.draw(batch);
 
         // debug
         // draw bird speed
