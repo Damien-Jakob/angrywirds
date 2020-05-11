@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.model.Bird;
+import ch.cpnv.model.Block;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 
@@ -34,6 +35,7 @@ public class AngryWirds extends ApplicationAdapter {
     private Bird bird;
     private ArrayList<Wasp> swarm;
     private ArrayList<Tnt> tnts;
+    private  ArrayList<Block> blocks;
 
     private OrthographicCamera camera;
 
@@ -64,6 +66,11 @@ public class AngryWirds extends ApplicationAdapter {
         tnts = new ArrayList<Tnt>();
         tnts.add(new Tnt(new Vector2(1000, BOTTOM_HEIGHT), 10));
         tnts.add(new Tnt(new Vector2(1200, BOTTOM_HEIGHT), 10));
+
+        blocks = new ArrayList<Block>();
+        blocks.add(new Block(new Vector2(200, BOTTOM_HEIGHT)));
+        blocks.add(new Block(new Vector2(250, BOTTOM_HEIGHT)));
+        blocks.add(new Block(new Vector2(300, BOTTOM_HEIGHT)));
 
         batch = new SpriteBatch();
 
@@ -99,6 +106,9 @@ public class AngryWirds extends ApplicationAdapter {
         }
         for (Tnt tnt : tnts) {
             tnt.draw(batch);
+        }
+        for (Block block : blocks) {
+            block.draw(batch);
         }
         bird.draw(batch);
 
