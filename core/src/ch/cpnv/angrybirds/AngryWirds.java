@@ -62,7 +62,7 @@ public class AngryWirds extends ApplicationAdapter {
 
         swarm = new ArrayList<Wasp>();
         for (int i = 0; i < SWARM_SIZE; i++) {
-            Wasp wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(0, 0));
+            Wasp wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(40, 40));
             swarm.add(wasp);
         }
 
