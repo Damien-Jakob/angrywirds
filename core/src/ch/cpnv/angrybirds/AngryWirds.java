@@ -19,8 +19,6 @@ import ch.cpnv.model.Wasp;
 
 
 public class AngryWirds extends ApplicationAdapter {
-    public static Random alea; // random generator object. Static for app-wide use
-
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
@@ -33,15 +31,15 @@ public class AngryWirds extends ApplicationAdapter {
     private static final int HERD_SIZE = 2;
     private static final int TNT_QUANTITY = 3;
 
-    private Texture background;
-
     private Bird bird;
     private ArrayList<Wasp> swarm;
     private Scenery scenery;
+    private Texture background;
 
     private OrthographicCamera camera;
-
     private SpriteBatch batch;
+
+    public static Random alea; // random generator object. Static for app-wide use
 
     // Just for debug purpose
     private BitmapFont font;

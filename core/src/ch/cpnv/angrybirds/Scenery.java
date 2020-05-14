@@ -25,7 +25,7 @@ public final class Scenery {
     }
 
     /**
-     * Lay down a line of blocks to act as floor to the scene
+     * Lay down a line of blocks to act as the floor of the scene
      */
     public void addFloor() {
         for (float x = 0; x < AngryWirds.WORLD_WIDTH; x += Block.WIDTH) {
