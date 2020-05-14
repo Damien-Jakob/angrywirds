@@ -4,14 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.AngryWirds;
 
-// TODO WASP random movements
-
 public final class Bird extends MovingObject {
     private enum BirdState {init, aim, fly}
 
     private static final String PICTURE_NAME = "bird.png";
     public static final int WIDTH = 60;
-    public static final int HEIGHT = 60;
+    public static final int HEIGHT = WIDTH;
 
     private BirdState state = BirdState.init;
 

@@ -6,7 +6,7 @@ public final class Tnt extends PhysicalObject {
     private static final String PICTURE_NAME = "tnt.png";
 
     private static final int WIDTH = 60;
-    private static final int HEIGHT = 60;
+    private static final int HEIGHT = WIDTH;
 
     private int negativePoints;
 
