@@ -3,7 +3,7 @@ package ch.cpnv.model;
 import com.badlogic.gdx.math.Vector2;
 
 public final class Bubble extends TextualObject {
-    private static final String PICTURE_NAME = "pig.png";
+    private static final String PICTURE_NAME = "bubble.png";
 
     private static final int WIDTH = 60;
     private static final int HEIGHT = 60;
