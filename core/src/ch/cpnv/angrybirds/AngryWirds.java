@@ -86,17 +86,18 @@ public class AngryWirds extends ApplicationAdapter {
 
     public void update() {
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
+        if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
+            // --------- Bird
+            // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
+            bird.move(dt);
+            bird.accelerate(dt);
 
-        // --------- Bird
-        // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
-        bird.move(dt);
-        bird.accelerate(dt);
-
-        // --------- Wasp
-        // Apply changes to the wasp...
-        for (Wasp wasp : swarm) {
-            wasp.move(dt);
-            wasp.accelerate(dt);
+            // --------- Wasp
+            // Apply changes to the wasp...
+            for (Wasp wasp : swarm) {
+                wasp.move(dt);
+                wasp.accelerate(dt);
+            }
         }
     }
 
