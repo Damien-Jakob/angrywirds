@@ -14,4 +14,8 @@ public final class Pig extends TextualObject {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, word);
         this.points = points;
     }
+
+    public void sayWord() {
+        // TODO implement comportment
+    }
 }
