@@ -43,6 +43,7 @@ public class AngryWirds extends ApplicationAdapter {
 
     private SpriteBatch batch;
 
+    // Just for debug purpose
     private BitmapFont font;
 
     @Override
@@ -66,8 +67,8 @@ public class AngryWirds extends ApplicationAdapter {
         }
 
         pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Vector2(200, BOTTOM_HEIGHT + 40), "maman"));
-        pigs.add(new Pig(new Vector2(250, BOTTOM_HEIGHT + 40), "papa"));
+        pigs.add(new Pig(new Vector2(200, BOTTOM_HEIGHT + 40), "maman", 10));
+        pigs.add(new Pig(new Vector2(250, BOTTOM_HEIGHT + 40), "papa", 9));
 
         tnts = new ArrayList<Tnt>();
         tnts.add(new Tnt(new Vector2(1000, BOTTOM_HEIGHT), 10));
