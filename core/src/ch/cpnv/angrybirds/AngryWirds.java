@@ -25,6 +25,7 @@ public class AngryWirds extends ApplicationAdapter {
     public static final int WORLD_HEIGHT = 900;
 
     public static final int BOTTOM_HEIGHT = 120;
+    public static final int OVER_BOX_HEIGHT = BOTTOM_HEIGHT + Block.height();
 
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
@@ -67,17 +68,15 @@ public class AngryWirds extends ApplicationAdapter {
         }
 
         pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Vector2(200, BOTTOM_HEIGHT + 40), "maman", 10));
-        pigs.add(new Pig(new Vector2(250, BOTTOM_HEIGHT + 40), "papa", 9));
+        pigs.add(new Pig(new Vector2(200, OVER_BOX_HEIGHT), "maman", 10));
+        pigs.add(new Pig(new Vector2(250, OVER_BOX_HEIGHT), "papa", 9));
 
         tnts = new ArrayList<Tnt>();
-        tnts.add(new Tnt(new Vector2(1000, BOTTOM_HEIGHT), 10));
-        tnts.add(new Tnt(new Vector2(1200, BOTTOM_HEIGHT), 10));
+        tnts.add(new Tnt(new Vector2(1000, OVER_BOX_HEIGHT), 10));
+        tnts.add(new Tnt(new Vector2(1200, OVER_BOX_HEIGHT), 10));
 
         blocks = new ArrayList<Block>();
-        blocks.add(new Block(new Vector2(200, BOTTOM_HEIGHT)));
-        blocks.add(new Block(new Vector2(250, BOTTOM_HEIGHT)));
-        blocks.add(new Block(new Vector2(300, BOTTOM_HEIGHT)));
+        generateBottom();
 
         batch = new SpriteBatch();
 
@@ -133,5 +132,11 @@ public class AngryWirds extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+    }
+
+    public void generateBottom() {
+        for (float x = 0; x < WORLD_WIDTH; x += Block.height()) {
+            blocks.add(new Block(new Vector2(x, BOTTOM_HEIGHT)));
+        }
     }
 }
