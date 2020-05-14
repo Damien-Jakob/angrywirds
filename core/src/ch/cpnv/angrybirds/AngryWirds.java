@@ -108,6 +108,11 @@ public class AngryWirds extends ApplicationAdapter {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
+        // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
+        bird.draw(batch);
+        for (Pig pig : pigs) {
+            pig.draw(batch);
+        }
         for (Wasp wasp : swarm) {
             wasp.draw(batch);
         }
@@ -117,11 +122,7 @@ public class AngryWirds extends ApplicationAdapter {
         for (Block block : blocks) {
             block.draw(batch);
         }
-        for (Pig pig : pigs) {
-            pig.draw(batch);
-        }
-        bird.draw(batch);
-
+        
         // debug
         // draw bird speed
         //font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
