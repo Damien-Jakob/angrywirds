@@ -18,10 +18,11 @@ public final class Scenery {
     /**
      * Add one piece of scenery
      *
-     * @param element
+     * @param newObject
      */
-    public void addElement(PhysicalObject element) {
-        scene.add(element);
+    public void addElement(PhysicalObject newObject) {
+        fitY(newObject);
+        scene.add(newObject);
     }
 
     /**
@@ -31,6 +32,17 @@ public final class Scenery {
         for (float x = 0; x < AngryWirds.WORLD_WIDTH; x += Block.WIDTH) {
             scene.add(new Block(new Vector2(x, AngryWirds.FLOOR_HEIGHT)));
         }
+    }
+
+    protected void fitY(PhysicalObject newObject) {
+        float minAvailableAltitude = 0;
+        for (PhysicalObject object : scene) {
+            if (!(object.getX() + object.getWidth() < newObject.getX() || newObject.getX() + newObject.getWidth() < object.getX())
+                    && minAvailableAltitude < object.getY() + object.getHeight()) {
+                minAvailableAltitude = object.getY() + object.getHeight();
+            }
+        }
+        newObject.setY(minAvailableAltitude);
     }
 
     /**

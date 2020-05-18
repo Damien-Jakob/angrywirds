@@ -28,7 +28,7 @@ public class AngryWirds extends ApplicationAdapter {
     public static final int BIRD_START_Y = 200;
 
     private static final int SWARM_SIZE = 5;
-    private static final int HERD_SIZE = 2;
+    private static final int HERD_SIZE = 40;
     private static final int TNT_QUANTITY = 3;
 
     private Bird bird;
