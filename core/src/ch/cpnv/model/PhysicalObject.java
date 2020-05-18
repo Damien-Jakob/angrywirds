@@ -9,4 +9,20 @@ public class PhysicalObject extends Sprite {
         super(new Texture(pictureName));
         setBounds(position.x, position.y, width, height);
     }
+
+    public float getXLeft() {
+        return getX();
+    }
+
+    public float getXRight() {
+        return getX() + getWidth();
+    }
+
+    public float getYBottom() {
+        return getY();
+    }
+
+    public float getYTop() {
+        return getY() + getHeight();
+    }
 }

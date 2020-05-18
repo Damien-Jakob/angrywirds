@@ -37,8 +37,8 @@ public final class Scenery {
     protected void fitY(PhysicalObject newObject) {
         float minAvailableAltitude = 0;
         for (PhysicalObject object : scene) {
-            if (!(object.getX() + object.getWidth() < newObject.getX() || newObject.getX() + newObject.getWidth() < object.getX())
-                    && minAvailableAltitude < object.getY() + object.getHeight()) {
+            if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())
+                    && minAvailableAltitude < object.getYTop()) {
                 minAvailableAltitude = object.getY() + object.getHeight();
             }
         }
