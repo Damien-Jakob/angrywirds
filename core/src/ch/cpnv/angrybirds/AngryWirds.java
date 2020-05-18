@@ -68,15 +68,15 @@ public class AngryWirds extends ApplicationAdapter {
         scenery = new Scenery();
         scenery.addFloor();
         for (int i = 0; i < BLOCKS_QUANTITY; i++) {
-            Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT));
+            Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0));
             scenery.addElement(block);
         }
         for (int i = 0; i < TNT_QUANTITY; i++) {
-            Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT), 5);
+            Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), 5);
             scenery.addElement(tnt);
         }
         for (int i = 0; i < HERD_SIZE; i++) {
-            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT), "?", 10);
+            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), "?", 10);
             scenery.addElement(pig);
         }
 
@@ -112,11 +112,11 @@ public class AngryWirds extends ApplicationAdapter {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
-        bird.draw(batch);
         scenery.draw(batch);
         for (Wasp wasp : swarm) {
             wasp.draw(batch);
         }
+        bird.draw(batch);
 
         // debug
         // draw bird speed
