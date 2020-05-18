@@ -28,8 +28,9 @@ public class AngryWirds extends ApplicationAdapter {
     public static final int BIRD_START_Y = 200;
 
     private static final int SWARM_SIZE = 5;
-    private static final int HERD_SIZE = 40;
-    private static final int TNT_QUANTITY = 3;
+    private static final int HERD_SIZE = 12;
+    private static final int TNT_QUANTITY = 50;
+    private static final int BLOCKS_QUANTITY = 154;
 
     private Bird bird;
     private ArrayList<Wasp> swarm;
@@ -66,14 +67,19 @@ public class AngryWirds extends ApplicationAdapter {
 
         scenery = new Scenery();
         scenery.addFloor();
-        for (int i = 0; i < HERD_SIZE; i++) {
-            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT), "?", 10);
-            scenery.addElement(pig);
+        for (int i = 0; i < BLOCKS_QUANTITY; i++) {
+            Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT));
+            scenery.addElement(block);
         }
         for (int i = 0; i < TNT_QUANTITY; i++) {
             Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT), 5);
             scenery.addElement(tnt);
         }
+        for (int i = 0; i < HERD_SIZE; i++) {
+            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, FLOOR_HEIGHT + Block.HEIGHT), "?", 10);
+            scenery.addElement(pig);
+        }
+
 
         batch = new SpriteBatch();
 
