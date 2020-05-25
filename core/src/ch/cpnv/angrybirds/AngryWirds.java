@@ -106,6 +106,10 @@ public class AngryWirds extends ApplicationAdapter {
                 1000
         );
          */
+        /*
+        bird.freeze();
+        haveFunWithBirds();
+         */
     }
 
     public void update() {
