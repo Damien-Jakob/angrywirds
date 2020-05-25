@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
@@ -44,6 +46,9 @@ public class AngryWirds extends ApplicationAdapter {
 
     // Just for debug purpose
     private BitmapFont font;
+
+    // Just for fun
+    private ArrayList<Bird> babyBirds;
 
     @Override
     public void create() {
@@ -80,11 +85,27 @@ public class AngryWirds extends ApplicationAdapter {
             scenery.addElement(pig);
         }
 
-
         batch = new SpriteBatch();
 
         // For debugging
         font = new BitmapFont();
+
+        // For fun
+        babyBirds = new ArrayList<Bird>();
+        //babyBirds.add(bird);
+        Timer birdsTimer = new Timer();
+        /*
+        birdsTimer.scheduleAtFixedRate(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        haveFunWithBirds();
+                    }
+                },
+                1000,
+                1000
+        );
+         */
     }
 
     public void update() {
@@ -101,6 +122,10 @@ public class AngryWirds extends ApplicationAdapter {
                 wasp.move(dt);
                 wasp.accelerate(dt);
             }
+            for (Bird bird : babyBirds) {
+                bird.move(dt);
+                bird.accelerate(dt);
+            }
         }
     }
 
@@ -116,11 +141,15 @@ public class AngryWirds extends ApplicationAdapter {
         for (Wasp wasp : swarm) {
             wasp.draw(batch);
         }
+        for (Bird bird : babyBirds) {
+            bird.draw(batch);
+        }
         bird.draw(batch);
 
         // debug
         // draw bird speed
         //font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
+        font.draw(batch, String.valueOf(babyBirds.size()), 100, 100);
 
         batch.end();
     }
@@ -128,5 +157,9 @@ public class AngryWirds extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+    }
+
+    protected void haveFunWithBirds() {
+        babyBirds.add(bird.giveBirth());
     }
 }

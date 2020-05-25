@@ -17,6 +17,10 @@ public final class Bird extends MovingObject {
         super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
     }
 
+    public Bird(Vector2 position, int width, int height, Vector2 speed) {
+        super(position, width, height, PICTURE_NAME, speed);
+    }
+
     public void setSpeed(Vector2 speed) {
         this.speed = speed;
     }
@@ -37,5 +41,11 @@ public final class Bird extends MovingObject {
             // y = y0 - g * t
             speed.y -= GRAVITY * dt;
         }
+    }
+
+    public Bird giveBirth() {
+        Bird child = new Bird(new Vector2(getX(), getY()), (int) getWidth(), (int) getHeight(), new Vector2(speed.x, 0));
+        //Bird child = new Bird();
+        return child;
     }
 }
