@@ -10,7 +10,7 @@ public final class Wasp extends MovingObject {
     private static final int AGITATION_ANGLE = 360;
     private static final String PICTURE_NAME = "wasp.png";
     private static final int WIDTH = 60;
-    private static final int HEIGHT = 60;
+    private static final int HEIGHT = WIDTH;
 
     public Wasp(Vector2 position, Vector2 speed) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, speed);
@@ -20,11 +20,11 @@ public final class Wasp extends MovingObject {
     public void accelerate(float dt) {
         // The wasp only slightly alters its speed at random. It is subject to gravity, but it counters it with its flight
         if (!frozen) {
-            accelerateByRandom(dt);
+            accelerateToCenter(dt);
         }
     }
 
-    private void accelerateByRandom(float dt) {
+    private void accelerateToCenter(float dt) {
         // update the speed by a random acceleration
         // note : that 0 <= nextFloat() < 1
         // note : that the more the wasp is far from the center, the more it will be attracted to it

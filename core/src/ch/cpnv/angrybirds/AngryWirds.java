@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
@@ -19,33 +21,34 @@ import ch.cpnv.model.Wasp;
 
 
 public class AngryWirds extends ApplicationAdapter {
-    public static Random alea; // random generator object. Static for app-wide use
-
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
-    public static final int BOTTOM_HEIGHT = 120;
-    public static final int OVER_BOX_HEIGHT = BOTTOM_HEIGHT + Block.height();
+    public static final int FLOOR_HEIGHT = 120;
 
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
 
-    private static final int SWARM_SIZE = 3;
-
-    private Texture background;
+    private static final int SWARM_SIZE = 5;
+    private static final int HERD_SIZE = 12;
+    private static final int TNT_QUANTITY = 50;
+    private static final int BLOCKS_QUANTITY = 154;
 
     private Bird bird;
     private ArrayList<Wasp> swarm;
-    private ArrayList<Tnt> tnts;
-    private ArrayList<Block> blocks;
-    private ArrayList<Pig> pigs;
+    private Scenery scenery;
+    private Texture background;
 
     private OrthographicCamera camera;
-
     private SpriteBatch batch;
+
+    public static Random alea; // random generator object. Static for app-wide use
 
     // Just for debug purpose
     private BitmapFont font;
+
+    // Just for fun
+    private ArrayList<Bird> babyBirds;
 
     @Override
     public void create() {
@@ -67,21 +70,42 @@ public class AngryWirds extends ApplicationAdapter {
             swarm.add(wasp);
         }
 
-        pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Vector2(200, OVER_BOX_HEIGHT), "maman", 10));
-        pigs.add(new Pig(new Vector2(250, OVER_BOX_HEIGHT), "papa", 9));
-
-        tnts = new ArrayList<Tnt>();
-        tnts.add(new Tnt(new Vector2(1000, OVER_BOX_HEIGHT), 10));
-        tnts.add(new Tnt(new Vector2(1200, OVER_BOX_HEIGHT), 10));
-
-        blocks = new ArrayList<Block>();
-        generateBottom();
+        scenery = new Scenery();
+        scenery.addFloor();
+        for (int i = 0; i < BLOCKS_QUANTITY; i++) {
+            Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0));
+            scenery.addElement(block);
+        }
+        for (int i = 0; i < TNT_QUANTITY; i++) {
+            Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), 5);
+            scenery.addElement(tnt);
+        }
+        for (int i = 0; i < HERD_SIZE; i++) {
+            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), "?", 10);
+            scenery.addElement(pig);
+        }
 
         batch = new SpriteBatch();
 
         // For debugging
         font = new BitmapFont();
+
+        // For fun
+        babyBirds = new ArrayList<Bird>();
+        //babyBirds.add(bird);
+        Timer birdsTimer = new Timer();
+        /*
+        birdsTimer.scheduleAtFixedRate(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        haveFunWithBirds();
+                    }
+                },
+                1000,
+                1000
+        );
+         */
     }
 
     public void update() {
@@ -98,6 +122,10 @@ public class AngryWirds extends ApplicationAdapter {
                 wasp.move(dt);
                 wasp.accelerate(dt);
             }
+            for (Bird bird : babyBirds) {
+                bird.move(dt);
+                bird.accelerate(dt);
+            }
         }
     }
 
@@ -109,23 +137,19 @@ public class AngryWirds extends ApplicationAdapter {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
-        bird.draw(batch);
-        for (Pig pig : pigs) {
-            pig.draw(batch);
-        }
+        scenery.draw(batch);
         for (Wasp wasp : swarm) {
             wasp.draw(batch);
         }
-        for (Tnt tnt : tnts) {
-            tnt.draw(batch);
+        for (Bird bird : babyBirds) {
+            bird.draw(batch);
         }
-        for (Block block : blocks) {
-            block.draw(batch);
-        }
-        
+        bird.draw(batch);
+
         // debug
         // draw bird speed
         //font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
+        font.draw(batch, String.valueOf(babyBirds.size()), 100, 100);
 
         batch.end();
     }
@@ -135,9 +159,7 @@ public class AngryWirds extends ApplicationAdapter {
         batch.dispose();
     }
 
-    public void generateBottom() {
-        for (float x = 0; x < WORLD_WIDTH; x += Block.height()) {
-            blocks.add(new Block(new Vector2(x, BOTTOM_HEIGHT)));
-        }
+    protected void haveFunWithBirds() {
+        babyBirds.add(bird.giveBirth());
     }
 }
