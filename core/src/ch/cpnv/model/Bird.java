@@ -15,10 +15,12 @@ public final class Bird extends MovingObject {
 
     public Bird() {
         super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
+        //freeze();
     }
 
     public Bird(Vector2 position, int width, int height, Vector2 speed) {
         super(position, width, height, PICTURE_NAME, speed);
+        //freeze();
     }
 
     public void setSpeed(Vector2 speed) {

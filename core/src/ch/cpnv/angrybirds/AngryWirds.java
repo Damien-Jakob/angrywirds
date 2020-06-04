@@ -44,6 +44,8 @@ public class AngryWirds extends ApplicationAdapter {
 
     public static Random alea; // random generator object. Static for app-wide use
 
+    private Vector2 touchPoint;
+
     // Just for debug purpose
     private BitmapFont font;
 
@@ -87,6 +89,8 @@ public class AngryWirds extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
+        touchPoint = new Vector2();
+
         // For debugging
         font = new BitmapFont();
 
@@ -94,22 +98,38 @@ public class AngryWirds extends ApplicationAdapter {
         babyBirds = new ArrayList<Bird>();
         //babyBirds.add(bird);
         Timer birdsTimer = new Timer();
-        /*
-        birdsTimer.scheduleAtFixedRate(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        haveFunWithBirds();
-                    }
-                },
-                1000,
-                1000
-        );
-         */
+
+        // Test giving birth before flight
+        if (false) {
+            bird.freeze();
+            haveFunWithBirds();
+        }
+        // Test giving birth during flight : glitched
+        if (false) {
+            birdsTimer.scheduleAtFixedRate(
+                    new TimerTask() {
+                        @Override
+                        public void run() {
+                            haveFunWithBirds();
+                        }
+                    },
+                    1000,
+                    1000
+            );
+        }
     }
 
     public void update() {
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
+
+        // TODO fix it, it doesn't do anything
+        if (Gdx.input.justTouched()) {
+            touchPoint.set(Gdx.input.getX(), Gdx.input.getY());
+            if (bird.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
+                bird.unFreeze();
+            }
+        }
+
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
@@ -159,6 +179,7 @@ public class AngryWirds extends ApplicationAdapter {
         batch.dispose();
     }
 
+    // TODO fix it, the image is displayed glitched when generated during runtime
     protected void haveFunWithBirds() {
         babyBirds.add(bird.giveBirth());
     }
