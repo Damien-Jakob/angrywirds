@@ -11,10 +11,14 @@ import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
 
+// TODO (optional) exceptions for non-stable objects
+
 public final class Scenery {
     public static final int MIN_X = AngryWirds.BIRD_START_X + 50;
     public static final int MAX_X = AngryWirds.WORLD_WIDTH;
-    
+    public static final int MIN_Y = AngryWirds.FLOOR_HEIGHT;
+    public static final int MAX_Y = AngryWirds.WORLD_HEIGHT;
+
     private ArrayList<PhysicalObject> scene;
     private ArrayList<Sprite> decoy;
 
@@ -47,18 +51,21 @@ public final class Scenery {
      * Lay down a line of blocks to act as the floor of the scene
      */
     public void addFloor() {
-        for (float x = 0; x < AngryWirds.WORLD_WIDTH; x += Block.WIDTH) {
+        for (float x = MIN_X; x < MAX_X; x += Block.WIDTH) {
             scene.add(new Block(new Vector2(x, AngryWirds.FLOOR_HEIGHT)));
         }
     }
 
-    protected void fitY(PhysicalObject newObject) {
-        float minAvailableAltitude = 0;
+    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException {
+        float minAvailableAltitude = MIN_Y;
         for (PhysicalObject object : scene) {
             if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())
                     && minAvailableAltitude < object.getYTop()) {
                 minAvailableAltitude = object.getYTop();
             }
+        }
+        if (minAvailableAltitude > MAX_Y) {
+            throw new OutOfSceneryException();
         }
         newObject.setY(minAvailableAltitude);
     }
@@ -73,9 +80,4 @@ public final class Scenery {
         for (PhysicalObject element : scene) element.draw(batch);
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
     }
-
-
-    // TODO
-    // exceptions for out-of-bound positions
-    // (optional) exceptions for non-accepted
 }
