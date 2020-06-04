@@ -8,9 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import ch.cpnv.model.Block;
+import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
 
 public final class Scenery {
+    public static final int MIN_X = AngryWirds.BIRD_START_X + 50;
+    public static final int MAX_X = AngryWirds.WORLD_WIDTH;
+    
     private ArrayList<PhysicalObject> scene;
     private ArrayList<Sprite> decoy;
 
@@ -31,7 +35,10 @@ public final class Scenery {
      *
      * @param newObject
      */
-    public void addElement(PhysicalObject newObject) {
+    public void addElement(PhysicalObject newObject) throws OutOfSceneryException {
+        if (newObject.getXLeft() < MIN_X || newObject.getXRight() > MAX_X) {
+            throw new OutOfSceneryException();
+        }
         fitY(newObject);
         scene.add(newObject);
     }

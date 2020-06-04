@@ -15,6 +15,7 @@ import java.util.TimerTask;
 
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
+import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
@@ -75,16 +76,26 @@ public class AngryWirds extends ApplicationAdapter {
         scenery = new Scenery();
         scenery.addFloor();
         for (int i = 0; i < BLOCKS_QUANTITY; i++) {
-            Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0));
-            scenery.addElement(block);
+            try {
+                Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0));
+                scenery.addElement(block);
+            } catch (OutOfSceneryException ignored) {
+            }
+
         }
         for (int i = 0; i < TNT_QUANTITY; i++) {
-            Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), 5);
-            scenery.addElement(tnt);
+            try {
+                Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), 5);
+                scenery.addElement(tnt);
+            } catch (OutOfSceneryException ignored) {
+            }
         }
         for (int i = 0; i < HERD_SIZE; i++) {
-            Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), "?", 10);
-            scenery.addElement(pig);
+            try {
+                Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), "?", 10);
+                scenery.addElement(pig);
+            } catch (OutOfSceneryException ignored) {
+            }
         }
 
         batch = new SpriteBatch();
