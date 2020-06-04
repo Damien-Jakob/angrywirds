@@ -3,10 +3,10 @@ package ch.cpnv.model;
 import com.badlogic.gdx.math.Vector2;
 
 public final class Pig extends TextualObject {
-    private static final String PICTURE_NAME = "pig.png";
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = WIDTH;
 
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = WIDTH;
+    private static final String PICTURE_NAME = "pig.png";
 
     private int points;
 
