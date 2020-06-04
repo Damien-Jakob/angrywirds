@@ -2,6 +2,7 @@ package ch.cpnv.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class PhysicalObject extends Sprite {
@@ -24,5 +25,14 @@ public class PhysicalObject extends Sprite {
 
     public float getYTop() {
         return getY() + getHeight();
+    }
+
+    public boolean collidesWith(PhysicalObject o)
+    {
+        return this.getRectangle().overlaps(o.getRectangle());
+    }
+
+    private Rectangle getRectangle() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }
