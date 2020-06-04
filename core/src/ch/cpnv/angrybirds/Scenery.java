@@ -64,7 +64,7 @@ public final class Scenery {
                 minAvailableAltitude = object.getYTop();
             }
         }
-        if (minAvailableAltitude > MAX_Y) {
+        if (minAvailableAltitude + newObject.getHeight() > MAX_Y) {
             throw new OutOfSceneryException();
         }
         newObject.setY(minAvailableAltitude);
