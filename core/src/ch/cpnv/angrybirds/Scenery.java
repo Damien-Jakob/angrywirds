@@ -50,7 +50,7 @@ public final class Scenery {
         for (PhysicalObject object : scene) {
             if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())
                     && minAvailableAltitude < object.getYTop()) {
-                minAvailableAltitude = object.getY() + object.getHeight();
+                minAvailableAltitude = object.getYTop();
             }
         }
         newObject.setY(minAvailableAltitude);
@@ -67,4 +67,8 @@ public final class Scenery {
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
     }
 
+
+    // TODO
+    // exceptions for out-of-bound positions
+    // (optional) exceptions for non-accepted
 }
