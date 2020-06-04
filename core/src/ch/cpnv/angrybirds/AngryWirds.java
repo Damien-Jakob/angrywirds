@@ -75,16 +75,20 @@ public class AngryWirds extends ApplicationAdapter {
 
         scenery = new Scenery();
         scenery.addFloor();
-        for (int i = 0; i < BLOCKS_QUANTITY; i++) {
-            try {
-                Block block = new Block(new Vector2(
-                        alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
-                        0
-                ));
-                scenery.addElement(block);
-            } catch (OutOfSceneryException ignored) {
-            }
 
+        int maxTries = 3;
+        for (int i = 0; i < BLOCKS_QUANTITY; i++) {
+            for (int tryNumber = 0; tryNumber < maxTries ; tryNumber++) {
+                try {
+                    Block block = new Block(new Vector2(
+                            alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                            0
+                    ));
+                    scenery.addElement(block);
+                    break;
+                } catch (OutOfSceneryException ignored) {
+                }
+            }
         }
         for (int i = 0; i < TNT_QUANTITY; i++) {
             try {
