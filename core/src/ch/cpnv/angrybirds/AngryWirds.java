@@ -77,7 +77,10 @@ public class AngryWirds extends ApplicationAdapter {
         scenery.addFloor();
         for (int i = 0; i < BLOCKS_QUANTITY; i++) {
             try {
-                Block block = new Block(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0));
+                Block block = new Block(new Vector2(
+                        alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        0
+                ));
                 scenery.addElement(block);
             } catch (OutOfSceneryException ignored) {
             }
@@ -85,14 +88,20 @@ public class AngryWirds extends ApplicationAdapter {
         }
         for (int i = 0; i < TNT_QUANTITY; i++) {
             try {
-                Tnt tnt = new Tnt(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), 5);
+                Tnt tnt = new Tnt(new Vector2(
+                        alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        0
+                ), 5);
                 scenery.addElement(tnt);
             } catch (OutOfSceneryException ignored) {
             }
         }
         for (int i = 0; i < HERD_SIZE; i++) {
             try {
-                Pig pig = new Pig(new Vector2(alea.nextFloat() * WORLD_WIDTH, 0), "?", 10);
+                Pig pig = new Pig(new Vector2(
+                        alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        0
+                ), "?", 10);
                 scenery.addElement(pig);
             } catch (OutOfSceneryException ignored) {
             }
