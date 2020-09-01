@@ -67,7 +67,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         camera.update();
 
         bird = new Bird();
-        bird.setSpeed(new Vector2(150, 200));
 
         swarm = new ArrayList<Wasp>();
         for (int i = 0; i < SWARM_SIZE; i++) {
@@ -155,6 +154,11 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
             bird.move(dt);
             bird.accelerate(dt);
+
+            // If the bird has gone out of bound, it is time to stop that throw and start a new one
+            if (bird.getXRight() < 0 || bird.getXLeft() > WORLD_WIDTH || bird.getYTop() < 0) {
+                bird = new Bird();
+            }
 
             // --------- Wasp
             // Apply changes to the wasp...
