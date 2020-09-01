@@ -37,6 +37,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     private static final int TNT_QUANTITY = 50;
     private static final int BLOCKS_QUANTITY = 154;
 
+    private static final float SLINGSHOT_ELASTICITY = 1.5f;
+
     private Bird bird;
     private ArrayList<Wasp> swarm;
     private Scenery scenery;
@@ -238,6 +240,12 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
+        if (bird.getState() == Bird.BirdState.aim) {
+            Vector2 direction = new Vector2(BIRD_START_X - bird.getX(), BIRD_START_Y - bird.getY());
+            bird.setSpeed(direction.scl(SLINGSHOT_ELASTICITY));
+            bird.unFreeze();
+        }
         return false;
     }
 
