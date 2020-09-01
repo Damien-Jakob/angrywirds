@@ -2,11 +2,13 @@ package ch.cpnv.angrybirds;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +23,7 @@ import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 
 
-public class AngryWirds extends ApplicationAdapter {
+public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
@@ -35,6 +37,8 @@ public class AngryWirds extends ApplicationAdapter {
     private static final int TNT_QUANTITY = 50;
     private static final int BLOCKS_QUANTITY = 154;
 
+    private static final float SLINGSHOT_ELASTICITY = 1.5f;
+
     private Bird bird;
     private ArrayList<Wasp> swarm;
     private Scenery scenery;
@@ -44,8 +48,6 @@ public class AngryWirds extends ApplicationAdapter {
     private SpriteBatch batch;
 
     public static Random alea; // random generator object. Static for app-wide use
-
-    private Vector2 touchPoint;
 
     // Just for debug purpose
     private BitmapFont font;
@@ -65,7 +67,6 @@ public class AngryWirds extends ApplicationAdapter {
         camera.update();
 
         bird = new Bird();
-        bird.setSpeed(new Vector2(150, 200));
 
         swarm = new ArrayList<Wasp>();
         for (int i = 0; i < SWARM_SIZE; i++) {
@@ -78,7 +79,7 @@ public class AngryWirds extends ApplicationAdapter {
 
         int maxTries = 3;
         for (int i = 0; i < BLOCKS_QUANTITY; i++) {
-            for (int tryNumber = 0; tryNumber < maxTries ; tryNumber++) {
+            for (int tryNumber = 0; tryNumber < maxTries; tryNumber++) {
                 try {
                     Block block = new Block(new Vector2(
                             alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
@@ -113,8 +114,6 @@ public class AngryWirds extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        touchPoint = new Vector2();
-
         // For debugging
         font = new BitmapFont();
 
@@ -141,24 +140,25 @@ public class AngryWirds extends ApplicationAdapter {
                     1000
             );
         }
+
+        // Set which InputProcessor does answer to the inputs
+        // In our case, it is this class
+        Gdx.input.setInputProcessor(this);
     }
 
     public void update() {
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
-
-        // TODO fix it, it doesn't do anything
-        if (Gdx.input.justTouched()) {
-            touchPoint.set(Gdx.input.getX(), Gdx.input.getY());
-            if (bird.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                bird.unFreeze();
-            }
-        }
 
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
             bird.move(dt);
             bird.accelerate(dt);
+
+            // If the bird has gone out of bound, it is time to stop that throw and start a new one
+            if (bird.getXRight() < 0 || bird.getXLeft() > WORLD_WIDTH || bird.getYTop() < 0) {
+                bird = new Bird();
+            }
 
             // --------- Wasp
             // Apply changes to the wasp...
@@ -206,5 +206,78 @@ public class AngryWirds extends ApplicationAdapter {
     // TODO fix it, the image is displayed glitched when generated during runtime
     protected void haveFunWithBirds() {
         babyBirds.add(bird.giveBirth());
+    }
+
+    // InputProcessor interface implementation
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
+
+        if (bird.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
+            Gdx.app.log("ANGRY", "Bird touched");
+            if (bird.getState() == Bird.BirdState.init) {
+                Gdx.app.log("ANGRY", "Aiming the bird");
+                bird.setState(Bird.BirdState.aim);
+            }
+        }
+
+
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
+        if (bird.getState() == Bird.BirdState.aim) {
+            Vector2 direction = new Vector2(BIRD_START_X - bird.getX(), BIRD_START_Y - bird.getY());
+            bird.setSpeed(direction.scl(SLINGSHOT_ELASTICITY));
+            bird.unFreeze();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
+        if (bird.getState() == Bird.BirdState.aim) {
+            Gdx.app.log("ANGRY", "Dragging the bird");
+            bird.setCenter(touchPoint.x, touchPoint.y);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
+
+    // convert screen coordinates to camera coordinates
+    protected Vector2 convertCoordinates(int screenX, int screenY) {
+        Vector3 point = new Vector3(screenX, screenY, 0);
+        camera.unproject(point);
+        return new Vector2(point.x, point.y);
     }
 }
