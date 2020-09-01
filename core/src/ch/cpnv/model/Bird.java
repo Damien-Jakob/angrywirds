@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import ch.cpnv.angrybirds.AngryWirds;
 
 public final class Bird extends MovingObject {
-    private enum BirdState {init, aim, fly}
+    public enum BirdState {init, aim, fly}
 
     private static final String PICTURE_NAME = "bird.png";
     public static final int WIDTH = 60;
@@ -15,12 +15,20 @@ public final class Bird extends MovingObject {
 
     public Bird() {
         super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
-        //freeze();
+        freeze();
     }
 
     public Bird(Vector2 position, int width, int height, Vector2 speed) {
         super(position, width, height, PICTURE_NAME, speed);
-        //freeze();
+        freeze();
+    }
+
+    public BirdState getState() {
+        return state;
+    }
+
+    public void setState(BirdState state) {
+        this.state = state;
     }
 
     public void setSpeed(Vector2 speed) {
