@@ -37,7 +37,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     private static final int TNT_QUANTITY = 50;
     private static final int BLOCKS_QUANTITY = 154;
 
-    private static final float SLINGSHOT_ELASTICITY = 1.5f;
+    public static final float SLINGSHOT_POWER = 1.5f;
 
     private Bird bird;
     private ArrayList<Wasp> swarm;
@@ -230,14 +230,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
-        if (bird.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-            Gdx.app.log("ANGRY", "Bird touched");
-            if (bird.getState() == Bird.BirdState.READY) {
-                Gdx.app.log("ANGRY", "Aiming the bird");
-                bird.setState(Bird.BirdState.AIMING);
-            }
-        }
-
+        bird.startAim(touchPoint);
 
         return true;
     }
@@ -246,11 +239,9 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch up at " + touchPoint.x + "," + touchPoint.y);
-        if (bird.getState() == Bird.BirdState.AIMING) {
-            Vector2 direction = new Vector2(BIRD_START_X - bird.getX(), BIRD_START_Y - bird.getY());
-            bird.setSpeed(direction.scl(SLINGSHOT_ELASTICITY));
-            bird.setState(Bird.BirdState.FLYING);
-        }
+
+        bird.launchFrom(touchPoint);
+
         return true;
     }
 
@@ -258,10 +249,9 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
-        if (bird.getState() == Bird.BirdState.AIMING) {
-            Gdx.app.log("ANGRY", "Dragging the bird");
-            bird.setCenter(touchPoint.x, touchPoint.y);
-        }
+
+        bird.drag(touchPoint);
+
         return true;
     }
 

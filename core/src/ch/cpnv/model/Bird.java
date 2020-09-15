@@ -12,6 +12,9 @@ public final class Bird extends MovingObject {
     public static final int HEIGHT = WIDTH;
 
     private BirdState state = BirdState.READY;
+    // Remember where the aiming started
+    private Vector2 aimOrigin;
+    private Vector2 dragOffset; // Touch location "within" the bird, used to help keep the dragging animation clean
 
     public Bird() {
         super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
@@ -25,16 +28,34 @@ public final class Bird extends MovingObject {
         return state;
     }
 
-    public void setState(BirdState state) {
-        this.state = state;
-    }
-
     public void setSpeed(Vector2 speed) {
         this.speed = speed;
     }
 
     public Vector2 getSpeed() {
         return speed;
+    }
+
+    public void startAim(Vector2 position) {
+        if (state == BirdState.READY) {
+            aimOrigin = position.cpy();
+            // Attention : copy the position before modifying it
+            dragOffset = position.sub(getX(), getY());
+            state = BirdState.AIMING;
+        }
+    }
+
+    public void drag(Vector2 position) {
+        if (state == BirdState.AIMING) {
+            setPosition(position.x - dragOffset.x, position.y - dragOffset.y);
+        }
+    }
+
+    public void launchFrom(Vector2 position) {
+        if (state == BirdState.AIMING) {
+            state = BirdState.FLYING;
+            speed = aimOrigin.sub(position).scl(AngryWirds.SLINGSHOT_POWER);
+        }
     }
 
     @Override
