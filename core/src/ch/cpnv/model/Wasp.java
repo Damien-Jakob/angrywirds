@@ -19,9 +19,7 @@ public final class Wasp extends MovingObject {
     @Override
     public void accelerate(float dt) {
         // The wasp only slightly alters its speed at random. It is subject to gravity, but it counters it with its flight
-        if (!frozen) {
-            accelerateToCenter(dt);
-        }
+        accelerateToCenter(dt);
     }
 
     private void accelerateToCenter(float dt) {
@@ -30,8 +28,8 @@ public final class Wasp extends MovingObject {
         // note : that the more the wasp is far from the center, the more it will be attracted to it
         // -0.5 <= nextFloat - 0.5 < 0.5, in this case the acceleration in all directions is equally probable
         // getX()/AngryWirds.WORLD_WIDTH == 0.5 if the wasp is at the center
-        float acc_x_update = AngryWirds.alea.nextFloat() - getX()/AngryWirds.WORLD_WIDTH;
-        float acc_y_update = AngryWirds.alea.nextFloat() - getY()/AngryWirds.WORLD_HEIGHT;
+        float acc_x_update = AngryWirds.alea.nextFloat() - getX() / AngryWirds.WORLD_WIDTH;
+        float acc_y_update = AngryWirds.alea.nextFloat() - getY() / AngryWirds.WORLD_HEIGHT;
         speed.add(new Vector2(acc_x_update, acc_y_update).scl(dt * AGITATION));
     }
 
