@@ -124,7 +124,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
         // Test giving birth before flight
         if (false) {
-            bird.freeze();
             haveFunWithBirds();
         }
         // Test giving birth during flight : glitched
@@ -152,8 +151,10 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
-            bird.move(dt);
-            bird.accelerate(dt);
+            if(bird.getState() == Bird.BirdState.FLYING) {
+                bird.move(dt);
+                bird.accelerate(dt);
+            }
 
             // If the bird has gone out of bound, it is time to stop that throw and start a new one
             if (bird.getXRight() < 0 || bird.getXLeft() > WORLD_WIDTH || bird.getYTop() < 0) {
@@ -231,37 +232,37 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
         if (bird.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
             Gdx.app.log("ANGRY", "Bird touched");
-            if (bird.getState() == Bird.BirdState.init) {
+            if (bird.getState() == Bird.BirdState.READY) {
                 Gdx.app.log("ANGRY", "Aiming the bird");
-                bird.setState(Bird.BirdState.aim);
+                bird.setState(Bird.BirdState.AIMING);
             }
         }
 
 
-        return false;
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
-        Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
-        if (bird.getState() == Bird.BirdState.aim) {
+        Gdx.app.log("ANGRY", "Touch up at " + touchPoint.x + "," + touchPoint.y);
+        if (bird.getState() == Bird.BirdState.AIMING) {
             Vector2 direction = new Vector2(BIRD_START_X - bird.getX(), BIRD_START_Y - bird.getY());
             bird.setSpeed(direction.scl(SLINGSHOT_ELASTICITY));
-            bird.unFreeze();
+            bird.setState(Bird.BirdState.FLYING);
         }
-        return false;
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
-        if (bird.getState() == Bird.BirdState.aim) {
+        if (bird.getState() == Bird.BirdState.AIMING) {
             Gdx.app.log("ANGRY", "Dragging the bird");
             bird.setCenter(touchPoint.x, touchPoint.y);
         }
-        return false;
+        return true;
     }
 
     @Override
