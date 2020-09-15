@@ -63,11 +63,4 @@ public final class Bird extends MovingObject {
         // y = y0 - g * t
         speed.y -= GRAVITY * dt;
     }
-
-    // TODO fix it, the image is displayed glitched when generated during runtime
-    public Bird giveBirth() {
-        Bird child = new Bird(new Vector2(getX(), getY()), (int) getWidth(), (int) getHeight(), new Vector2(speed.x, 0));
-        //Bird child = new Bird();
-        return child;
-    }
 }

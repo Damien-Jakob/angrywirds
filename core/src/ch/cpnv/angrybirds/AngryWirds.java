@@ -52,9 +52,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     // Just for debug purpose
     private BitmapFont font;
 
-    // Just for fun
-    private ArrayList<Bird> babyBirds;
-
     @Override
     public void create() {
         alea = new Random();
@@ -117,29 +114,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         // For debugging
         font = new BitmapFont();
 
-        // For fun
-        babyBirds = new ArrayList<Bird>();
-        //babyBirds.add(bird);
-        Timer birdsTimer = new Timer();
-
-        // Test giving birth before flight
-        if (false) {
-            haveFunWithBirds();
-        }
-        // Test giving birth during flight : glitched
-        if (false) {
-            birdsTimer.scheduleAtFixedRate(
-                    new TimerTask() {
-                        @Override
-                        public void run() {
-                            haveFunWithBirds();
-                        }
-                    },
-                    1000,
-                    1000
-            );
-        }
-
         // Set which InputProcessor does answer to the inputs
         // In our case, it is this class
         Gdx.input.setInputProcessor(this);
@@ -167,10 +141,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 wasp.move(dt);
                 wasp.accelerate(dt);
             }
-            for (Bird bird : babyBirds) {
-                bird.move(dt);
-                bird.accelerate(dt);
-            }
         }
     }
 
@@ -186,15 +156,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         for (Wasp wasp : swarm) {
             wasp.draw(batch);
         }
-        for (Bird bird : babyBirds) {
-            bird.draw(batch);
-        }
         bird.draw(batch);
-
-        // debug
-        // draw bird speed
-        //font.draw(batch, String.valueOf(bird.getSpeed().x) + ';' + String.valueOf(bird.getSpeed().y), 100, 100);
-        font.draw(batch, String.valueOf(babyBirds.size()), 100, 100);
 
         batch.end();
     }
@@ -202,11 +164,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
-    }
-
-    // TODO fix it, the image is displayed glitched when generated during runtime
-    protected void haveFunWithBirds() {
-        babyBirds.add(bird.giveBirth());
     }
 
     // InputProcessor interface implementation
