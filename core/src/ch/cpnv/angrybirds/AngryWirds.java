@@ -71,7 +71,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
         bird = new Bird();
 
-        wasps = new ArrayList<Wasp>();
+        wasps = new ArrayList<>();
         for (int i = 0; i < WASP_QUANTITY; i++) {
             Wasp wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(40, 40));
             wasps.add(wasp);

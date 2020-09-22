@@ -28,8 +28,8 @@ public final class Scenery {
     private static final int PANEL_X = 50;
 
     public Scenery() {
-        scene = new ArrayList<PhysicalObject>();
-        decoy = new ArrayList<Sprite>();
+        scene = new ArrayList<>();
+        decoy = new ArrayList<>();
         Sprite panel = new Sprite(new Texture("panel.png"));
         panel.setBounds(PANEL_X, AngryWirds.WORLD_HEIGHT - PANEL_HEIGHT, PANEL_WIDTH, PANEL_HEIGHT);
         decoy.add(panel);
@@ -38,7 +38,7 @@ public final class Scenery {
     /**
      * Add one piece of scenery
      *
-     * @param newObject
+     * @param newObject element to add to the scenery
      */
     public void addElement(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         if (newObject.getXLeft() < MIN_X || newObject.getXRight() > MAX_X) {
@@ -74,10 +74,9 @@ public final class Scenery {
     /**
      * Render the whole scenary
      *
-     * @param batch
+     * @param batch batch in which the scenery must be drawn
      */
     public void draw(Batch batch) {
-
         for (PhysicalObject element : scene) element.draw(batch);
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
     }

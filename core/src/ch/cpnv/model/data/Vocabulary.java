@@ -10,7 +10,7 @@ public class Vocabulary {
 
     public Vocabulary(String name) {
         this.name = name;
-        words = new ArrayList<Word>();
+        words = new ArrayList<>();
     }
 
     public void addWord(Word word) {
