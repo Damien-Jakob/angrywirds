@@ -12,8 +12,6 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
@@ -21,6 +19,8 @@ import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
+import ch.cpnv.model.data.Vocabulary;
+import ch.cpnv.providers.VocProvider;
 
 
 public class AngryWirds extends ApplicationAdapter implements InputProcessor {
@@ -32,17 +32,20 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
 
-    private static final int SWARM_SIZE = 5;
-    private static final int HERD_SIZE = 12;
-    private static final int TNT_QUANTITY = 50;
-    private static final int BLOCKS_QUANTITY = 154;
+    private static final int WASP_QUANTITY = 2;
+    private static final int PIGS_QUANTITY = 5;
+    private static final int TNT_QUANTITY = 3;
+    private static final int BLOCKS_QUANTITY = 30;
 
     public static final float SLINGSHOT_POWER = 1.5f;
 
     private Bird bird;
-    private ArrayList<Wasp> swarm;
+    private ArrayList<Wasp> wasps;
     private Scenery scenery;
     private Texture background;
+
+    private VocProvider vocProvider = VocProvider.getInstance();
+    private Vocabulary voc;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -63,49 +66,59 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
+        voc = vocProvider.pickAVoc();
+
         bird = new Bird();
 
-        swarm = new ArrayList<Wasp>();
-        for (int i = 0; i < SWARM_SIZE; i++) {
+        wasps = new ArrayList<Wasp>();
+        for (int i = 0; i < WASP_QUANTITY; i++) {
             Wasp wasp = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(40, 40));
-            swarm.add(wasp);
+            wasps.add(wasp);
         }
 
         scenery = new Scenery();
         scenery.addFloor();
 
-        int maxTries = 3;
-        for (int i = 0; i < BLOCKS_QUANTITY; i++) {
-            for (int tryNumber = 0; tryNumber < maxTries; tryNumber++) {
-                try {
-                    Block block = new Block(new Vector2(
-                            alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
-                            0
-                    ));
-                    scenery.addElement(block);
-                    break;
-                } catch (OutOfSceneryException ignored) {
-                }
+        int maxTries = 5;
+        int blocksLeft = BLOCKS_QUANTITY;
+        while (blocksLeft > 0) {
+            try {
+                Block block = new Block(new Vector2(
+                        alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        0
+                ));
+                scenery.addElement(block);
+                blocksLeft--;
+            } catch (OutOfSceneryException exception) {
+                Gdx.app.log("EXCEPTION", "Block out of bounds: " + exception.getMessage());
             }
         }
-        for (int i = 0; i < TNT_QUANTITY; i++) {
+
+        int tntLeft = TNT_QUANTITY;
+        while (tntLeft > 0) {
             try {
                 Tnt tnt = new Tnt(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ), 5);
                 scenery.addElement(tnt);
-            } catch (OutOfSceneryException ignored) {
+                tntLeft--;
+            } catch (OutOfSceneryException exception) {
+                Gdx.app.log("EXCEPTION", "TNT out of bounds: " + exception.getMessage());
             }
         }
-        for (int i = 0; i < HERD_SIZE; i++) {
+
+        int pigsLeft = PIGS_QUANTITY;
+        while (pigsLeft > 0) {
             try {
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ), "?", 10);
                 scenery.addElement(pig);
-            } catch (OutOfSceneryException ignored) {
+                pigsLeft--;
+            } catch (OutOfSceneryException exception) {
+                Gdx.app.log("EXCEPTION", "Pig out of bounds: " + exception.getMessage());
             }
         }
 
@@ -125,7 +138,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
-            if(bird.getState() == Bird.BirdState.FLYING) {
+            if (bird.getState() == Bird.BirdState.FLYING) {
                 bird.move(dt);
                 bird.accelerate(dt);
             }
@@ -137,7 +150,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
             // --------- Wasp
             // Apply changes to the wasp...
-            for (Wasp wasp : swarm) {
+            for (Wasp wasp : wasps) {
                 wasp.move(dt);
                 wasp.accelerate(dt);
             }
@@ -153,7 +166,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
         // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
         scenery.draw(batch);
-        for (Wasp wasp : swarm) {
+        for (Wasp wasp : wasps) {
             wasp.draw(batch);
         }
         bird.draw(batch);
