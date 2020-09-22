@@ -79,7 +79,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         scenery = new Scenery();
         scenery.addFloor();
 
-        int maxTries = 5;
         int blocksLeft = BLOCKS_QUANTITY;
         while (blocksLeft > 0) {
             try {
@@ -114,7 +113,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), "?", 10);
+                ), voc.pickAWord().getSolution(), 10);
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
