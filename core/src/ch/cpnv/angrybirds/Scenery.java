@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
+import ch.cpnv.model.SceneCollapseException;
 
 // TODO (optional) exceptions for non-stable objects
 
 public final class Scenery {
-    public static final int MIN_X = AngryWirds.BIRD_START_X + 50;
+    public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
     public static final int MAX_X = AngryWirds.WORLD_WIDTH;
     public static final int MIN_Y = AngryWirds.FLOOR_HEIGHT;
     public static final int MAX_Y = AngryWirds.WORLD_HEIGHT;
@@ -39,7 +40,7 @@ public final class Scenery {
      *
      * @param newObject
      */
-    public void addElement(PhysicalObject newObject) throws OutOfSceneryException {
+    public void addElement(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         if (newObject.getXLeft() < MIN_X || newObject.getXRight() > MAX_X) {
             throw new OutOfSceneryException();
         }
@@ -56,7 +57,7 @@ public final class Scenery {
         }
     }
 
-    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException {
+    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         float minAvailableAltitude = MIN_Y;
         for (PhysicalObject object : scene) {
             if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())

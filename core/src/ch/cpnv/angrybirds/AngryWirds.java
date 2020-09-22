@@ -17,6 +17,7 @@ import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.Pig;
+import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 import ch.cpnv.model.data.Vocabulary;
@@ -90,6 +91,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 blocksLeft--;
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "Block out of bounds: " + exception.getMessage());
+            } catch (SceneCollapseException exception) {
+                Gdx.app.log("EXCEPTION", "Unstable block: " + exception.getMessage());
             }
         }
 
@@ -104,6 +107,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 tntLeft--;
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "TNT out of bounds: " + exception.getMessage());
+            } catch (SceneCollapseException exception) {
+                Gdx.app.log("EXCEPTION", "Unstable TNT: " + exception.getMessage());
             }
         }
 
@@ -113,11 +118,13 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), voc.pickAWord().getSolution(), 10);
+                ), voc.pickAWord(), 10);
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "Pig out of bounds: " + exception.getMessage());
+            } catch (SceneCollapseException exception) {
+                Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
             }
         }
 
