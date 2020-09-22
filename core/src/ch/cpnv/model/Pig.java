@@ -35,9 +35,14 @@ public final class Pig extends TextualObject {
         return getText();
     }
 
-    public boolean isScreaming() {
+    public boolean getScreaming() {
         return screaming;
     }
+
+    public void setScreaming(boolean screaming) {
+        this.screaming = screaming;
+    }
+
 
     public void sayWord() {
         // TODO implement comportment

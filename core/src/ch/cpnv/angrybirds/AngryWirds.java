@@ -208,6 +208,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
         bird.startAim(touchPoint);
 
+        scenery.handleTouchDown(touchPoint);
+
         return true;
     }
 
@@ -217,6 +219,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         Gdx.app.log("ANGRY", "Touch up at " + touchPoint.x + "," + touchPoint.y);
 
         bird.launchFrom(touchPoint);
+
+        scenery.handleTouchUp(touchPoint);
 
         return true;
     }

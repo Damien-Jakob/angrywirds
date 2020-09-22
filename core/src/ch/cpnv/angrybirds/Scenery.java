@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
+import ch.cpnv.model.Pig;
 import ch.cpnv.model.SceneCollapseException;
 
 public final class Scenery {
@@ -78,5 +80,25 @@ public final class Scenery {
     public void draw(Batch batch) {
         for (PhysicalObject element : scene) element.draw(batch);
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
+    }
+
+    public void handleTouchDown(Vector2 touchPoint) {
+        for (PhysicalObject element : scene) {
+            if (element instanceof Pig) {
+                Pig pig = (Pig) element;
+                if (pig.getBoundingRectangle().contains(touchPoint)) {
+                    pig.setScreaming(true);
+                }
+            }
+        }
+    }
+
+    public void handleTouchUp(Vector2 touchPoint) {
+        for (PhysicalObject element : scene) {
+            if (element instanceof Pig) {
+                Pig pig = (Pig) element;
+                pig.setScreaming(false);
+            }
+        }
     }
 }
