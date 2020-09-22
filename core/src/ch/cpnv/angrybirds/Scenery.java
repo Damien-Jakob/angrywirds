@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
-
-// TODO (optional) exceptions for non-stable objects
+import ch.cpnv.model.Pig;
+import ch.cpnv.model.SceneCollapseException;
 
 public final class Scenery {
-    public static final int MIN_X = AngryWirds.BIRD_START_X + 50;
+    public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
     public static final int MAX_X = AngryWirds.WORLD_WIDTH;
     public static final int MIN_Y = AngryWirds.FLOOR_HEIGHT;
     public static final int MAX_Y = AngryWirds.WORLD_HEIGHT;
@@ -27,8 +28,8 @@ public final class Scenery {
     private static final int PANEL_X = 50;
 
     public Scenery() {
-        scene = new ArrayList<PhysicalObject>();
-        decoy = new ArrayList<Sprite>();
+        scene = new ArrayList<>();
+        decoy = new ArrayList<>();
         Sprite panel = new Sprite(new Texture("panel.png"));
         panel.setBounds(PANEL_X, AngryWirds.WORLD_HEIGHT - PANEL_HEIGHT, PANEL_WIDTH, PANEL_HEIGHT);
         decoy.add(panel);
@@ -37,9 +38,9 @@ public final class Scenery {
     /**
      * Add one piece of scenery
      *
-     * @param newObject
+     * @param newObject element to add to the scenery
      */
-    public void addElement(PhysicalObject newObject) throws OutOfSceneryException {
+    public void addElement(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         if (newObject.getXLeft() < MIN_X || newObject.getXRight() > MAX_X) {
             throw new OutOfSceneryException();
         }
@@ -56,7 +57,8 @@ public final class Scenery {
         }
     }
 
-    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException {
+    // TODO test stability of objects
+    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         float minAvailableAltitude = MIN_Y;
         for (PhysicalObject object : scene) {
             if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())
@@ -73,11 +75,30 @@ public final class Scenery {
     /**
      * Render the whole scenary
      *
-     * @param batch
+     * @param batch batch in which the scenery must be drawn
      */
     public void draw(Batch batch) {
-
         for (PhysicalObject element : scene) element.draw(batch);
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
+    }
+
+    public void handleTouchDown(Vector2 touchPoint) {
+        for (PhysicalObject element : scene) {
+            if (element instanceof Pig) {
+                Pig pig = (Pig) element;
+                if (pig.getBoundingRectangle().contains(touchPoint)) {
+                    pig.sayWord();
+                }
+            }
+        }
+    }
+
+    public void handleTouchUp(Vector2 touchPoint) {
+        for (PhysicalObject element : scene) {
+            if (element instanceof Pig) {
+                Pig pig = (Pig) element;
+                pig.shutUp();
+            }
+        }
     }
 }
