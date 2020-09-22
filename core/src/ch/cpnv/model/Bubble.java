@@ -19,8 +19,8 @@ public final class Bubble extends TextualObject {
     private BitmapFont font;
 
     public Bubble(Pig pig) {
-        super(new Vector2(pig.getOriginX(), pig.getOriginY()), WIDTH, HEIGHT, PICTURE_NAME, pig.getWord());
-        setBounds(getOriginX() - WIDTH / 2 - OFFSET, getOriginY() - HEIGHT / 2, WIDTH, HEIGHT);
+        super(new Vector2(pig.getX(), pig.getY()), WIDTH, HEIGHT, PICTURE_NAME, pig.getWord());
+        setBounds(getX() - WIDTH / 2 - OFFSET, getY() + HEIGHT / 2, WIDTH, HEIGHT);
         font = new BitmapFont();
 
         font.setColor(Color.BLACK);
@@ -29,6 +29,6 @@ public final class Bubble extends TextualObject {
 
     public void draw(Batch batch) {
         super.draw(batch);
-        font.draw(batch, getText(), getOriginX() + TEXT_OFFSET_X, getOriginY() + TEXT_OFFSET_Y);
+        font.draw(batch, getText(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
     }
 }
