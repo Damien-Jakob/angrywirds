@@ -3,14 +3,14 @@ package ch.cpnv.model;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class TextualObject extends PhysicalObject {
-    protected String word;
+    protected String text;
 
-    public TextualObject(Vector2 position, float width, float height, String pictureName, String word) {
+    public TextualObject(Vector2 position, float width, float height, String pictureName, String text) {
         super(position, width, height, pictureName);
-        this.word = word;
+        this.text = text;
     }
 
-    public String getWord() {
-        return word;
+    public String getText() {
+        return text;
     }
 }
