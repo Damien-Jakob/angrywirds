@@ -12,8 +12,6 @@ import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
 import ch.cpnv.model.SceneCollapseException;
 
-// TODO (optional) exceptions for non-stable objects
-
 public final class Scenery {
     public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
     public static final int MAX_X = AngryWirds.WORLD_WIDTH;
@@ -57,6 +55,7 @@ public final class Scenery {
         }
     }
 
+    // TODO test stability of objects
     protected void fitY(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
         float minAvailableAltitude = MIN_Y;
         for (PhysicalObject object : scene) {
