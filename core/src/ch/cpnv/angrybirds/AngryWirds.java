@@ -206,11 +206,12 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
-        // TODO don't thow Bird when clicking a Pig
-        bird.startAim(touchPoint);
+        boolean actionHandled = scenery.handleTouchDown(touchPoint);
 
-        scenery.handleTouchDown(touchPoint);
-
+        // We don't want to move the bird if the user wanted to display a Pig
+        if (!actionHandled) {
+            bird.startAim(touchPoint);
+        }
         return true;
     }
 
@@ -219,9 +220,9 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch up at " + touchPoint.x + "," + touchPoint.y);
 
-        bird.launchFrom(touchPoint);
-
         scenery.handleTouchUp(touchPoint);
+
+        bird.launchFrom(touchPoint);
 
         return true;
     }

@@ -82,15 +82,17 @@ public final class Scenery {
         for (Sprite decoyElement : decoy) decoyElement.draw(batch);
     }
 
-    public void handleTouchDown(Vector2 touchPoint) {
+    public boolean handleTouchDown(Vector2 touchPoint) {
         for (PhysicalObject element : scene) {
             if (element instanceof Pig) {
                 Pig pig = (Pig) element;
                 if (pig.getBoundingRectangle().contains(touchPoint)) {
                     pig.sayWord();
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void handleTouchUp(Vector2 touchPoint) {
