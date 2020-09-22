@@ -9,12 +9,12 @@ import ch.cpnv.model.data.Word;
 // TODO store word ?
 
 public final class Pig extends TextualObject {
+    private static final String PICTURE_NAME = "pig.png";
+
     public static final int WIDTH = 60;
     public static final int HEIGHT = WIDTH;
 
-    private static final String PICTURE_NAME = "pig.png";
-
-    private boolean screaming = false;
+    private Bubble bubble = null;
 
     private int points;
 
@@ -26,8 +26,8 @@ public final class Pig extends TextualObject {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        if (screaming) {
-            Gdx.app.log("Info", "Pig Screams");
+        if (bubble != null) {
+            bubble.draw(batch);
         }
     }
 
@@ -36,15 +36,14 @@ public final class Pig extends TextualObject {
     }
 
     public boolean getScreaming() {
-        return screaming;
+        return bubble != null;
     }
-
-    public void setScreaming(boolean screaming) {
-        this.screaming = screaming;
-    }
-
 
     public void sayWord() {
-        // TODO implement comportment
+        this.bubble = new Bubble(this);
+    }
+
+    public void shutUp() {
+        this.bubble = null;
     }
 }

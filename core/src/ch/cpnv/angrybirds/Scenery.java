@@ -87,7 +87,7 @@ public final class Scenery {
             if (element instanceof Pig) {
                 Pig pig = (Pig) element;
                 if (pig.getBoundingRectangle().contains(touchPoint)) {
-                    pig.setScreaming(true);
+                    pig.sayWord();
                 }
             }
         }
@@ -97,7 +97,7 @@ public final class Scenery {
         for (PhysicalObject element : scene) {
             if (element instanceof Pig) {
                 Pig pig = (Pig) element;
-                pig.setScreaming(false);
+                pig.shutUp();
             }
         }
     }
