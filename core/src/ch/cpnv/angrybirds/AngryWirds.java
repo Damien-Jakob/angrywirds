@@ -206,6 +206,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
+        // TODO don't thow Bird when clicking a Pig
         bird.startAim(touchPoint);
 
         scenery.handleTouchDown(touchPoint);
