@@ -13,17 +13,17 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Random;
 
-import ch.cpnv.model.Bird;
-import ch.cpnv.model.Block;
-import ch.cpnv.model.OutOfSceneryException;
-import ch.cpnv.model.Panel;
-import ch.cpnv.model.PhysicalObject;
-import ch.cpnv.model.Pig;
-import ch.cpnv.model.SceneCollapseException;
-import ch.cpnv.model.Tnt;
-import ch.cpnv.model.Wasp;
-import ch.cpnv.model.data.Vocabulary;
-import ch.cpnv.providers.VocProvider;
+import ch.cpnv.angrybirds.model.Bird;
+import ch.cpnv.angrybirds.model.Block;
+import ch.cpnv.angrybirds.model.OutOfSceneryException;
+import ch.cpnv.angrybirds.model.Panel;
+import ch.cpnv.angrybirds.model.PhysicalObject;
+import ch.cpnv.angrybirds.model.Pig;
+import ch.cpnv.angrybirds.model.SceneCollapseException;
+import ch.cpnv.angrybirds.model.Tnt;
+import ch.cpnv.angrybirds.model.Wasp;
+import ch.cpnv.angrybirds.model.data.Vocabulary;
+import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;

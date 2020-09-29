@@ -1,4 +1,4 @@
-package ch.cpnv.model;
+package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.model.data.Word;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public class Panel extends Sprite {
     private static final String PICTURE_NAME = "panel.png";

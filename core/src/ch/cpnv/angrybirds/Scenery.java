@@ -1,19 +1,18 @@
 package ch.cpnv.angrybirds;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
-import ch.cpnv.model.Block;
-import ch.cpnv.model.MovingObject;
-import ch.cpnv.model.OutOfSceneryException;
-import ch.cpnv.model.PhysicalObject;
-import ch.cpnv.model.Pig;
-import ch.cpnv.model.SceneCollapseException;
-import ch.cpnv.model.data.Word;
+import ch.cpnv.angrybirds.model.Block;
+import ch.cpnv.angrybirds.model.MovingObject;
+import ch.cpnv.angrybirds.model.OutOfSceneryException;
+import ch.cpnv.angrybirds.model.PhysicalObject;
+import ch.cpnv.angrybirds.model.Pig;
+import ch.cpnv.angrybirds.model.SceneCollapseException;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public final class Scenery {
     public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
