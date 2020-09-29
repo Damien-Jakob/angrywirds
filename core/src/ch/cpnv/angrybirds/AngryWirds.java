@@ -16,6 +16,7 @@ import java.util.Random;
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
+import ch.cpnv.model.Panel;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
@@ -48,7 +49,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
     private VocProvider vocProvider = VocProvider.getInstance();
     private Vocabulary voc;
-    private Word wordToGuess;
+    private Panel questionPanel;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -117,6 +118,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         int pigsLeft = PIGS_QUANTITY;
         while (pigsLeft > 0) {
             try {
+                // TODO prevent having multiple pigs with the same word chosen
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
@@ -130,7 +132,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
             }
         }
 
-        wordToGuess = scenery.pickAWord();
+        questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
 
@@ -179,6 +181,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         for (Wasp wasp : wasps) {
             wasp.draw(batch);
         }
+        questionPanel.draw(batch);
         bird.draw(batch);
 
         batch.end();

@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.model.data.Word;
 
-// TODO store word ?
-
 public final class Pig extends TextualObject {
     private static final String PICTURE_NAME = "pig.png";
 
