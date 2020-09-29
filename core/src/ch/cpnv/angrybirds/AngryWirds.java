@@ -21,6 +21,7 @@ import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 import ch.cpnv.model.data.Vocabulary;
+import ch.cpnv.model.data.Word;
 import ch.cpnv.providers.VocProvider;
 
 
@@ -47,6 +48,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
     private VocProvider vocProvider = VocProvider.getInstance();
     private Vocabulary voc;
+    private Word wordToGuess;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -127,6 +129,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
             }
         }
+
+        wordToGuess = scenery.pickAWord();
 
         batch = new SpriteBatch();
 

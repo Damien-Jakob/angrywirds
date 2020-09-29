@@ -19,7 +19,7 @@ public final class Bubble extends TextualObject {
     private BitmapFont font;
 
     public Bubble(Pig pig) {
-        super(new Vector2(pig.getX(), pig.getY()), WIDTH, HEIGHT, PICTURE_NAME, pig.getWord());
+        super(new Vector2(pig.getX(), pig.getY()), WIDTH, HEIGHT, PICTURE_NAME, pig.getText());
         setBounds(getX() - WIDTH / 2 - OFFSET, getY() + HEIGHT / 2, WIDTH, HEIGHT);
         font = new BitmapFont();
 

@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.SceneCollapseException;
+import ch.cpnv.model.data.Word;
 
 public final class Scenery {
     public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
@@ -23,16 +23,9 @@ public final class Scenery {
     private ArrayList<PhysicalObject> scene;
     private ArrayList<Sprite> decoy;
 
-    private static final int PANEL_HEIGHT = 150;
-    private static final int PANEL_WIDTH = 250;
-    private static final int PANEL_X = 50;
-
     public Scenery() {
         scene = new ArrayList<>();
         decoy = new ArrayList<>();
-        Sprite panel = new Sprite(new Texture("panel.png"));
-        panel.setBounds(PANEL_X, AngryWirds.WORLD_HEIGHT - PANEL_HEIGHT, PANEL_WIDTH, PANEL_HEIGHT);
-        decoy.add(panel);
     }
 
     /**
@@ -102,5 +95,15 @@ public final class Scenery {
                 pig.shutUp();
             }
         }
+    }
+
+    public Word pickAWord() {
+        ArrayList<Pig> pigs = new ArrayList<Pig>();
+        for(PhysicalObject pigCandidate : scene) {
+            if(pigCandidate instanceof Pig) {
+                pigs.add((Pig)pigCandidate);
+            }
+        }
+        return pigs.get(AngryWirds.alea.nextInt(pigs.size())).getWord();
     }
 }

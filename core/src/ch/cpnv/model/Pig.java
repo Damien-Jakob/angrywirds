@@ -30,8 +30,8 @@ public final class Pig extends TextualObject {
         }
     }
 
-    public String getWord() {
-        return getText();
+    public Word getWord() {
+        return word;
     }
 
     public boolean getScreaming() {
