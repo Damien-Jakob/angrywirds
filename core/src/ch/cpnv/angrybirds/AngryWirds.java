@@ -17,6 +17,7 @@ import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.Panel;
+import ch.cpnv.model.PhysicalObject;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
@@ -151,6 +152,13 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
             if (bird.getState() == Bird.BirdState.FLYING) {
                 bird.move(dt);
                 bird.accelerate(dt);
+
+                PhysicalObject objectHit = scenery.objectHitBy(bird);
+                if (objectHit != null) {
+                    if (objectHit instanceof Pig) {
+                        scenery.removeElement(objectHit);
+                    }
+                }
             }
 
             // If the bird has gone out of bound, it is time to stop that throw and start a new one
