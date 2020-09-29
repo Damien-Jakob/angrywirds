@@ -1,4 +1,4 @@
-package ch.cpnv.model.data;
+package ch.cpnv.angrybirds.model.data;
 
 public class Word {
     private String question;
