@@ -22,9 +22,7 @@ import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 import ch.cpnv.model.data.Vocabulary;
-import ch.cpnv.model.data.Word;
 import ch.cpnv.providers.VocProvider;
-
 
 public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
