@@ -16,13 +16,14 @@ import java.util.Random;
 import ch.cpnv.model.Bird;
 import ch.cpnv.model.Block;
 import ch.cpnv.model.OutOfSceneryException;
+import ch.cpnv.model.Panel;
+import ch.cpnv.model.PhysicalObject;
 import ch.cpnv.model.Pig;
 import ch.cpnv.model.SceneCollapseException;
 import ch.cpnv.model.Tnt;
 import ch.cpnv.model.Wasp;
 import ch.cpnv.model.data.Vocabulary;
 import ch.cpnv.providers.VocProvider;
-
 
 public class AngryWirds extends ApplicationAdapter implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
@@ -47,6 +48,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
     private VocProvider vocProvider = VocProvider.getInstance();
     private Vocabulary voc;
+    private Panel questionPanel;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -115,10 +117,11 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         int pigsLeft = PIGS_QUANTITY;
         while (pigsLeft > 0) {
             try {
+                // TODO prevent having multiple pigs with the same word chosen
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), voc.pickAWord(), 10);
+                ), voc.pickAWord());
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
@@ -127,6 +130,8 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
             }
         }
+
+        questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
 
@@ -147,6 +152,13 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
             if (bird.getState() == Bird.BirdState.FLYING) {
                 bird.move(dt);
                 bird.accelerate(dt);
+
+                PhysicalObject objectHit = scenery.objectHitBy(bird);
+                if (objectHit != null) {
+                    if (objectHit instanceof Pig) {
+                        scenery.removeElement(objectHit);
+                    }
+                }
             }
 
             // If the bird has gone out of bound, it is time to stop that throw and start a new one
@@ -175,6 +187,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
         for (Wasp wasp : wasps) {
             wasp.draw(batch);
         }
+        questionPanel.draw(batch);
         bird.draw(batch);
 
         batch.end();
