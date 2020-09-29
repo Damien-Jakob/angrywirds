@@ -118,7 +118,7 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), voc.pickAWord(), 10);
+                ), voc.pickAWord());
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {

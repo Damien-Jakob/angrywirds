@@ -1,6 +1,5 @@
 package ch.cpnv.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,11 +15,11 @@ public final class Pig extends TextualObject {
 
     private Bubble bubble = null;
 
-    private int points;
+    private Word word;
 
-    public Pig(Vector2 position, Word word, int points) {
+    public Pig(Vector2 position, Word word) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getQuestion());
-        this.points = points;
+        this.word = word;
     }
 
     @Override
