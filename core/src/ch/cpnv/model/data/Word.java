@@ -8,7 +8,7 @@ public class Word {
     // tells if the player has already solved the translation
     private boolean found;
 
-    public Word(String question, String solution) {
+    public Word(String solution, String question) {
         this.question = question;
         this.solution = solution;
         allocated = false;

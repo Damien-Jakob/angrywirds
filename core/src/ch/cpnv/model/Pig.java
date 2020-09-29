@@ -1,12 +1,9 @@
 package ch.cpnv.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.model.data.Word;
-
-// TODO store word ?
 
 public final class Pig extends TextualObject {
     private static final String PICTURE_NAME = "pig.png";
@@ -16,11 +13,11 @@ public final class Pig extends TextualObject {
 
     private Bubble bubble = null;
 
-    private int points;
+    private Word word;
 
-    public Pig(Vector2 position, Word word, int points) {
-        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getQuestion());
-        this.points = points;
+    public Pig(Vector2 position, Word word) {
+        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getSolution());
+        this.word = word;
     }
 
     @Override
@@ -31,8 +28,8 @@ public final class Pig extends TextualObject {
         }
     }
 
-    public String getWord() {
-        return getText();
+    public Word getWord() {
+        return word;
     }
 
     public boolean getScreaming() {
