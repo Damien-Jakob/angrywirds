@@ -16,7 +16,7 @@ public final class Pig extends TextualObject {
     private Word word;
 
     public Pig(Vector2 position, Word word) {
-        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getQuestion());
+        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getSolution());
         this.word = word;
     }
 

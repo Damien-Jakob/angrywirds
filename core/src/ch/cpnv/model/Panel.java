@@ -36,6 +36,6 @@ public class Panel extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        font.draw(batch, word.getSolution(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        font.draw(batch, word.getQuestion(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
     }
 }
