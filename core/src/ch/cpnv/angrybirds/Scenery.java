@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import ch.cpnv.model.Block;
+import ch.cpnv.model.MovingObject;
 import ch.cpnv.model.OutOfSceneryException;
 import ch.cpnv.model.PhysicalObject;
 import ch.cpnv.model.Pig;
@@ -39,6 +40,10 @@ public final class Scenery {
         }
         fitY(newObject);
         scene.add(newObject);
+    }
+
+    public void removeElement(PhysicalObject objectToRemove) {
+        scene.remove(objectToRemove);
     }
 
     /**
@@ -99,11 +104,21 @@ public final class Scenery {
 
     public Word pickAWord() {
         ArrayList<Pig> pigs = new ArrayList<Pig>();
-        for(PhysicalObject pigCandidate : scene) {
-            if(pigCandidate instanceof Pig) {
-                pigs.add((Pig)pigCandidate);
+        for (PhysicalObject pigCandidate : scene) {
+            if (pigCandidate instanceof Pig) {
+                pigs.add((Pig) pigCandidate);
             }
         }
         return pigs.get(AngryWirds.alea.nextInt(pigs.size())).getWord();
+    }
+
+    public PhysicalObject objectHitBy(MovingObject movingObject) {
+        for (PhysicalObject collisionCandidate : scene) {
+            if (collisionCandidate.getBoundingRectangle().overlaps(
+                    movingObject.getBoundingRectangle())) {
+                return collisionCandidate;
+            }
+        }
+        return null;
     }
 }
