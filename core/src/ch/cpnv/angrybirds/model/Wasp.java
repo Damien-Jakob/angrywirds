@@ -1,8 +1,9 @@
-package ch.cpnv.model;
+package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.activities.Play;
 
 public final class Wasp extends MovingObject {
 
@@ -28,8 +29,8 @@ public final class Wasp extends MovingObject {
         // note : that the more the wasp is far from the center, the more it will be attracted to it
         // -0.5 <= nextFloat - 0.5 < 0.5, in this case the acceleration in all directions is equally probable
         // getX()/AngryWirds.WORLD_WIDTH == 0.5 if the wasp is at the center
-        float acc_x_update = AngryWirds.alea.nextFloat() - getX() / AngryWirds.WORLD_WIDTH;
-        float acc_y_update = AngryWirds.alea.nextFloat() - getY() / AngryWirds.WORLD_HEIGHT;
+        float acc_x_update = AngryWirds.alea.nextFloat() - getX() / Play.WORLD_WIDTH;
+        float acc_y_update = AngryWirds.alea.nextFloat() - getY() / Play.WORLD_HEIGHT;
         speed.add(new Vector2(acc_x_update, acc_y_update).scl(dt * AGITATION));
     }
 

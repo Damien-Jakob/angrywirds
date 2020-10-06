@@ -1,8 +1,9 @@
-package ch.cpnv.model;
+package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.activities.Play;
 
 public final class Bird extends MovingObject {
     public enum BirdState {READY, AIMING, FLYING}
@@ -17,7 +18,7 @@ public final class Bird extends MovingObject {
     private Vector2 dragOffset; // Touch location "within" the bird, used to help keep the dragging animation clean
 
     public Bird() {
-        super(new Vector2(AngryWirds.BIRD_START_X, AngryWirds.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
+        super(new Vector2(Play.BIRD_START_X, Play.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
     }
 
     public Bird(Vector2 position, int width, int height, Vector2 speed) {
@@ -54,7 +55,7 @@ public final class Bird extends MovingObject {
     public void launchFrom(Vector2 position) {
         if (state == BirdState.AIMING) {
             state = BirdState.FLYING;
-            speed = aimOrigin.sub(position).scl(AngryWirds.SLINGSHOT_POWER);
+            speed = aimOrigin.sub(position).scl(Play.SLINGSHOT_POWER);
         }
     }
 
