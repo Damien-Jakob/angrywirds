@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import java.util.Random;
 
@@ -31,6 +29,8 @@ public class Welcome extends Game implements InputProcessor {
     public Welcome() {
         batch = new SpriteBatch();
 
+        Gdx.input.setInputProcessor(this);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Play.WORLD_WIDTH, Play.WORLD_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
@@ -48,8 +48,13 @@ public class Welcome extends Game implements InputProcessor {
 
     }
 
+    public void update() {
+        float dt = Gdx.graphics.getDeltaTime();
+    }
+
     @Override
     public void render() {
+        update();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -82,7 +87,8 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        AngryWirds.pages.push(new Play());
+        return true;
     }
 
     @Override
@@ -103,12 +109,5 @@ public class Welcome extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    // convert screen coordinates to camera coordinates
-    protected Vector2 convertCoordinates(int screenX, int screenY) {
-        Vector3 point = new Vector3(screenX, screenY, 0);
-        camera.unproject(point);
-        return new Vector2(point.x, point.y);
     }
 }
