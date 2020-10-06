@@ -1,25 +1,25 @@
 package ch.cpnv.angrybirds;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
-import ch.cpnv.model.Block;
-import ch.cpnv.model.MovingObject;
-import ch.cpnv.model.OutOfSceneryException;
-import ch.cpnv.model.PhysicalObject;
-import ch.cpnv.model.Pig;
-import ch.cpnv.model.SceneCollapseException;
-import ch.cpnv.model.data.Word;
+import ch.cpnv.angrybirds.activities.Play;
+import ch.cpnv.angrybirds.model.Block;
+import ch.cpnv.angrybirds.model.MovingObject;
+import ch.cpnv.angrybirds.model.OutOfSceneryException;
+import ch.cpnv.angrybirds.model.PhysicalObject;
+import ch.cpnv.angrybirds.model.Pig;
+import ch.cpnv.angrybirds.model.SceneCollapseException;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public final class Scenery {
-    public static final int MIN_X = AngryWirds.BIRD_START_X + 100;
-    public static final int MAX_X = AngryWirds.WORLD_WIDTH;
-    public static final int MIN_Y = AngryWirds.FLOOR_HEIGHT;
-    public static final int MAX_Y = AngryWirds.WORLD_HEIGHT;
+    public static final int MIN_X = Play.BIRD_START_X + 100;
+    public static final int MAX_X = Play.WORLD_WIDTH;
+    public static final int MIN_Y = Play.FLOOR_HEIGHT;
+    public static final int MAX_Y = Play.WORLD_HEIGHT;
 
     private ArrayList<PhysicalObject> scene;
     private ArrayList<Sprite> decoy;
@@ -51,7 +51,7 @@ public final class Scenery {
      */
     public void addFloor() {
         for (float x = MIN_X; x < MAX_X; x += Block.WIDTH) {
-            scene.add(new Block(new Vector2(x, AngryWirds.FLOOR_HEIGHT)));
+            scene.add(new Block(new Vector2(x, Play.FLOOR_HEIGHT)));
         }
     }
 

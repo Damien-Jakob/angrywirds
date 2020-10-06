@@ -1,9 +1,9 @@
-package ch.cpnv.model;
+package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
-import ch.cpnv.model.data.Word;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public final class Pig extends TextualObject {
     private static final String PICTURE_NAME = "pig.png";

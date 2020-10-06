@@ -1,10 +1,10 @@
-package ch.cpnv.providers;
+package ch.cpnv.angrybirds.providers;
 
 import java.util.ArrayList;
 
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.model.data.Vocabulary;
-import ch.cpnv.model.data.Word;
+import ch.cpnv.angrybirds.model.data.Vocabulary;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public class VocProvider {
     // singleton
