@@ -26,6 +26,8 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
+// TODO display score
+
 public class Play extends Game implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
@@ -161,7 +163,7 @@ public class Play extends Game implements InputProcessor {
                         if (pig.getWord() == questionPanel.getWord()) {
                             score++;
                             // TODO generate new play
-                            AngryWirds.pages.pop();
+                            AngryWirds.popPage();
                         } else {
                             score--;
                             scenery.removeElement(objectHit);
