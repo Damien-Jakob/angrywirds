@@ -29,7 +29,7 @@ public class AngryWirds extends Game {
 
     public static void pushPage(Game game) {
         // Since we will only push new pages, we don't need to initialize
-        pages.push(new Welcome());
+        pages.push(game);
     }
 
     public static void popPage() {
