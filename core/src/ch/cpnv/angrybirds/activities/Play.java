@@ -3,10 +3,12 @@ package ch.cpnv.angrybirds.activities;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -44,20 +46,29 @@ public class Play extends Game implements InputProcessor {
 
     public static final float SLINGSHOT_POWER = 1.5f;
 
+    public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
+    public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
+
+    public static final int PAUSE_ZONE_DIMENSIONS = 50;
+
     private Bird bird;
     private ArrayList<Wasp> wasps;
     private Scenery scenery;
     private Texture background;
 
+    private BitmapFont scoreFont;
+    private Rectangle pauseZone;
+
+    private int score;
+
     private VocProvider vocProvider = VocProvider.getInstance();
     private Vocabulary voc;
     private Panel questionPanel;
 
+    private Rectangle aimingzone;
+
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private BitmapFont font;
-
-    private int score;
 
     public Play() {
         background = new Texture(Gdx.files.internal("background.jpg"));
@@ -129,17 +140,26 @@ public class Play extends Game implements InputProcessor {
             }
         }
 
+        aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
+        
+        pauseZone = new Rectangle(
+                WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS,
+                WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS,
+                PAUSE_ZONE_DIMENSIONS,
+                PAUSE_ZONE_DIMENSIONS
+        );
+
         score = 0;
 
         questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
 
-        // For debugging
-        font = new BitmapFont();
+        scoreFont = new BitmapFont();
+        scoreFont.setColor(Color.BLACK);
+        scoreFont.getData().setScale(2);
 
         // Set which InputProcessor does answer to the inputs
-        // In our case, it is this class
         Gdx.input.setInputProcessor(this);
     }
 
@@ -201,10 +221,10 @@ public class Play extends Game implements InputProcessor {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
-        scenery.draw(batch);
         for (Wasp wasp : wasps) {
             wasp.draw(batch);
         }
+        scenery.draw(batch);
         questionPanel.draw(batch);
         bird.draw(batch);
 
@@ -237,10 +257,17 @@ public class Play extends Game implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
+        if (pauseZone.contains(touchPoint)) {
+            Gdx.app.log("ANGRY", "Pause touched");
+            AngryWirds.pushPage(new Pause());
+            return true;
+        }
+
         boolean actionHandled = scenery.handleTouchDown(touchPoint);
 
         // We don't want to move the bird if the user wanted to display a Pig
-        if (!actionHandled) {
+        if (!actionHandled
+                && aimingzone.contains(touchPoint)) {
             bird.startAim(touchPoint);
         }
         return true;
@@ -253,8 +280,9 @@ public class Play extends Game implements InputProcessor {
 
         scenery.handleTouchUp(touchPoint);
 
-        bird.launchFrom(touchPoint);
-
+        if (aimingzone.contains(touchPoint)) {
+            bird.launchFrom(touchPoint);
+        }
         return true;
     }
 
@@ -263,8 +291,9 @@ public class Play extends Game implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
 
-        bird.drag(touchPoint);
-
+        if (aimingzone.contains(touchPoint)) {
+            bird.drag(touchPoint);
+        }
         return true;
     }
 

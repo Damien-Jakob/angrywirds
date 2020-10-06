@@ -13,10 +13,10 @@ import java.util.Random;
 
 import ch.cpnv.angrybirds.AngryWirds;
 
-public class Welcome extends Game implements InputProcessor {
+public class Pause extends Game implements InputProcessor {
     public static Random alea;
 
-    private static final String TITLE = "AngryWirds";
+    private static final String TITLE = "Pause";
     private static final int TITLE_SIZE = 6;
 
     private Texture background;
@@ -26,9 +26,7 @@ public class Welcome extends Game implements InputProcessor {
 
     private OrthographicCamera camera;
 
-    public Welcome() {
-        Gdx.app.log("ANGRY", "HELLO ");
-
+    public Pause() {
         batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(this);
@@ -89,7 +87,7 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        AngryWirds.pushPage(new Play());
+        AngryWirds.popPage();
         return true;
     }
 
