@@ -39,4 +39,8 @@ public class Panel extends Sprite {
         super.draw(batch);
         font.draw(batch, word.getQuestion(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
     }
+
+    public Word getWord() {
+        return word;
+    }
 }

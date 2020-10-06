@@ -55,6 +55,8 @@ public class Play extends Game implements InputProcessor {
     private SpriteBatch batch;
     private BitmapFont font;
 
+    private int score;
+
     public Play() {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
@@ -125,6 +127,8 @@ public class Play extends Game implements InputProcessor {
             }
         }
 
+        score = 0;
+
         questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
@@ -138,6 +142,9 @@ public class Play extends Game implements InputProcessor {
     }
 
     public void update() {
+        // TODO implement bird.reset method
+        // TODO implement play.reinit method
+
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
 
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
@@ -150,8 +157,18 @@ public class Play extends Game implements InputProcessor {
                 PhysicalObject objectHit = scenery.objectHitBy(bird);
                 if (objectHit != null) {
                     if (objectHit instanceof Pig) {
-                        scenery.removeElement(objectHit);
+                        Pig pig = (Pig) objectHit;
+                        if (pig.getWord() == questionPanel.getWord()) {
+                            score++;
+                            // TODO generate new play
+                            AngryWirds.pages.pop();
+                        } else {
+                            score--;
+                            scenery.removeElement(objectHit);
+                        }
                     }
+                    scenery.removeElement(objectHit);
+                    bird = new Bird();
                 }
             }
 
