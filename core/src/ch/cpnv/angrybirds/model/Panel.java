@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.model.data.Word;
 
 public class Panel extends Sprite {
@@ -16,7 +17,7 @@ public class Panel extends Sprite {
     private static final int HEIGHT = 100;
 
     private static final int POSITION_X = 20;
-    private static final int POSITION_Y = AngryWirds.WORLD_HEIGHT - HEIGHT;
+    private static final int POSITION_Y = Play.WORLD_HEIGHT - HEIGHT;
 
     private static final int TEXT_OFFSET_X = 50;
     private static final int TEXT_OFFSET_Y = 50;

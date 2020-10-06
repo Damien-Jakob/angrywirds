@@ -1,4 +1,4 @@
-package ch.cpnv.angrybirds;
+package ch.cpnv.angrybirds.activities;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.util.Random;
 
+import ch.cpnv.angrybirds.AngryWirds;
+
 public class Welcome extends Game implements InputProcessor {
     public static Random alea;
 
@@ -26,12 +28,11 @@ public class Welcome extends Game implements InputProcessor {
 
     private OrthographicCamera camera;
 
-    @Override
-    public void create() {
+    public Welcome() {
         batch = new SpriteBatch();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, AngryWirds.WORLD_WIDTH, AngryWirds.WORLD_HEIGHT);
+        camera.setToOrtho(false, Play.WORLD_WIDTH, Play.WORLD_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
@@ -43,12 +44,18 @@ public class Welcome extends Game implements InputProcessor {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void render() {
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         // TODO put title in the center
-        titleFont.draw(batch, TITLE, AngryWirds.WORLD_WIDTH / 2.0f, AngryWirds.WORLD_HEIGHT / 2.0f);
+        titleFont.draw(batch, TITLE, Play.WORLD_WIDTH / 2.0f, Play.WORLD_HEIGHT / 2.0f);
         batch.end();
     }
 
