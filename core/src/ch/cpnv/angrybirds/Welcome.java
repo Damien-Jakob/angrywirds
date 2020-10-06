@@ -3,6 +3,7 @@ package ch.cpnv.angrybirds;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,8 +16,11 @@ import java.util.Random;
 public class Welcome extends Game implements InputProcessor {
     public static Random alea;
 
+    private static final String TITLE = "AngryWirds";
+    private static final int TITLE_SIZE = 6;
+
     private Texture background;
-    private BitmapFont font;
+    private BitmapFont titleFont;
 
     private SpriteBatch batch;
 
@@ -32,6 +36,10 @@ public class Welcome extends Game implements InputProcessor {
         camera.update();
 
         background = new Texture(Gdx.files.internal("background.jpg"));
+
+        titleFont = new BitmapFont();
+        titleFont.setColor(Color.ROYAL);
+        titleFont.getData().setScale(TITLE_SIZE);
     }
 
     @Override
@@ -39,6 +47,8 @@ public class Welcome extends Game implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
+        // TODO put title in the center
+        titleFont.draw(batch, TITLE, AngryWirds.WORLD_WIDTH / 2.0f, AngryWirds.WORLD_HEIGHT / 2.0f);
         batch.end();
     }
 
