@@ -141,7 +141,7 @@ public class Play extends Game implements InputProcessor {
         }
 
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
-        
+
         pauseZone = new Rectangle(
                 WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS,
                 WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS,

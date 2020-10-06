@@ -39,7 +39,7 @@ public class Pause extends Game implements InputProcessor {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
         titleFont = new BitmapFont();
-        titleFont.setColor(Color.ROYAL);
+        titleFont.setColor(Color.RED);
         titleFont.getData().setScale(TITLE_SIZE);
     }
 
