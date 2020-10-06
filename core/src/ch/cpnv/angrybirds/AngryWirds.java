@@ -1,6 +1,6 @@
 package ch.cpnv.angrybirds;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,7 +25,9 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-public class AngryWirds extends ApplicationAdapter implements InputProcessor {
+public class AngryWirds extends Game implements InputProcessor {
+    public static Random alea;
+
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
@@ -52,10 +54,6 @@ public class AngryWirds extends ApplicationAdapter implements InputProcessor {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
-
-    public static Random alea; // random generator object. Static for app-wide use
-
-    // Just for debug purpose
     private BitmapFont font;
 
     @Override
