@@ -13,6 +13,7 @@ public class AngryWirds extends Game {
     @Override
     public void create() {
         alea = new Random();
+
         page = new Welcome();
     }
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.Scenery;
 import ch.cpnv.angrybirds.model.Bird;
 import ch.cpnv.angrybirds.model.Block;
@@ -27,8 +28,6 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class Play extends Game implements InputProcessor {
-    public static Random alea;
-
     public static final int WORLD_WIDTH = 1600;
     public static final int WORLD_HEIGHT = 900;
 
@@ -58,8 +57,6 @@ public class Play extends Game implements InputProcessor {
     private BitmapFont font;
 
     public Play() {
-        alea = new Random();
-
         background = new Texture(Gdx.files.internal("background.jpg"));
 
         camera = new OrthographicCamera();
@@ -84,7 +81,7 @@ public class Play extends Game implements InputProcessor {
         while (blocksLeft > 0) {
             try {
                 Block block = new Block(new Vector2(
-                        alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ));
                 scenery.addElement(block);
@@ -100,7 +97,7 @@ public class Play extends Game implements InputProcessor {
         while (tntLeft > 0) {
             try {
                 Tnt tnt = new Tnt(new Vector2(
-                        alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ), 5);
                 scenery.addElement(tnt);
@@ -117,7 +114,7 @@ public class Play extends Game implements InputProcessor {
             try {
                 // TODO prevent having multiple pigs with the same word chosen
                 Pig pig = new Pig(new Vector2(
-                        alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
+                        AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ), voc.pickAWord());
                 scenery.addElement(pig);
