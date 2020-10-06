@@ -29,6 +29,9 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
 // TODO display score
+// TODO display pause button
+// TODO game over
+// TODO Map theory
 
 public class Play extends Game implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
