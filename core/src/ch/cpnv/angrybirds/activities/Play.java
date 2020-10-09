@@ -30,7 +30,9 @@ import ch.cpnv.angrybirds.providers.VocProvider;
 
 // TODO display score
 // TODO display pause button
-// TODO game over
+// TODO game over screen
+// TODO prevent displaying the same word multiple times
+// TODO keep in memory the words already found
 // TODO Map theory
 
 public class Play extends Game implements InputProcessor {
