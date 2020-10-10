@@ -25,9 +25,9 @@ import ch.cpnv.angrybirds.model.Pig;
 import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
+import ch.cpnv.angrybirds.model.data.Word;
 
-// TODO prevent displaying the same word multiple times
-// TODO keep in memory the words already found, prevent to reuse them
+// TODO keep in memory the words already found, prevent to reuse them, Game Over when found
 // TODO better score management : objects have points/negative points
 // TODO see : Map !!!EXAMEN!!!
 // TODO see : tables
@@ -127,14 +127,20 @@ public class Play extends Game implements InputProcessor {
             }
         }
 
-        int pigsLeft = PIGS_QUANTITY;
+        int pigsLeft = Math.min(PIGS_QUANTITY, AngryWirds.voc.size());
+        ArrayList<Word> selectedWords = new ArrayList<Word>();
         while (pigsLeft > 0) {
             try {
-                // TODO prevent having multiple pigs with the same word chosen
+                Word word;
+                do {
+                    word = AngryWirds.voc.pickAWord();
+                } while (selectedWords.contains(word));
+                selectedWords.add(word);
+
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), AngryWirds.voc.pickAWord());
+                ), word);
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
