@@ -27,9 +27,7 @@ import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 
-// TODO prevent displaying the same word multiple times
-
-// TODO keep in memory the words already found, prevent to reuse them
+// TODO keep in memory the words already found, prevent to reuse them, Game Over when found
 // TODO better score management : objects have points/negative points
 // TODO see : Map !!!EXAMEN!!!
 // TODO see : tables
