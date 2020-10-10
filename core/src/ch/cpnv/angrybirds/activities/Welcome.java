@@ -21,8 +21,8 @@ public class Welcome extends Game implements InputProcessor {
     private static final int TITLE_SIZE = 6;
 
     private Texture background;
-    private BitmapFont titleFont;
 
+    private BitmapFont titleFont;
     private float titlePositionX;
     private float titlePositionY;
 
