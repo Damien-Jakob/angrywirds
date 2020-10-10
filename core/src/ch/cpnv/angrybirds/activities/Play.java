@@ -28,7 +28,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO display score
 // TODO display pause button
 // TODO game over screen
 // TODO prevent displaying the same word multiple times
@@ -48,6 +47,9 @@ public class Play extends Game implements InputProcessor {
     private static final int PIGS_QUANTITY = 5;
     private static final int TNT_QUANTITY = 3;
     private static final int BLOCKS_QUANTITY = 30;
+
+    private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
+    private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
 
     public static final float SLINGSHOT_POWER = 1.5f;
 
@@ -232,6 +234,8 @@ public class Play extends Game implements InputProcessor {
         scenery.draw(batch);
         questionPanel.draw(batch);
         bird.draw(batch);
+
+        scoreFont.draw(batch, "Score : " + Integer.toString(score), SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
