@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Random;
@@ -20,7 +21,10 @@ public class Pause extends Game implements InputProcessor {
     private static final int TITLE_SIZE = 6;
 
     private Texture background;
+
     private BitmapFont titleFont;
+    private float titlePositionX;
+    private float titlePositionY;
 
     private SpriteBatch batch;
 
@@ -41,6 +45,10 @@ public class Pause extends Game implements InputProcessor {
         titleFont = new BitmapFont();
         titleFont.setColor(Color.RED);
         titleFont.getData().setScale(TITLE_SIZE);
+        GlyphLayout titleGlyphLayout = new GlyphLayout();
+        titleGlyphLayout.setText(titleFont, TITLE);
+        titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
+        titlePositionY = Play.WORLD_HEIGHT / 2f + titleGlyphLayout.height / 2f;
     }
 
     @Override
@@ -59,8 +67,7 @@ public class Pause extends Game implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
-        // TODO put title in the center
-        titleFont.draw(batch, TITLE, Play.WORLD_WIDTH / 2.0f, Play.WORLD_HEIGHT / 2.0f);
+        titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
         batch.end();
     }
 

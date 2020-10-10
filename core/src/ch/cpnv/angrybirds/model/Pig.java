@@ -5,8 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.model.data.Word;
 
-public final class Pig extends TextualObject {
+public final class Pig extends TextualObject implements ScoreInfluencer {
     private static final String PICTURE_NAME = "pig.png";
+
+    private static final int POINTS = -50;
 
     public static final int WIDTH = 60;
     public static final int HEIGHT = WIDTH;
@@ -42,5 +44,10 @@ public final class Pig extends TextualObject {
 
     public void shutUp() {
         this.bubble = null;
+    }
+
+    @Override
+    public int getPoints() {
+        return POINTS;
     }
 }

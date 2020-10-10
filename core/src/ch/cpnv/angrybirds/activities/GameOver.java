@@ -10,18 +10,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.providers.VocProvider;
 
-public class Welcome extends Game implements InputProcessor {
+public class GameOver extends Game implements InputProcessor {
     public static Random alea;
 
-    private static final String TITLE = "AngryWirds";
+    private static final String TITLE = "Fin de la partie";
     private static final int TITLE_SIZE = 6;
+    private static final int SCORE_SIZE = 2;
 
     private Texture background;
 
@@ -29,13 +27,16 @@ public class Welcome extends Game implements InputProcessor {
     private float titlePositionX;
     private float titlePositionY;
 
+    private String scoreText;
+    private BitmapFont scoreFont;
+    private float scorePositionX;
+    private float scorePositionY;
+
     private SpriteBatch batch;
 
     private OrthographicCamera camera;
 
-    public Welcome() {
-        Gdx.app.log("ANGRY", "HELLO ");
-
+    public GameOver() {
         batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(this);
@@ -48,12 +49,21 @@ public class Welcome extends Game implements InputProcessor {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
         titleFont = new BitmapFont();
-        titleFont.setColor(Color.ROYAL);
+        titleFont.setColor(Color.RED);
         titleFont.getData().setScale(TITLE_SIZE);
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
         titlePositionY = Play.WORLD_HEIGHT / 2f + titleGlyphLayout.height / 2f;
+
+        scoreText = "Score : " + AngryWirds.score;
+        scoreFont = new BitmapFont();
+        scoreFont.setColor(Color.BLACK);
+        scoreFont.getData().setScale(SCORE_SIZE);
+        GlyphLayout scoreGlyphLayout = new GlyphLayout();
+        scoreGlyphLayout.setText(scoreFont, scoreText);
+        scorePositionX = Play.WORLD_WIDTH / 2f - scoreGlyphLayout.width / 2f;
+        scorePositionY = titlePositionY - titleGlyphLayout.height - scoreGlyphLayout.height;
     }
 
     @Override
@@ -73,6 +83,7 @@ public class Welcome extends Game implements InputProcessor {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
+        scoreFont.draw(batch, scoreText, scorePositionX, scorePositionY);
         batch.end();
     }
 
@@ -99,12 +110,7 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // reset the game data
-        AngryWirds.score = 0;
-        AngryWirds.voc = VocProvider.getInstance().pickAVoc();
-        AngryWirds.foundWords = new ArrayList<Word>();
-
-        AngryWirds.pushPage(new Play());
+        AngryWirds.popPage();
         return true;
     }
 

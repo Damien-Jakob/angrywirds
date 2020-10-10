@@ -10,8 +10,31 @@ public class VocProvider {
     // singleton
     private static VocProvider single_instance = null;
 
+    public static VocProvider getInstance() {
+        if (single_instance == null) {
+            single_instance = new VocProvider(true);
+        }
+        return single_instance;
+    }
+
+    public Vocabulary pickAVoc() {
+        return vocabularies.get(AngryWirds.alea.nextInt(vocabularies.size()));
+    }
+
     // All available vocabularies
     public ArrayList<Vocabulary> vocabularies;
+
+    private VocProvider(boolean smallVoc) {
+        this();
+        if(smallVoc) {
+            vocabularies = new ArrayList<Vocabulary>();
+            Word w;
+            Vocabulary voc = new Vocabulary("L'argent");
+            w = new Word("la banque","the bank"); voc.addWord(w);
+            w = new Word("l''argent liquide","cash"); voc.addWord(w);
+            vocabularies.add(voc);
+        }
+    }
 
     private VocProvider() {
         vocabularies = new ArrayList<Vocabulary>();
@@ -130,16 +153,5 @@ public class VocProvider {
         w = new Word("le beau-frère","brother in-law"); voc.addWord(w);
         w = new Word("le beau-père","father in-law"); voc.addWord(w);
         vocabularies.add(voc);
-    }
-
-    public static VocProvider getInstance() {
-        if (single_instance == null) {
-            single_instance = new VocProvider();
-        }
-        return single_instance;
-    }
-
-    public Vocabulary pickAVoc() {
-        return vocabularies.get(AngryWirds.alea.nextInt(vocabularies.size()));
     }
 }

@@ -23,15 +23,19 @@ import ch.cpnv.angrybirds.model.Panel;
 import ch.cpnv.angrybirds.model.PhysicalObject;
 import ch.cpnv.angrybirds.model.Pig;
 import ch.cpnv.angrybirds.model.SceneCollapseException;
+import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
-import ch.cpnv.angrybirds.model.data.Vocabulary;
-import ch.cpnv.angrybirds.providers.VocProvider;
+import ch.cpnv.angrybirds.model.data.Word;
 
-// TODO display score
-// TODO display pause button
-// TODO game over
-// TODO Map theory
+// TODO better score management : objects have points/negative points
+
+// TODO select voc (+ possibility to select randomly)
+// TODO see voc detail
+// TODO switch languages
+// TODO see : Map !!!EXAMEN!!!
+// TODO see : tables
+// TODO save advancement
 
 public class Play extends Game implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
@@ -47,12 +51,19 @@ public class Play extends Game implements InputProcessor {
     private static final int TNT_QUANTITY = 3;
     private static final int BLOCKS_QUANTITY = 30;
 
-    public static final float SLINGSHOT_POWER = 1.5f;
+    private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
+    private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
+
+    public static final int SUCCESS_POINTS = 100;
+
+    public static final float SLINGSHOT_POWER = 3f;
 
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
-    public static final int PAUSE_ZONE_DIMENSIONS = 50;
+    public static final int PAUSE_ZONE_DIMENSIONS = 100;
+    public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS;
+    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
@@ -60,12 +71,10 @@ public class Play extends Game implements InputProcessor {
     private Texture background;
 
     private BitmapFont scoreFont;
+
     private Rectangle pauseZone;
+    private PhysicalObject pauseIcon;
 
-    private int score;
-
-    private VocProvider vocProvider = VocProvider.getInstance();
-    private Vocabulary voc;
     private Panel questionPanel;
 
     private Rectangle aimingzone;
@@ -80,8 +89,6 @@ public class Play extends Game implements InputProcessor {
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
-
-        voc = vocProvider.pickAVoc();
 
         bird = new Bird();
 
@@ -126,14 +133,31 @@ public class Play extends Game implements InputProcessor {
             }
         }
 
-        int pigsLeft = PIGS_QUANTITY;
+        int pigsLeft = Math.min(PIGS_QUANTITY, AngryWirds.voc.size());
+        ArrayList<Word> selectedWords = new ArrayList<Word>();
+        boolean firstPig = true;
         while (pigsLeft > 0) {
             try {
-                // TODO prevent having multiple pigs with the same word chosen
+                Word word;
+                // The first pig will have a word that has never been found
+                // It will be the word of the question panel
+                if (firstPig) {
+                    word = AngryWirds.voc.pickAWord(AngryWirds.foundWords);
+
+                    questionPanel = new Panel(word);
+
+                    firstPig = false;
+                } else {
+                    do {
+                        word = AngryWirds.voc.pickAWord();
+                    } while (selectedWords.contains(word));
+                }
+                selectedWords.add(word);
+
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), voc.pickAWord());
+                ), word);
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
@@ -146,15 +170,13 @@ public class Play extends Game implements InputProcessor {
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
 
         pauseZone = new Rectangle(
-                WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS,
-                WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS,
-                PAUSE_ZONE_DIMENSIONS,
-                PAUSE_ZONE_DIMENSIONS
+                PAUSE_ZONE_X, PAUSE_ZONE_Y,
+                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS
         );
-
-        score = 0;
-
-        questionPanel = new Panel(scenery.pickAWord());
+        pauseIcon = new PhysicalObject(
+                new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
+                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
+                "pause-icon.png");
 
         batch = new SpriteBatch();
 
@@ -167,9 +189,6 @@ public class Play extends Game implements InputProcessor {
     }
 
     public void update() {
-        // TODO implement bird.reset method
-        // TODO implement play.reinit method
-
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
 
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
@@ -180,19 +199,35 @@ public class Play extends Game implements InputProcessor {
                 bird.accelerate(dt);
 
                 PhysicalObject objectHit = scenery.objectHitBy(bird);
+                for (Wasp wasp : wasps) {
+                    if (wasp.collidesWith(bird)) {
+                        objectHit = wasp;
+                    }
+                }
                 if (objectHit != null) {
+                    if (objectHit instanceof ScoreInfluencer) {
+                        ScoreInfluencer scoreInfluencer = (ScoreInfluencer) objectHit;
+                        AngryWirds.score += scoreInfluencer.getPoints();
+                        scenery.removeElement(objectHit);
+                    }
                     if (objectHit instanceof Pig) {
                         Pig pig = (Pig) objectHit;
                         if (pig.getWord() == questionPanel.getWord()) {
-                            score++;
-                            // TODO generate new play
+                            AngryWirds.score -= pig.getPoints();
+                            AngryWirds.score += SUCCESS_POINTS;
+                            AngryWirds.foundWords.add(questionPanel.getWord());
                             AngryWirds.popPage();
-                        } else {
-                            score--;
-                            scenery.removeElement(objectHit);
+                            if (AngryWirds.foundWords.size() < AngryWirds.voc.size()) {
+                                AngryWirds.pushPage(new Play());
+                            } else {
+                                AngryWirds.pushPage(new GameOver());
+                            }
                         }
                     }
                     scenery.removeElement(objectHit);
+                    if (objectHit instanceof Wasp) {
+                        wasps.remove(objectHit);
+                    }
                     bird = new Bird();
                 }
             }
@@ -230,6 +265,9 @@ public class Play extends Game implements InputProcessor {
         scenery.draw(batch);
         questionPanel.draw(batch);
         bird.draw(batch);
+
+        pauseIcon.draw(batch);
+        scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
