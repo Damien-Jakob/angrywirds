@@ -8,11 +8,14 @@ import java.util.Random;
 import java.util.Stack;
 
 import ch.cpnv.angrybirds.activities.Welcome;
+import ch.cpnv.angrybirds.model.data.Vocabulary;
 
 public class AngryWirds extends Game {
     public static Random alea;
 
     protected static Stack<Game> pages;
+
+    public static Vocabulary voc;
 
     public static int score = 0;
 

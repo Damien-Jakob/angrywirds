@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Random;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class Welcome extends Game implements InputProcessor {
     public static Random alea;
@@ -96,8 +97,10 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // reset the score
+        // reset the game data
         AngryWirds.score = 0;
+        AngryWirds.voc = VocProvider.getInstance().pickAVoc();
+
         AngryWirds.pushPage(new Play());
         return true;
     }

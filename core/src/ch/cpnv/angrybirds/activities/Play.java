@@ -25,10 +25,7 @@ import ch.cpnv.angrybirds.model.Pig;
 import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
-import ch.cpnv.angrybirds.model.data.Vocabulary;
-import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO keep voc for an entire game
 // TODO prevent displaying the same word multiple times
 // TODO keep in memory the words already found, prevent to reuse them
 // TODO better score management : objects have points/negative points
@@ -72,8 +69,6 @@ public class Play extends Game implements InputProcessor {
     private Rectangle pauseZone;
     private PhysicalObject pauseIcon;
 
-    private VocProvider vocProvider = VocProvider.getInstance();
-    private Vocabulary voc;
     private Panel questionPanel;
 
     private Rectangle aimingzone;
@@ -88,8 +83,6 @@ public class Play extends Game implements InputProcessor {
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
-
-        voc = vocProvider.pickAVoc();
 
         bird = new Bird();
 
@@ -141,7 +134,7 @@ public class Play extends Game implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
-                ), voc.pickAWord());
+                ), AngryWirds.voc.pickAWord());
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
