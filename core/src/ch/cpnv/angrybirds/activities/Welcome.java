@@ -89,6 +89,8 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // reset the score
+        AngryWirds.score = 0;
         AngryWirds.pushPage(new Play());
         return true;
     }

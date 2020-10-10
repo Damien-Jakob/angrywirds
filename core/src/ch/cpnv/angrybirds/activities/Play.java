@@ -30,7 +30,6 @@ import ch.cpnv.angrybirds.providers.VocProvider;
 
 // TODO display pause button
 // TODO better text positioning
-// TODO game over screen
 // TODO continue game when found solution
 // TODO display score in gameOver screen
 // TODO Wasp collision
@@ -58,7 +57,7 @@ public class Play extends Game implements InputProcessor {
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
 
-    public static final float SLINGSHOT_POWER = 1.5f;
+    public static final float SLINGSHOT_POWER = 3f;
 
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
@@ -72,8 +71,6 @@ public class Play extends Game implements InputProcessor {
 
     private BitmapFont scoreFont;
     private Rectangle pauseZone;
-
-    private int score;
 
     private VocProvider vocProvider = VocProvider.getInstance();
     private Vocabulary voc;
@@ -163,8 +160,6 @@ public class Play extends Game implements InputProcessor {
                 PAUSE_ZONE_DIMENSIONS
         );
 
-        score = 0;
-
         questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
@@ -195,12 +190,12 @@ public class Play extends Game implements InputProcessor {
                     if (objectHit instanceof Pig) {
                         Pig pig = (Pig) objectHit;
                         if (pig.getWord() == questionPanel.getWord()) {
-                            score++;
+                            AngryWirds.score++;
                             // TODO generate new play
                             AngryWirds.popPage();
-                            AngryWirds.pushPage(new GameOver());
+                            AngryWirds.pushPage(new Play());
                         } else {
-                            score--;
+                            AngryWirds.score--;
                             scenery.removeElement(objectHit);
                         }
                     }
@@ -243,7 +238,7 @@ public class Play extends Game implements InputProcessor {
         questionPanel.draw(batch);
         bird.draw(batch);
 
-        scoreFont.draw(batch, "Score : " + Integer.toString(score), SCORE_POSITION_X, SCORE_POSITION_Y);
+        scoreFont.draw(batch, "Score : " + Integer.toString(AngryWirds.score), SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }

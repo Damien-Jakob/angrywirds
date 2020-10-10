@@ -14,6 +14,8 @@ public class AngryWirds extends Game {
 
     protected static Stack<Game> pages;
 
+    public static int score = 0;
+
     @Override
     public void create() {
         alea = new Random();
