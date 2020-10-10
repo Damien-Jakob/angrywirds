@@ -26,7 +26,6 @@ import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 
-// TODO keep voc for an entire game
 // TODO prevent displaying the same word multiple times
 // TODO keep in memory the words already found, prevent to reuse them
 // TODO better score management : objects have points/negative points
