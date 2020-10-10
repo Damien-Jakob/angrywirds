@@ -28,13 +28,13 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO display score in gameOver screen
 // TODO Wasp collision
 // TODO keep voc for an entire game
 // TODO prevent displaying the same word multiple times
 // TODO keep in memory the words already found, prevent to reuse them
 // TODO better score management : objects have points/negative points
-// TODO Map theory
+// TODO see : Map !!!EXAMEN!!!
+// TODO see : tables
 // TODO save advancement
 
 public class Play extends Game implements InputProcessor {
@@ -59,7 +59,7 @@ public class Play extends Game implements InputProcessor {
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
-    public static final int PAUSE_ZONE_DIMENSIONS = 50;
+    public static final int PAUSE_ZONE_DIMENSIONS = 100;
     public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS;
     public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS;
 
@@ -242,7 +242,7 @@ public class Play extends Game implements InputProcessor {
         bird.draw(batch);
 
         pauseIcon.draw(batch);
-        scoreFont.draw(batch, "Score : " + Integer.toString(AngryWirds.score), SCORE_POSITION_X, SCORE_POSITION_Y);
+        scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
