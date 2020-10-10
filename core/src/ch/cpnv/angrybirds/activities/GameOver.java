@@ -19,12 +19,18 @@ public class GameOver extends Game implements InputProcessor {
 
     private static final String TITLE = "Fin de la partie";
     private static final int TITLE_SIZE = 6;
+    private static final int SCORE_SIZE = 2;
 
     private Texture background;
 
     private BitmapFont titleFont;
     private float titlePositionX;
     private float titlePositionY;
+
+    private String scoreText;
+    private BitmapFont scoreFont;
+    private float scorePositionX;
+    private float scorePositionY;
 
     private SpriteBatch batch;
 
@@ -49,6 +55,15 @@ public class GameOver extends Game implements InputProcessor {
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
         titlePositionY = Play.WORLD_HEIGHT / 2f + titleGlyphLayout.height / 2f;
+
+        scoreText = "Score : " + AngryWirds.score;
+        scoreFont = new BitmapFont();
+        scoreFont.setColor(Color.BLACK);
+        scoreFont.getData().setScale(SCORE_SIZE);
+        GlyphLayout scoreGlyphLayout = new GlyphLayout();
+        scoreGlyphLayout.setText(scoreFont, scoreText);
+        scorePositionX = Play.WORLD_WIDTH / 2f - scoreGlyphLayout.width / 2f;
+        scorePositionY = titlePositionY - titleGlyphLayout.height - scoreGlyphLayout.height;
     }
 
     @Override
@@ -68,6 +83,7 @@ public class GameOver extends Game implements InputProcessor {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
+        scoreFont.draw(batch, scoreText, scorePositionX, scorePositionY);
         batch.end();
     }
 

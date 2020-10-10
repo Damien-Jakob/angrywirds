@@ -34,7 +34,8 @@ import ch.cpnv.angrybirds.providers.VocProvider;
 // TODO prevent displaying the same word multiple times
 // TODO keep in memory the words already found, prevent to reuse them
 // TODO better score management : objects have points/negative points
-// TODO Map theory
+// TODO see : Map !!!EXAMEN!!!
+// TODO see : tables
 // TODO save advancement
 
 public class Play extends Game implements InputProcessor {
@@ -242,7 +243,7 @@ public class Play extends Game implements InputProcessor {
         bird.draw(batch);
 
         pauseIcon.draw(batch);
-        scoreFont.draw(batch, "Score : " + Integer.toString(AngryWirds.score), SCORE_POSITION_X, SCORE_POSITION_Y);
+        scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
