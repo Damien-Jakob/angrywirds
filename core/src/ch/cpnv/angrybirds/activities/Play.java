@@ -27,8 +27,10 @@ import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 
-// TODO keep in memory the words already found, prevent to reuse them, Game Over when found
 // TODO better score management : objects have points/negative points
+// TODO select voc (+ possibility to select randomly)
+// TODO see voc detail
+// TODO switch languages
 // TODO see : Map !!!EXAMEN!!!
 // TODO see : tables
 // TODO save advancement
@@ -129,12 +131,18 @@ public class Play extends Game implements InputProcessor {
 
         int pigsLeft = Math.min(PIGS_QUANTITY, AngryWirds.voc.size());
         ArrayList<Word> selectedWords = new ArrayList<Word>();
+        boolean firstPig = true;
         while (pigsLeft > 0) {
             try {
                 Word word;
-                do {
-                    word = AngryWirds.voc.pickAWord();
-                } while (selectedWords.contains(word));
+                if (firstPig) {
+                    word = AngryWirds.voc.pickAWord(AngryWirds.foundWords);
+                    firstPig = false;
+                } else {
+                    do {
+                        word = AngryWirds.voc.pickAWord();
+                    } while (selectedWords.contains(word));
+                }
                 selectedWords.add(word);
 
                 Pig pig = new Pig(new Vector2(
@@ -194,15 +202,20 @@ public class Play extends Game implements InputProcessor {
                         Pig pig = (Pig) objectHit;
                         if (pig.getWord() == questionPanel.getWord()) {
                             AngryWirds.score++;
+                            AngryWirds.foundWords.add(questionPanel.getWord());
                             AngryWirds.popPage();
-                            AngryWirds.pushPage(new Play());
+                            if (AngryWirds.foundWords.size() < AngryWirds.voc.size()) {
+                                AngryWirds.pushPage(new Play());
+                            } else {
+                                AngryWirds.pushPage(new GameOver());
+                            }
                         } else {
                             AngryWirds.score--;
                             scenery.removeElement(objectHit);
                         }
                     }
                     scenery.removeElement(objectHit);
-                    if(objectHit instanceof Wasp) {
+                    if (objectHit instanceof Wasp) {
                         wasps.remove(objectHit);
                     }
                     bird = new Bird();

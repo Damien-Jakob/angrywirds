@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class Welcome extends Game implements InputProcessor {
@@ -100,6 +102,7 @@ public class Welcome extends Game implements InputProcessor {
         // reset the game data
         AngryWirds.score = 0;
         AngryWirds.voc = VocProvider.getInstance().pickAVoc();
+        AngryWirds.foundWords = new ArrayList<Word>();
 
         AngryWirds.pushPage(new Play());
         return true;
