@@ -23,11 +23,13 @@ import ch.cpnv.angrybirds.model.Panel;
 import ch.cpnv.angrybirds.model.PhysicalObject;
 import ch.cpnv.angrybirds.model.Pig;
 import ch.cpnv.angrybirds.model.SceneCollapseException;
+import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 
 // TODO better score management : objects have points/negative points
+
 // TODO select voc (+ possibility to select randomly)
 // TODO see voc detail
 // TODO switch languages
@@ -51,6 +53,8 @@ public class Play extends Game implements InputProcessor {
 
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
+
+    public static final int SUCCESS_POINTS = 100;
 
     public static final float SLINGSHOT_POWER = 3f;
 
@@ -135,8 +139,13 @@ public class Play extends Game implements InputProcessor {
         while (pigsLeft > 0) {
             try {
                 Word word;
+                // The first pig will have a word that has never been found
+                // It will be the word of the question panel
                 if (firstPig) {
                     word = AngryWirds.voc.pickAWord(AngryWirds.foundWords);
+
+                    questionPanel = new Panel(word);
+
                     firstPig = false;
                 } else {
                     do {
@@ -169,8 +178,6 @@ public class Play extends Game implements InputProcessor {
                 PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
                 "pause-icon.png");
 
-        questionPanel = new Panel(scenery.pickAWord());
-
         batch = new SpriteBatch();
 
         scoreFont = new BitmapFont();
@@ -198,10 +205,16 @@ public class Play extends Game implements InputProcessor {
                     }
                 }
                 if (objectHit != null) {
+                    if (objectHit instanceof ScoreInfluencer) {
+                        ScoreInfluencer scoreInfluencer = (ScoreInfluencer) objectHit;
+                        AngryWirds.score += scoreInfluencer.getPoints();
+                        scenery.removeElement(objectHit);
+                    }
                     if (objectHit instanceof Pig) {
                         Pig pig = (Pig) objectHit;
                         if (pig.getWord() == questionPanel.getWord()) {
-                            AngryWirds.score++;
+                            AngryWirds.score -= pig.getPoints();
+                            AngryWirds.score += SUCCESS_POINTS;
                             AngryWirds.foundWords.add(questionPanel.getWord());
                             AngryWirds.popPage();
                             if (AngryWirds.foundWords.size() < AngryWirds.voc.size()) {
@@ -209,9 +222,6 @@ public class Play extends Game implements InputProcessor {
                             } else {
                                 AngryWirds.pushPage(new GameOver());
                             }
-                        } else {
-                            AngryWirds.score--;
-                            scenery.removeElement(objectHit);
                         }
                     }
                     scenery.removeElement(objectHit);

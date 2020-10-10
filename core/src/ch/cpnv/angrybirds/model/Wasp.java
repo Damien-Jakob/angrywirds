@@ -5,13 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.activities.Play;
 
-public final class Wasp extends MovingObject {
-
+public final class Wasp extends MovingObject implements ScoreInfluencer {
     private static final int AGITATION = 30; // How sharply speed changes
     private static final int AGITATION_ANGLE = 360;
     private static final String PICTURE_NAME = "wasp.png";
     private static final int WIDTH = 60;
     private static final int HEIGHT = WIDTH;
+
+    public static final int POINTS = -20;
 
     public Wasp(Vector2 position, Vector2 speed) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, speed);
@@ -40,5 +41,10 @@ public final class Wasp extends MovingObject {
     private void accelerateByRotation(float dt) {
         int rotationAngle = AngryWirds.alea.nextInt(AGITATION_ANGLE * 2 + 1) - AGITATION_ANGLE;
         speed.rotate(rotationAngle * dt);
+    }
+
+    @Override
+    public int getPoints() {
+        return POINTS;
     }
 }
