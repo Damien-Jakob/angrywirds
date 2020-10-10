@@ -28,7 +28,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO display score in gameOver screen
 // TODO Wasp collision
 // TODO keep voc for an entire game
 // TODO prevent displaying the same word multiple times
@@ -60,7 +59,7 @@ public class Play extends Game implements InputProcessor {
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
-    public static final int PAUSE_ZONE_DIMENSIONS = 50;
+    public static final int PAUSE_ZONE_DIMENSIONS = 100;
     public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS;
     public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS;
 
