@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.activities.Welcome;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class AngryWirds extends Game {
     public static Random alea;
@@ -33,6 +35,13 @@ public class AngryWirds extends Game {
     @Override
     public void render() {
         pages.peek().render();
+    }
+
+    public static void start() {
+        AngryWirds.score = 0;
+        AngryWirds.voc = VocProvider.getInstance().pickAVoc();
+        AngryWirds.foundWords = new ArrayList<Word>();
+        AngryWirds.pushPage(new Play());
     }
 
     public static void pushPage(Game game) {
