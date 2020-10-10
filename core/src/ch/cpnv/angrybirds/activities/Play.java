@@ -61,8 +61,8 @@ public class Play extends Game implements InputProcessor {
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
     public static final int PAUSE_ZONE_DIMENSIONS = 100;
-    public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS;
-    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS;
+    public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS - 10;
+    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS -10;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
