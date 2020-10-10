@@ -10,32 +10,27 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.providers.VocProvider;
 
-public class Welcome extends Game implements InputProcessor {
+public class VocSelection extends Game implements InputProcessor {
     public static Random alea;
 
-    private static final String TITLE = "AngryWirds";
+    private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
 
     private Texture background;
 
     private BitmapFont titleFont;
     private float titlePositionX;
-    private float titlePositionY;
+    private float titlePositionY = Play.WORLD_HEIGHT - 10;
 
     private SpriteBatch batch;
 
     private OrthographicCamera camera;
 
-    public Welcome() {
-        Gdx.app.log("ANGRY", "HELLO ");
-
+    public VocSelection() {
         batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(this);
@@ -48,12 +43,11 @@ public class Welcome extends Game implements InputProcessor {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
         titleFont = new BitmapFont();
-        titleFont.setColor(Color.ROYAL);
+        titleFont.setColor(Color.RED);
         titleFont.getData().setScale(TITLE_SIZE);
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
-        titlePositionY = Play.WORLD_HEIGHT / 2f + titleGlyphLayout.height / 2f;
     }
 
     @Override
@@ -99,7 +93,9 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        AngryWirds.pushPage(new VocSelection());
+        AngryWirds.popPage();
+        // TODO give the voc selected
+        AngryWirds.start();
         return true;
     }
 
