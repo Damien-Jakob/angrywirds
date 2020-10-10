@@ -4,11 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
 import ch.cpnv.angrybirds.activities.Welcome;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
+import ch.cpnv.angrybirds.model.data.Word;
 
 public class AngryWirds extends Game {
     public static Random alea;
@@ -16,6 +18,7 @@ public class AngryWirds extends Game {
     protected static Stack<Game> pages;
 
     public static Vocabulary voc;
+    public static ArrayList<Word> foundWords;
 
     public static int score = 0;
 
