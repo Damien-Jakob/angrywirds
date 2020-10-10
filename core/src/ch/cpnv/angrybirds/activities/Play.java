@@ -28,8 +28,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO better text positioning
-
 // TODO display score in gameOver screen
 // TODO Wasp collision
 // TODO keep voc for an entire game
@@ -38,7 +36,6 @@ import ch.cpnv.angrybirds.providers.VocProvider;
 // TODO better score management : objects have points/negative points
 // TODO Map theory
 // TODO save advancement
-
 
 public class Play extends Game implements InputProcessor {
     public static final int WORLD_WIDTH = 1600;
