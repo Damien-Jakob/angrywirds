@@ -139,8 +139,13 @@ public class Play extends Game implements InputProcessor {
         while (pigsLeft > 0) {
             try {
                 Word word;
+                // The first pig will have a word that has never been found
+                // It will be the word of the question panel
                 if (firstPig) {
                     word = AngryWirds.voc.pickAWord(AngryWirds.foundWords);
+
+                    questionPanel = new Panel(word);
+
                     firstPig = false;
                 } else {
                     do {
@@ -172,8 +177,6 @@ public class Play extends Game implements InputProcessor {
                 new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
                 PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
                 "pause-icon.png");
-
-        questionPanel = new Panel(scenery.pickAWord());
 
         batch = new SpriteBatch();
 
