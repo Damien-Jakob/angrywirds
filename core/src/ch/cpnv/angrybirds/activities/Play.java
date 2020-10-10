@@ -28,7 +28,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO Wasp collision
 // TODO keep voc for an entire game
 // TODO prevent displaying the same word multiple times
 // TODO keep in memory the words already found, prevent to reuse them
@@ -176,9 +175,6 @@ public class Play extends Game implements InputProcessor {
     }
 
     public void update() {
-        // TODO implement bird.reset method
-        // TODO implement play.reinit method
-
         float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
 
         if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
@@ -189,12 +185,16 @@ public class Play extends Game implements InputProcessor {
                 bird.accelerate(dt);
 
                 PhysicalObject objectHit = scenery.objectHitBy(bird);
+                for (Wasp wasp : wasps) {
+                    if (wasp.collidesWith(bird)) {
+                        objectHit = wasp;
+                    }
+                }
                 if (objectHit != null) {
                     if (objectHit instanceof Pig) {
                         Pig pig = (Pig) objectHit;
                         if (pig.getWord() == questionPanel.getWord()) {
                             AngryWirds.score++;
-                            // TODO generate new play
                             AngryWirds.popPage();
                             AngryWirds.pushPage(new Play());
                         } else {
@@ -203,6 +203,9 @@ public class Play extends Game implements InputProcessor {
                         }
                     }
                     scenery.removeElement(objectHit);
+                    if(objectHit instanceof Wasp) {
+                        wasps.remove(objectHit);
+                    }
                     bird = new Bird();
                 }
             }
