@@ -28,9 +28,8 @@ import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 
-// TODO better score management : objects have points/negative points
-
 // TODO select voc (+ possibility to select randomly)
+
 // TODO see voc detail
 // TODO switch languages
 // TODO see : Map !!!EXAMEN!!!
