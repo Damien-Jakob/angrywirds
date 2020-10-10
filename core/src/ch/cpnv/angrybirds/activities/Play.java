@@ -28,9 +28,8 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO display pause button
-
 // TODO better text positioning
+
 // TODO display score in gameOver screen
 // TODO Wasp collision
 // TODO keep voc for an entire game
