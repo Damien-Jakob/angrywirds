@@ -10,13 +10,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.Random;
-
 import ch.cpnv.angrybirds.AngryWirds;
 
 public class VocSelection extends Game implements InputProcessor {
-    public static Random alea;
-
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
 

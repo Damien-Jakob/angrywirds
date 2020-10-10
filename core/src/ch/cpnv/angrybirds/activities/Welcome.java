@@ -10,16 +10,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class Welcome extends Game implements InputProcessor {
-    public static Random alea;
-
     private static final String TITLE = "AngryWirds";
     private static final int TITLE_SIZE = 6;
 
