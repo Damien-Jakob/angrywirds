@@ -21,4 +21,8 @@ public class Vocabulary {
         // TODO better selection
         return words.get(AngryWirds.alea.nextInt(words.size()));
     }
+
+    public int size() {
+        return words.size();
+    }
 }
