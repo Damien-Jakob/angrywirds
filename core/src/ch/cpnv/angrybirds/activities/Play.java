@@ -57,7 +57,7 @@ public class Play extends Game implements InputProcessor {
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
 
-    public static final float SLINGSHOT_POWER = 1.5f;
+    public static final float SLINGSHOT_POWER = 3f;
 
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
