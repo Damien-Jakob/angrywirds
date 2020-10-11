@@ -1,12 +1,8 @@
 package ch.cpnv.angrybirds.activities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ch.cpnv.angrybirds.AngryWirds;
 
@@ -37,7 +33,6 @@ public class Welcome extends BaseActivity {
         batch.end();
     }
 
-    // InputProcessor interface implementation
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         AngryWirds.pushPage(new VocSelection());

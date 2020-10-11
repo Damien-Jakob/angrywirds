@@ -26,8 +26,6 @@ public class GameOver extends BaseActivity implements InputProcessor {
     private float vocPositionY;
 
     public GameOver() {
-        Gdx.input.setInputProcessor(this);
-
         titleFont = new BitmapFont();
         titleFont.setColor(Color.RED);
         titleFont.getData().setScale(TITLE_SIZE);

@@ -3,14 +3,9 @@ package ch.cpnv.angrybirds.activities;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import ch.cpnv.angrybirds.AngryWirds;
 
 public abstract class BaseActivity extends Game implements InputProcessor {
     private Texture background;
@@ -22,6 +17,7 @@ public abstract class BaseActivity extends Game implements InputProcessor {
     public BaseActivity() {
         batch = new SpriteBatch();
 
+        // Set which InputProcessor does answer to the inputs
         Gdx.input.setInputProcessor(this);
 
         camera = new OrthographicCamera();
@@ -33,18 +29,10 @@ public abstract class BaseActivity extends Game implements InputProcessor {
     }
 
     @Override
-    public void create() {
-
-    }
-
-    public void update() {
-        float dt = Gdx.graphics.getDeltaTime();
-    }
+    public void create() { }
 
     @Override
     public void render() {
-        update();
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
