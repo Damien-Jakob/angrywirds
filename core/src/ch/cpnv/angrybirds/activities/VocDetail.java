@@ -154,7 +154,7 @@ public class VocDetail extends Game implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         float verticalDrag = touchPoint.y - previousTouchPoint.y;
         scrolled((int) verticalDrag);
-        
+
         previousTouchPoint = touchPoint;
         return true;
     }
@@ -167,6 +167,9 @@ public class VocDetail extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         scrollOffset += amount;
+        if (scrollOffset < 0) {
+            scrollOffset = 0;
+        }
         return true;
     }
 
