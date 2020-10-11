@@ -38,8 +38,10 @@ public class VocSelection extends Game implements InputProcessor {
     private float titlePositionX;
 
     private BitmapFont vocabularyFont;
+    private BitmapFont randomVocFont;
     private float vocTextX;
 
+    private IconButton randomVocButton;
     private HashMap<IconButton, Vocabulary> vocSelectionButtons;
 
     private SpriteBatch batch;
@@ -59,21 +61,29 @@ public class VocSelection extends Game implements InputProcessor {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
         titleFont = new BitmapFont();
-        titleFont.setColor(Color.RED);
+        titleFont.setColor(Color.GOLD);
         titleFont.getData().setScale(TITLE_SIZE);
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
 
         vocabularyFont = new BitmapFont();
-        Color vocabularyNameColor = Color.BLUE;
-        vocabularyFont = new BitmapFont();
-        vocabularyFont.setColor(vocabularyNameColor);
+        vocabularyFont.setColor(Color.BLUE);
         vocabularyFont.getData().setScale(LINE_SIZE);
         vocTextX = VOC_POSITION_X + BUTTON_DIMENSION + VOC_MARGIN;
 
-        vocSelectionButtons = new HashMap<IconButton, Vocabulary>();
+        randomVocFont = new BitmapFont();
+        randomVocFont.setColor(Color.RED);
+        randomVocFont.getData().setScale(LINE_SIZE);
+
         float buttonY = VOC_START_Y;
+        randomVocButton = new IconButton(
+                new Vector2(VOC_POSITION_X, buttonY),
+                BUTTON_DIMENSION, BUTTON_DIMENSION,
+                "play-icon.png"
+        );
+        buttonY -= BUTTON_DIMENSION + VOC_MARGIN;
+        vocSelectionButtons = new HashMap<IconButton, Vocabulary>();
         for (Vocabulary vocabulary : VocProvider.getInstance().vocabularies) {
             vocSelectionButtons.put(
                     new IconButton(
@@ -104,6 +114,8 @@ public class VocSelection extends Game implements InputProcessor {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, TITLE_POSITION_Y);
+        randomVocButton.draw(batch);
+        randomVocFont.draw(batch, "Random", vocTextX, randomVocButton.getYTop() + TEXT_OFFSET_Y);
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
             IconButton button = entry.getKey();
             button.draw(batch);
@@ -138,6 +150,10 @@ public class VocSelection extends Game implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        if (randomVocButton.contains(touchPoint)) {
+            AngryWirds.popPage();
+            AngryWirds.start();
+        }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
             IconButton iconButton = entry.getKey();
             if (iconButton.contains(touchPoint)) {
