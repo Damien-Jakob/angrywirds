@@ -186,6 +186,13 @@ public class VocSelection extends Game implements InputProcessor {
                 AngryWirds.start(selectedVoc);
             }
         }
+        for (HashMap.Entry<IconButton, Vocabulary> entry : vocDetailButtons.entrySet()) {
+            IconButton iconButton = entry.getKey();
+            if (iconButton.contains(touchPoint)) {
+                Vocabulary selectedVoc = entry.getValue();
+                AngryWirds.pushPage(new VocDetail(selectedVoc));
+            }
+        }
         return true;
     }
 
