@@ -29,9 +29,10 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO select voc (+ possibility to select randomly)
+// TODO select voc
 
-// TODO see voc detail
+// TODO add option to select voc randomly
+// TODO see voc detail (+ scroll)
 // TODO switch languages
 // TODO see : Map !!!EXAMEN!!!
 // TODO see : tables
@@ -73,9 +74,6 @@ public class Play extends Game implements InputProcessor {
     private BitmapFont scoreFont;
 
     private IconButton pauseButton;
-
-    //private Rectangle pauseZone;
-    //private PhysicalObject pauseIcon;
 
     private Panel questionPanel;
 
@@ -176,16 +174,7 @@ public class Play extends Game implements InputProcessor {
                 PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
                 "pause-icon.png"
         );
-        /*
-        pauseZone = new Rectangle(
-                PAUSE_ZONE_X, PAUSE_ZONE_Y,
-                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS
-        );
-        pauseIcon = new PhysicalObject(
-                new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
-                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
-                "pause-icon.png");
-*/
+
         batch = new SpriteBatch();
 
         scoreFont = new BitmapFont();

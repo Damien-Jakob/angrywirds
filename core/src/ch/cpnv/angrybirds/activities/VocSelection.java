@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+import java.util.HashMap;
 
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
+import ch.cpnv.angrybirds.ui.IconButton;
 
 public class VocSelection extends Game implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
@@ -20,9 +24,12 @@ public class VocSelection extends Game implements InputProcessor {
     private static final int LINE_SIZE = 3;
 
     private static final float TITLE_POSITION_Y = Play.WORLD_HEIGHT - 20f;
-    private static final float DISTANCE_TITLE_LIST = 40f;
+    private static final float buttonDimension = 100;
     private static final float VOC_POSITION_X = 200;
+    private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
     private static final float VOC_MARGIN = 50f;
+    // used to align the text with the buttons
+    private static final float TEXT_OFFSET_Y = -30f;
 
     private Texture background;
 
@@ -30,8 +37,9 @@ public class VocSelection extends Game implements InputProcessor {
     private float titlePositionX;
 
     private BitmapFont vocabularyFont;
-    private float vocStartY;
-    private float vocHeight;
+    private float vocTextX;
+
+    private HashMap<IconButton, Vocabulary> vocSelectionButtons;
 
     private SpriteBatch batch;
 
@@ -61,11 +69,21 @@ public class VocSelection extends Game implements InputProcessor {
         vocabularyFont = new BitmapFont();
         vocabularyFont.setColor(vocabularyNameColor);
         vocabularyFont.getData().setScale(LINE_SIZE);
-        GlyphLayout vocGlyphLayout = new GlyphLayout();
-        vocGlyphLayout.setText(vocabularyFont, TITLE);
+        vocTextX = VOC_POSITION_X + buttonDimension + VOC_MARGIN;
 
-        vocStartY = TITLE_POSITION_Y - titleGlyphLayout.height - DISTANCE_TITLE_LIST;
-        vocHeight = vocGlyphLayout.height + VOC_MARGIN;
+        vocSelectionButtons = new HashMap<IconButton, Vocabulary>();
+        float buttonY = VOC_START_Y;
+        for (Vocabulary vocabulary : VocProvider.getInstance().vocabularies) {
+            vocSelectionButtons.put(
+                    new IconButton(
+                            new Vector2(VOC_POSITION_X, buttonY),
+                            buttonDimension, buttonDimension,
+                            "play-icon.png"
+                    ),
+                    vocabulary
+            );
+            buttonY -= buttonDimension + VOC_MARGIN;
+        }
     }
 
     @Override
@@ -85,10 +103,12 @@ public class VocSelection extends Game implements InputProcessor {
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, TITLE_POSITION_Y);
-        float fontY = vocStartY;
-        for (Vocabulary voc : VocProvider.getInstance().vocabularies) {
-            vocabularyFont.draw(batch, voc.getName(), VOC_POSITION_X, fontY);
-            fontY -= vocHeight;
+        for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
+            IconButton button = entry.getKey();
+            button.draw(batch);
+
+            Vocabulary voc = entry.getValue();
+            vocabularyFont.draw(batch, voc.getName(), vocTextX, button.getYTop() + TEXT_OFFSET_Y);
         }
         batch.end();
     }
