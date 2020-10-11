@@ -27,7 +27,7 @@ public class Vocabulary {
 
     public Word pickAWord(ArrayList<Word> banList) {
         ArrayList<Word> pickableWords = (ArrayList<Word>) words.clone();
-        for(Word bannedWord : banList) {
+        for (Word bannedWord : banList) {
             pickableWords.remove(bannedWord);
         }
         return pickableWords.get(AngryWirds.alea.nextInt(pickableWords.size()));
@@ -35,5 +35,9 @@ public class Vocabulary {
 
     public int size() {
         return words.size();
+    }
+
+    public ArrayList<Word> getWords() {
+        return words;
     }
 }

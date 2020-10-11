@@ -12,11 +12,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.HashMap;
-
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
-import ch.cpnv.angrybirds.providers.VocProvider;
+import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 public class VocDetail extends Game implements InputProcessor {
@@ -25,10 +23,10 @@ public class VocDetail extends Game implements InputProcessor {
 
     private static final float TITLE_POSITION_Y = Play.WORLD_HEIGHT - 20f;
     private static final float BUTTON_DIMENSION = 100;
-    private static final float COLUMN1_POSITION_X = 100;
-    private static final float COLUMN2_POSITION_X = Play.WORLD_WIDTH / 2f + COLUMN1_POSITION_X;
+    private static final float COLUMN1_X = 200;
+    private static final float COLUMN2_X = Play.WORLD_WIDTH / 2f + COLUMN1_X;
     private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
-    private static final float VOC_MARGIN = 25f;
+    private static final float WORD_MARGIN = 25f;
 
     private Texture background;
 
@@ -70,7 +68,7 @@ public class VocDetail extends Game implements InputProcessor {
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
 
         wordFont = new BitmapFont();
-        wordFont.setColor(Color.BLUE);
+        wordFont.setColor(Color.BLACK);
         wordFont.getData().setScale(WORD_SIZE);
 
         returnButton = new IconButton(
@@ -103,6 +101,12 @@ public class VocDetail extends Game implements InputProcessor {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, title, titlePositionX, TITLE_POSITION_Y);
         returnButton.draw(batch);
+        float wordY = VOC_START_Y;
+        for (Word word : voc.getWords()) {
+            wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
+            wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);
+            wordY -= wordHeight + WORD_MARGIN;
+        }
         batch.end();
     }
 
