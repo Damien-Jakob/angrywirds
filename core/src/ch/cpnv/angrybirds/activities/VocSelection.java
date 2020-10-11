@@ -43,6 +43,8 @@ public class VocSelection extends Game implements InputProcessor {
 
     private IconButton randomVocButton;
     private HashMap<IconButton, Vocabulary> vocSelectionButtons;
+    private HashMap<IconButton, Vocabulary> vocDetailButtons;
+    private float vocDetailX;
 
     private SpriteBatch batch;
 
@@ -67,10 +69,12 @@ public class VocSelection extends Game implements InputProcessor {
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
 
+        vocDetailX = VOC_POSITION_X + BUTTON_DIMENSION + VOC_MARGIN;
+
         vocabularyFont = new BitmapFont();
         vocabularyFont.setColor(Color.BLUE);
         vocabularyFont.getData().setScale(LINE_SIZE);
-        vocTextX = VOC_POSITION_X + BUTTON_DIMENSION + VOC_MARGIN;
+        vocTextX = vocDetailX + BUTTON_DIMENSION + VOC_MARGIN;
 
         randomVocFont = new BitmapFont();
         randomVocFont.setColor(Color.RED);
@@ -83,7 +87,8 @@ public class VocSelection extends Game implements InputProcessor {
                 "play-icon.png"
         );
         buttonY -= BUTTON_DIMENSION + VOC_MARGIN;
-        vocSelectionButtons = new HashMap<IconButton, Vocabulary>();
+        vocSelectionButtons = new HashMap<>();
+        vocDetailButtons = new HashMap<>();
         for (Vocabulary vocabulary : VocProvider.getInstance().vocabularies) {
             vocSelectionButtons.put(
                     new IconButton(
@@ -93,6 +98,15 @@ public class VocSelection extends Game implements InputProcessor {
                     ),
                     vocabulary
             );
+            vocDetailButtons.put(
+                    new IconButton(
+                            new Vector2(vocDetailX, buttonY),
+                            100, 100,
+                            "details-icon.png"
+                    ),
+                    vocabulary
+            );
+
             buttonY -= BUTTON_DIMENSION + VOC_MARGIN;
         }
     }
@@ -122,6 +136,10 @@ public class VocSelection extends Game implements InputProcessor {
 
             Vocabulary voc = entry.getValue();
             vocabularyFont.draw(batch, voc.getName(), vocTextX, button.getYTop() + TEXT_OFFSET_Y);
+        }
+        for (HashMap.Entry<IconButton, Vocabulary> entry : vocDetailButtons.entrySet()) {
+            IconButton button = entry.getKey();
+            button.draw(batch);
         }
         batch.end();
     }
