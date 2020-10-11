@@ -13,6 +13,8 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 import ch.cpnv.angrybirds.ui.IconButton;
 
+// TODO switch languages
+
 // TODO find better icons (should take 100% of width and height of the png)
 
 public class VocSelection extends BaseActivity implements InputProcessor {

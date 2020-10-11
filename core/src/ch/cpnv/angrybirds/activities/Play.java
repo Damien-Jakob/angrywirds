@@ -24,9 +24,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO switch languages
-// TODO save advancement
-
 public class Play extends BaseActivity implements InputProcessor {
     private static final float MAX_DT = 0.5f;
 
