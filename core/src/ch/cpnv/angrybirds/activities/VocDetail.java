@@ -32,6 +32,7 @@ public class VocDetail extends Game implements InputProcessor {
 
     private Vector2 previousTouchPoint;
     private float scrollOffset = 0;
+    private float maxScrollOffset;
 
     private Vocabulary voc;
 
@@ -84,6 +85,8 @@ public class VocDetail extends Game implements InputProcessor {
         GlyphLayout vocGlyphLayout = new GlyphLayout();
         vocGlyphLayout.setText(wordFont, title);
         wordHeight = vocGlyphLayout.height;
+
+        maxScrollOffset = (wordHeight + WORD_MARGIN) * voc.size() - VOC_START_Y;
     }
 
     @Override
@@ -169,6 +172,9 @@ public class VocDetail extends Game implements InputProcessor {
         scrollOffset += amount;
         if (scrollOffset < 0) {
             scrollOffset = 0;
+        }
+        if (scrollOffset > maxScrollOffset) {
+            scrollOffset = maxScrollOffset;
         }
         return true;
     }
