@@ -11,16 +11,27 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.model.data.Vocabulary;
+import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class VocSelection extends Game implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
+    private static final int LINE_SIZE = 3;
+
+    private static final float TITLE_POSITION_Y = Play.WORLD_HEIGHT - 20f;
+    private static final float DISTANCE_TITLE_LIST = 40f;
+    private static final float VOC_POSITION_X = 200;
+    private static final float VOC_MARGIN = 50f;
 
     private Texture background;
 
     private BitmapFont titleFont;
     private float titlePositionX;
-    private float titlePositionY = Play.WORLD_HEIGHT - 10;
+
+    private BitmapFont vocabularyFont;
+    private float vocStartY;
+    private float vocHeight;
 
     private SpriteBatch batch;
 
@@ -44,6 +55,17 @@ public class VocSelection extends Game implements InputProcessor {
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
+
+        vocabularyFont = new BitmapFont();
+        Color vocabularyNameColor = Color.BLUE;
+        vocabularyFont = new BitmapFont();
+        vocabularyFont.setColor(vocabularyNameColor);
+        vocabularyFont.getData().setScale(LINE_SIZE);
+        GlyphLayout vocGlyphLayout = new GlyphLayout();
+        vocGlyphLayout.setText(vocabularyFont, TITLE);
+
+        vocStartY = TITLE_POSITION_Y - titleGlyphLayout.height - DISTANCE_TITLE_LIST;
+        vocHeight = vocGlyphLayout.height + VOC_MARGIN;
     }
 
     @Override
@@ -62,7 +84,12 @@ public class VocSelection extends Game implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
-        titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
+        titleFont.draw(batch, TITLE, titlePositionX, TITLE_POSITION_Y);
+        float fontY = vocStartY;
+        for (Vocabulary voc : VocProvider.getInstance().vocabularies) {
+            vocabularyFont.draw(batch, voc.getName(), VOC_POSITION_X, fontY);
+            fontY -= vocHeight;
+        }
         batch.end();
     }
 

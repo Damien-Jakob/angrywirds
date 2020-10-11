@@ -13,6 +13,10 @@ public class Vocabulary {
         words = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void addWord(Word word) {
         words.add(word);
     }
