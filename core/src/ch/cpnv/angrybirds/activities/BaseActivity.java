@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public abstract class BaseActivity extends Game implements InputProcessor {
+    protected static final int WORLD_WIDTH = 1600;
+    protected static final int WORLD_HEIGHT = 900;
+
     private Texture background;
 
     protected SpriteBatch batch;
@@ -31,7 +34,8 @@ public abstract class BaseActivity extends Game implements InputProcessor {
     }
 
     @Override
-    public void create() { }
+    public void create() {
+    }
 
     @Override
     public void render() {

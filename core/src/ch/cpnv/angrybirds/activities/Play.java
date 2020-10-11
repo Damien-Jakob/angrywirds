@@ -25,16 +25,12 @@ import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO base class for activities (background, camera, ...)
-// - move WORLD dimensions to BaseActivity
 // - const MAX_DT
 
 // TODO switch languages
 // TODO save advancement
 
 public class Play extends BaseActivity implements InputProcessor {
-    public static final int WORLD_WIDTH = 1600;
-    public static final int WORLD_HEIGHT = 900;
-
     public static final int FLOOR_HEIGHT = 120;
 
     public static final int BIRD_START_X = 200;
