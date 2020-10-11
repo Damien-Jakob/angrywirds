@@ -22,8 +22,8 @@ public class VocDetail extends Game implements InputProcessor {
     private static final int WORD_SIZE = 2;
 
     private static final float TITLE_POSITION_Y = Play.WORLD_HEIGHT - 20f;
-    private static final float BUTTON_DIMENSION = 100;
-    private static final float COLUMN1_X = 200;
+    private static final float BUTTON_DIMENSION = 100f;
+    private static final float COLUMN1_X = 200f;
     private static final float COLUMN2_X = Play.WORLD_WIDTH / 2f + COLUMN1_X;
     private static final float WORD_MARGIN = 25f;
 
@@ -110,8 +110,10 @@ public class VocDetail extends Game implements InputProcessor {
         returnButton.draw(batch);
         float wordY = vocStartY + scrollOffset;
         for (Word word : voc.getWords()) {
-            wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
-            wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);
+            if (0 <= wordY && wordY <= vocStartY) {
+                wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
+                wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);
+            }
             wordY -= wordHeight + WORD_MARGIN;
         }
         batch.end();
