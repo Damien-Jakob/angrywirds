@@ -77,7 +77,7 @@ public class VocDetail extends Game implements InputProcessor {
                 new Vector2(Play.WORLD_WIDTH - BUTTON_DIMENSION - 10f,
                         Play.WORLD_HEIGHT - BUTTON_DIMENSION - 10f),
                 BUTTON_DIMENSION, BUTTON_DIMENSION,
-                "play-icon.png"
+                "return-icon.png"
         );
 
         GlyphLayout vocGlyphLayout = new GlyphLayout();
