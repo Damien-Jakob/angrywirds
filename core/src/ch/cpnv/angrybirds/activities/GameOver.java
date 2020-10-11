@@ -1,6 +1,5 @@
 package ch.cpnv.angrybirds.activities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,8 +9,8 @@ import ch.cpnv.angrybirds.AngryWirds;
 
 public class GameOver extends BaseActivity implements InputProcessor {
     private static final String TITLE = "Fin de la partie";
-    private static final int TITLE_SIZE = 6;
-    private static final int SCORE_SIZE = 2;
+    private static final int TITLE_SCALE = 6;
+    private static final int INFO_SCALE = 2;
 
     private BitmapFont titleFont;
     private float titlePositionX;
@@ -28,7 +27,7 @@ public class GameOver extends BaseActivity implements InputProcessor {
     public GameOver() {
         titleFont = new BitmapFont();
         titleFont.setColor(Color.RED);
-        titleFont.getData().setScale(TITLE_SIZE);
+        titleFont.getData().setScale(TITLE_SCALE);
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
@@ -39,7 +38,7 @@ public class GameOver extends BaseActivity implements InputProcessor {
 
         infoFont = new BitmapFont();
         infoFont.setColor(Color.BLACK);
-        infoFont.getData().setScale(SCORE_SIZE);
+        infoFont.getData().setScale(INFO_SCALE);
 
         GlyphLayout glyphLayout = new GlyphLayout();
         glyphLayout.setText(infoFont, scoreText);

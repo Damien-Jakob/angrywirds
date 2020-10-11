@@ -3,6 +3,7 @@ package ch.cpnv.angrybirds.activities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.angrybirds.Scenery;
+import ch.cpnv.angrybirds.model.Scenery;
 import ch.cpnv.angrybirds.model.Bird;
 import ch.cpnv.angrybirds.model.Block;
 import ch.cpnv.angrybirds.model.OutOfSceneryException;
@@ -24,6 +25,9 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
+// TODO draw slingshot
+// TODO add rubber once implemented
+
 public class Play extends BaseActivity implements InputProcessor {
     private static final float MAX_DT = 0.5f;
 
@@ -31,11 +35,12 @@ public class Play extends BaseActivity implements InputProcessor {
 
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
+    private static final int SLINGSHOT_WIDTH = 75;
 
     private static final int WASP_QUANTITY = 2;
     private static final int PIGS_QUANTITY = 5;
     private static final int TNT_QUANTITY = 3;
-    private static final int BLOCKS_QUANTITY = 30;
+    private static final int BLOCKS_QUANTITY = 50;
 
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
@@ -46,8 +51,8 @@ public class Play extends BaseActivity implements InputProcessor {
 
     public static final float SLINGSHOT_POWER = 3f;
 
-    public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
-    public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
+    private static final int AIMING_ZONE_X = BIRD_START_X + Bird.WIDTH;
+    private static final int AIMING_ZONE_Y = BIRD_START_Y + Bird.HEIGHT;
 
     public static final int PAUSE_BUTTON_DIMENSIONS = 100;
     public static final int PAUSE_BUTTON_X = WORLD_WIDTH - PAUSE_BUTTON_DIMENSIONS - 10;
@@ -65,6 +70,11 @@ public class Play extends BaseActivity implements InputProcessor {
 
     private Rectangle aimingzone;
 
+    private Texture slingshot1;
+    private Texture slingshot2;
+    // private RubberBand rubberBand1;
+    // private RubberBand rubberBand2;
+
     public Play() {
         bird = new Bird();
 
@@ -75,7 +85,6 @@ public class Play extends BaseActivity implements InputProcessor {
         }
 
         scenery = new Scenery();
-        scenery.addFloor();
 
         int blocksLeft = BLOCKS_QUANTITY;
         while (blocksLeft > 0) {
@@ -143,17 +152,21 @@ public class Play extends BaseActivity implements InputProcessor {
             }
         }
 
-        aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
-
         pauseButton = new IconButton(
                 new Vector2(PAUSE_BUTTON_X, PAUSE_BUTTON_Y),
                 PAUSE_BUTTON_DIMENSIONS, PAUSE_BUTTON_DIMENSIONS,
                 "pause-icon.png"
         );
 
+        slingshot1 = new Texture(Gdx.files.internal("slingshot1.png"));
+        slingshot2 = new Texture(Gdx.files.internal("slingshot2.png"));
+
         infoFont = new BitmapFont();
         infoFont.setColor(Color.BLACK);
         infoFont.getData().setScale(2);
+
+        aimingzone = new Rectangle(0, 0, AIMING_ZONE_X, AIMING_ZONE_Y);
+
     }
 
     public void update() {
@@ -230,12 +243,14 @@ public class Play extends BaseActivity implements InputProcessor {
         scenery.draw(batch);
         questionPanel.draw(batch);
         bird.draw(batch);
-
         pauseButton.draw(batch);
+        drawGameInfo();
+        batch.end();
+    }
+
+    private void drawGameInfo() {
         infoFont.draw(batch, "Voc : " + AngryWirds.voc.getName(), VOC_POSITION_X, VOC_POSITION_Y);
         infoFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
-
-        batch.end();
     }
 
     @Override
@@ -249,7 +264,7 @@ public class Play extends BaseActivity implements InputProcessor {
 
         boolean actionHandled = scenery.handleTouchDown(touchPoint);
 
-        if (!actionHandled // We don't want to move the bird if the user wanted to display a Pig
+        if (!actionHandled
                 && aimingzone.contains(touchPoint)) {
             bird.startAim(touchPoint);
         }

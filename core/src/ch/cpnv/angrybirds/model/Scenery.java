@@ -1,4 +1,4 @@
-package ch.cpnv.angrybirds;
+package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.model.Block;
 import ch.cpnv.angrybirds.model.MovingObject;
