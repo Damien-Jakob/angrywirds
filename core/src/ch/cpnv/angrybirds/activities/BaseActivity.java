@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ch.cpnv.angrybirds.AngryWirds;
 
-public class BaseActivity extends Game implements InputProcessor {
+public abstract class BaseActivity extends Game implements InputProcessor {
     private Texture background;
 
     protected SpriteBatch batch;
