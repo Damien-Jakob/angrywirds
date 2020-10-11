@@ -25,12 +25,13 @@ import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO base class for activities (background, camera, ...)
-// - const MAX_DT
 
 // TODO switch languages
 // TODO save advancement
 
 public class Play extends BaseActivity implements InputProcessor {
+    private static final float MAX_DT = 0.5f;
+
     public static final int FLOOR_HEIGHT = 120;
 
     public static final int BIRD_START_X = 200;
@@ -164,7 +165,7 @@ public class Play extends BaseActivity implements InputProcessor {
         // number of milliseconds elapsed since last render
         float dt = Gdx.graphics.getDeltaTime();
 
-        if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
+        if (dt < MAX_DT) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
             if (bird.getState() == Bird.BirdState.FLYING) {
