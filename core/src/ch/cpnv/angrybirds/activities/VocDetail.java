@@ -30,6 +30,9 @@ public class VocDetail extends Game implements InputProcessor {
 
     private Texture background;
 
+    private Vector2 previousTouchPoint;
+    private float scrollOffset = 0;
+
     private Vocabulary voc;
 
     private BitmapFont titleFont;
@@ -101,7 +104,7 @@ public class VocDetail extends Game implements InputProcessor {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, title, titlePositionX, TITLE_POSITION_Y);
         returnButton.draw(batch);
-        float wordY = VOC_START_Y;
+        float wordY = VOC_START_Y + scrollOffset;
         for (Word word : voc.getWords()) {
             wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
             wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);
@@ -137,6 +140,7 @@ public class VocDetail extends Game implements InputProcessor {
         if (returnButton.contains(touchPoint)) {
             AngryWirds.popPage();
         }
+        previousTouchPoint = touchPoint;
         return true;
     }
 
@@ -147,7 +151,12 @@ public class VocDetail extends Game implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        float verticalDrag = touchPoint.y - previousTouchPoint.y;
+        scrolled((int) verticalDrag);
+        
+        previousTouchPoint = touchPoint;
+        return true;
     }
 
     @Override
@@ -157,7 +166,8 @@ public class VocDetail extends Game implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        return false;
+        scrollOffset += amount;
+        return true;
     }
 
     // convert screen coordinates to camera coordinates
