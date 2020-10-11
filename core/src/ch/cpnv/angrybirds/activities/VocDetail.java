@@ -25,7 +25,6 @@ public class VocDetail extends Game implements InputProcessor {
     private static final float BUTTON_DIMENSION = 100;
     private static final float COLUMN1_X = 200;
     private static final float COLUMN2_X = Play.WORLD_WIDTH / 2f + COLUMN1_X;
-    private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
     private static final float WORD_MARGIN = 25f;
 
     private Texture background;
@@ -41,6 +40,7 @@ public class VocDetail extends Game implements InputProcessor {
     private float titlePositionX;
 
     private BitmapFont wordFont;
+    private float vocStartY;
     private float wordHeight;
 
     private IconButton returnButton;
@@ -70,6 +70,7 @@ public class VocDetail extends Game implements InputProcessor {
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, title);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
+        vocStartY = TITLE_POSITION_Y - titleGlyphLayout.height - WORD_MARGIN;
 
         wordFont = new BitmapFont();
         wordFont.setColor(Color.BLACK);
@@ -86,7 +87,7 @@ public class VocDetail extends Game implements InputProcessor {
         vocGlyphLayout.setText(wordFont, title);
         wordHeight = vocGlyphLayout.height;
 
-        maxScrollOffset = (wordHeight + WORD_MARGIN) * voc.size() - VOC_START_Y;
+        maxScrollOffset = (wordHeight + WORD_MARGIN) * voc.size() - vocStartY;
     }
 
     @Override
@@ -107,7 +108,7 @@ public class VocDetail extends Game implements InputProcessor {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, title, titlePositionX, TITLE_POSITION_Y);
         returnButton.draw(batch);
-        float wordY = VOC_START_Y + scrollOffset;
+        float wordY = vocStartY + scrollOffset;
         for (Word word : voc.getWords()) {
             wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
             wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);
