@@ -32,7 +32,7 @@ public class PhysicalObject extends Sprite {
         return this.getRectangle().overlaps(o.getRectangle());
     }
 
-    private Rectangle getRectangle() {
+    protected Rectangle getRectangle() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }

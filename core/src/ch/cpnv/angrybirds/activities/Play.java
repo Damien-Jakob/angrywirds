@@ -27,6 +27,7 @@ import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO select voc (+ possibility to select randomly)
 
@@ -62,7 +63,7 @@ public class Play extends Game implements InputProcessor {
 
     public static final int PAUSE_ZONE_DIMENSIONS = 100;
     public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS - 10;
-    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS -10;
+    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS - 10;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
@@ -71,8 +72,10 @@ public class Play extends Game implements InputProcessor {
 
     private BitmapFont scoreFont;
 
-    private Rectangle pauseZone;
-    private PhysicalObject pauseIcon;
+    private IconButton pauseButton;
+
+    //private Rectangle pauseZone;
+    //private PhysicalObject pauseIcon;
 
     private Panel questionPanel;
 
@@ -168,6 +171,12 @@ public class Play extends Game implements InputProcessor {
 
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
 
+        pauseButton = new IconButton(
+                new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
+                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
+                "pause-icon.png"
+        );
+        /*
         pauseZone = new Rectangle(
                 PAUSE_ZONE_X, PAUSE_ZONE_Y,
                 PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS
@@ -176,7 +185,7 @@ public class Play extends Game implements InputProcessor {
                 new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
                 PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
                 "pause-icon.png");
-
+*/
         batch = new SpriteBatch();
 
         scoreFont = new BitmapFont();
@@ -265,7 +274,7 @@ public class Play extends Game implements InputProcessor {
         questionPanel.draw(batch);
         bird.draw(batch);
 
-        pauseIcon.draw(batch);
+        pauseButton.draw(batch);
         scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
@@ -297,7 +306,7 @@ public class Play extends Game implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
-        if (pauseZone.contains(touchPoint)) {
+        if (pauseButton.contains(touchPoint)) {
             Gdx.app.log("ANGRY", "Pause touched");
             AngryWirds.pushPage(new Pause());
             return true;
