@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class PhysicalObject extends Sprite {
+public abstract class PhysicalObject extends Sprite {
     public PhysicalObject(Vector2 position, float width, float height, String pictureName) {
         super(new Texture(pictureName));
         setBounds(position.x, position.y, width, height);
@@ -32,7 +32,7 @@ public class PhysicalObject extends Sprite {
         return this.getRectangle().overlaps(o.getRectangle());
     }
 
-    private Rectangle getRectangle() {
+    protected Rectangle getRectangle() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }
