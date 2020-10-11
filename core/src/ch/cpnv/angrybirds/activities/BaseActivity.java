@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class BaseActivity extends Game implements InputProcessor {
     private Texture background;
@@ -83,5 +85,12 @@ public abstract class BaseActivity extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    // convert screen coordinates to camera coordinates
+    protected Vector2 convertCoordinates(int screenX, int screenY) {
+        Vector3 point = new Vector3(screenX, screenY, 0);
+        camera.unproject(point);
+        return new Vector2(point.x, point.y);
     }
 }
