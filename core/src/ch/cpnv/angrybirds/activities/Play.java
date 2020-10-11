@@ -30,6 +30,8 @@ import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO add option to select voc randomly
+
+
 // TODO see voc detail (+ scroll)
 // TODO switch languages
 // TODO save advancement
