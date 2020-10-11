@@ -27,14 +27,11 @@ import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO better score management : objects have points/negative points
-
-// TODO select voc (+ possibility to select randomly)
-// TODO see voc detail
+// TODO add option to select voc randomly
+// TODO see voc detail (+ scroll)
 // TODO switch languages
-// TODO see : Map !!!EXAMEN!!!
-// TODO see : tables
 // TODO save advancement
 
 public class Play extends Game implements InputProcessor {
@@ -53,6 +50,8 @@ public class Play extends Game implements InputProcessor {
 
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
+    private static final int VOC_POSITION_X = SCORE_POSITION_X;
+    private static final int VOC_POSITION_Y = WORLD_HEIGHT - 10;
 
     public static final int SUCCESS_POINTS = 100;
 
@@ -61,19 +60,18 @@ public class Play extends Game implements InputProcessor {
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
-    public static final int PAUSE_ZONE_DIMENSIONS = 100;
-    public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS;
-    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS;
+    public static final int PAUSE_BUTTON_DIMENSIONS = 100;
+    public static final int PAUSE_BUTTON_X = WORLD_WIDTH - PAUSE_BUTTON_DIMENSIONS - 10;
+    public static final int PAUSE_BUTTON_Y = WORLD_HEIGHT - PAUSE_BUTTON_DIMENSIONS - 10;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
     private Scenery scenery;
     private Texture background;
 
-    private BitmapFont scoreFont;
+    private BitmapFont infoFont;
 
-    private Rectangle pauseZone;
-    private PhysicalObject pauseIcon;
+    private IconButton pauseButton;
 
     private Panel questionPanel;
 
@@ -169,20 +167,17 @@ public class Play extends Game implements InputProcessor {
 
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
 
-        pauseZone = new Rectangle(
-                PAUSE_ZONE_X, PAUSE_ZONE_Y,
-                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS
+        pauseButton = new IconButton(
+                new Vector2(PAUSE_BUTTON_X, PAUSE_BUTTON_Y),
+                PAUSE_BUTTON_DIMENSIONS, PAUSE_BUTTON_DIMENSIONS,
+                "pause-icon.png"
         );
-        pauseIcon = new PhysicalObject(
-                new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
-                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
-                "pause-icon.png");
 
         batch = new SpriteBatch();
 
-        scoreFont = new BitmapFont();
-        scoreFont.setColor(Color.BLACK);
-        scoreFont.getData().setScale(2);
+        infoFont = new BitmapFont();
+        infoFont.setColor(Color.BLACK);
+        infoFont.getData().setScale(2);
 
         // Set which InputProcessor does answer to the inputs
         Gdx.input.setInputProcessor(this);
@@ -266,8 +261,9 @@ public class Play extends Game implements InputProcessor {
         questionPanel.draw(batch);
         bird.draw(batch);
 
-        pauseIcon.draw(batch);
-        scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
+        pauseButton.draw(batch);
+        infoFont.draw(batch, "Voc : " + AngryWirds.voc.getName(), VOC_POSITION_X, VOC_POSITION_Y);
+        infoFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
@@ -298,7 +294,7 @@ public class Play extends Game implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
-        if (pauseZone.contains(touchPoint)) {
+        if (pauseButton.contains(touchPoint)) {
             Gdx.app.log("ANGRY", "Pause touched");
             AngryWirds.pushPage(new Pause());
             return true;

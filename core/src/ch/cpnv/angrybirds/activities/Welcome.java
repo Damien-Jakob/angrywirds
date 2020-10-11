@@ -10,16 +10,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import ch.cpnv.angrybirds.AngryWirds;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.providers.VocProvider;
 
 public class Welcome extends Game implements InputProcessor {
-    public static Random alea;
-
     private static final String TITLE = "AngryWirds";
     private static final int TITLE_SIZE = 6;
 
@@ -99,12 +92,7 @@ public class Welcome extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // reset the game data
-        AngryWirds.score = 0;
-        AngryWirds.voc = VocProvider.getInstance().pickAVoc();
-        AngryWirds.foundWords = new ArrayList<Word>();
-
-        AngryWirds.pushPage(new Play());
+        AngryWirds.pushPage(new VocSelection());
         return true;
     }
 
