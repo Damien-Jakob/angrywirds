@@ -31,6 +31,7 @@ import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO select voc
 
+// TODO display voc name in Play
 // TODO add option to select voc randomly
 // TODO see voc detail (+ scroll)
 // TODO switch languages

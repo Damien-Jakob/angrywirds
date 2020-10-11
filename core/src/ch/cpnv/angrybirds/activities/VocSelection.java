@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
 
@@ -24,7 +25,7 @@ public class VocSelection extends Game implements InputProcessor {
     private static final int LINE_SIZE = 3;
 
     private static final float TITLE_POSITION_Y = Play.WORLD_HEIGHT - 20f;
-    private static final float buttonDimension = 100;
+    private static final float BUTTON_DIMENSION = 100;
     private static final float VOC_POSITION_X = 200;
     private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
     private static final float VOC_MARGIN = 50f;
@@ -69,7 +70,7 @@ public class VocSelection extends Game implements InputProcessor {
         vocabularyFont = new BitmapFont();
         vocabularyFont.setColor(vocabularyNameColor);
         vocabularyFont.getData().setScale(LINE_SIZE);
-        vocTextX = VOC_POSITION_X + buttonDimension + VOC_MARGIN;
+        vocTextX = VOC_POSITION_X + BUTTON_DIMENSION + VOC_MARGIN;
 
         vocSelectionButtons = new HashMap<IconButton, Vocabulary>();
         float buttonY = VOC_START_Y;
@@ -77,12 +78,12 @@ public class VocSelection extends Game implements InputProcessor {
             vocSelectionButtons.put(
                     new IconButton(
                             new Vector2(VOC_POSITION_X, buttonY),
-                            buttonDimension, buttonDimension,
+                            BUTTON_DIMENSION, BUTTON_DIMENSION,
                             "play-icon.png"
                     ),
                     vocabulary
             );
-            buttonY -= buttonDimension + VOC_MARGIN;
+            buttonY -= BUTTON_DIMENSION + VOC_MARGIN;
         }
     }
 
@@ -136,9 +137,15 @@ public class VocSelection extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        AngryWirds.popPage();
-        // TODO give the voc selected
-        AngryWirds.start();
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
+            IconButton iconButton = entry.getKey();
+            if (iconButton.contains(touchPoint)) {
+                Vocabulary selectedVoc = entry.getValue();
+                AngryWirds.popPage();
+                AngryWirds.start(selectedVoc);
+            }
+        }
         return true;
     }
 
@@ -160,5 +167,12 @@ public class VocSelection extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    // convert screen coordinates to camera coordinates
+    protected Vector2 convertCoordinates(int screenX, int screenY) {
+        Vector3 point = new Vector3(screenX, screenY, 0);
+        camera.unproject(point);
+        return new Vector2(point.x, point.y);
     }
 }

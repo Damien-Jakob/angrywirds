@@ -37,11 +37,15 @@ public class AngryWirds extends Game {
         pages.peek().render();
     }
 
-    public static void start() {
+    public static void start(Vocabulary voc) {
         AngryWirds.score = 0;
-        AngryWirds.voc = VocProvider.getInstance().pickAVoc();
+        AngryWirds.voc = voc;
         AngryWirds.foundWords = new ArrayList<Word>();
         AngryWirds.pushPage(new Play());
+    }
+
+    public static void start() {
+        start(VocProvider.getInstance().pickAVoc());
     }
 
     public static void pushPage(Game game) {
