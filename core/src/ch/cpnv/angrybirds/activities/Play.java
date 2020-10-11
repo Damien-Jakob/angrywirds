@@ -29,9 +29,8 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO see voc detail (+ scroll)
-
 // TODO base class for activities (background, camera, ...)
+
 // TODO switch languages
 // TODO save advancement
 
