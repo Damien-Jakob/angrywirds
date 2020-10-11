@@ -29,14 +29,9 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO select voc
-
-// TODO display voc name in Play
 // TODO add option to select voc randomly
 // TODO see voc detail (+ scroll)
 // TODO switch languages
-// TODO see : Map !!!EXAMEN!!!
-// TODO see : tables
 // TODO save advancement
 
 public class Play extends Game implements InputProcessor {
@@ -55,6 +50,8 @@ public class Play extends Game implements InputProcessor {
 
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
+    private static final int VOC_POSITION_X = SCORE_POSITION_X;
+    private static final int VOC_POSITION_Y = WORLD_HEIGHT - 10;
 
     public static final int SUCCESS_POINTS = 100;
 
@@ -63,16 +60,16 @@ public class Play extends Game implements InputProcessor {
     public static final int AIMING_ZONE_WIDTH = WORLD_WIDTH;
     public static final int AIMING_ZONE_HEIGHT = WORLD_HEIGHT;
 
-    public static final int PAUSE_ZONE_DIMENSIONS = 100;
-    public static final int PAUSE_ZONE_X = WORLD_WIDTH - PAUSE_ZONE_DIMENSIONS - 10;
-    public static final int PAUSE_ZONE_Y = WORLD_HEIGHT - PAUSE_ZONE_DIMENSIONS - 10;
+    public static final int PAUSE_BUTTON_DIMENSIONS = 100;
+    public static final int PAUSE_BUTTON_X = WORLD_WIDTH - PAUSE_BUTTON_DIMENSIONS - 10;
+    public static final int PAUSE_BUTTON_Y = WORLD_HEIGHT - PAUSE_BUTTON_DIMENSIONS - 10;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
     private Scenery scenery;
     private Texture background;
 
-    private BitmapFont scoreFont;
+    private BitmapFont infoFont;
 
     private IconButton pauseButton;
 
@@ -171,16 +168,16 @@ public class Play extends Game implements InputProcessor {
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_WIDTH, AIMING_ZONE_HEIGHT);
 
         pauseButton = new IconButton(
-                new Vector2(PAUSE_ZONE_X, PAUSE_ZONE_Y),
-                PAUSE_ZONE_DIMENSIONS, PAUSE_ZONE_DIMENSIONS,
+                new Vector2(PAUSE_BUTTON_X, PAUSE_BUTTON_Y),
+                PAUSE_BUTTON_DIMENSIONS, PAUSE_BUTTON_DIMENSIONS,
                 "pause-icon.png"
         );
 
         batch = new SpriteBatch();
 
-        scoreFont = new BitmapFont();
-        scoreFont.setColor(Color.BLACK);
-        scoreFont.getData().setScale(2);
+        infoFont = new BitmapFont();
+        infoFont.setColor(Color.BLACK);
+        infoFont.getData().setScale(2);
 
         // Set which InputProcessor does answer to the inputs
         Gdx.input.setInputProcessor(this);
@@ -265,7 +262,8 @@ public class Play extends Game implements InputProcessor {
         bird.draw(batch);
 
         pauseButton.draw(batch);
-        scoreFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
+        infoFont.draw(batch, "Voc : " + AngryWirds.voc.getName(), VOC_POSITION_X, VOC_POSITION_Y);
+        infoFont.draw(batch, "Score : " + AngryWirds.score, SCORE_POSITION_X, SCORE_POSITION_Y);
 
         batch.end();
     }
