@@ -1,16 +1,11 @@
 package ch.cpnv.angrybirds.activities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
@@ -29,15 +24,13 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO see voc detail (+ scroll)
-
 // TODO base class for activities (background, camera, ...)
+
 // TODO switch languages
 // TODO save advancement
 
-public class Play extends Game implements InputProcessor {
-    public static final int WORLD_WIDTH = 1600;
-    public static final int WORLD_HEIGHT = 900;
+public class Play extends BaseActivity implements InputProcessor {
+    private static final float MAX_DT = 0.5f;
 
     public static final int FLOOR_HEIGHT = 120;
 
@@ -68,7 +61,6 @@ public class Play extends Game implements InputProcessor {
     private Bird bird;
     private ArrayList<Wasp> wasps;
     private Scenery scenery;
-    private Texture background;
 
     private BitmapFont infoFont;
 
@@ -78,17 +70,7 @@ public class Play extends Game implements InputProcessor {
 
     private Rectangle aimingzone;
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-
     public Play() {
-        background = new Texture(Gdx.files.internal("background.jpg"));
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        camera.update();
-
         bird = new Bird();
 
         wasps = new ArrayList<>();
@@ -174,20 +156,16 @@ public class Play extends Game implements InputProcessor {
                 "pause-icon.png"
         );
 
-        batch = new SpriteBatch();
-
         infoFont = new BitmapFont();
         infoFont.setColor(Color.BLACK);
         infoFont.getData().setScale(2);
-
-        // Set which InputProcessor does answer to the inputs
-        Gdx.input.setInputProcessor(this);
     }
 
     public void update() {
-        float dt = Gdx.graphics.getDeltaTime(); // number of milliseconds elapsed since last render
+        // number of milliseconds elapsed since last render
+        float dt = Gdx.graphics.getDeltaTime();
 
-        if (dt < 0.5f) { // Ignore big lapses, like the ones at the start of the game
+        if (dt < MAX_DT) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
             if (bird.getState() == Bird.BirdState.FLYING) {
@@ -243,16 +221,12 @@ public class Play extends Game implements InputProcessor {
     }
 
     @Override
-    public void create() {
-
-    }
-
-    @Override
     public void render() {
         update();
-        batch.setProjectionMatrix(camera.combined);
+
+        super.render();
+
         batch.begin();
-        batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // Note that the order in which they are drawn matters, the last ones are on top of the previous ones
         for (Wasp wasp : wasps) {
@@ -270,41 +244,17 @@ public class Play extends Game implements InputProcessor {
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-    }
-
-    // InputProcessor interface implementation
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
-        Gdx.app.log("ANGRY", "Touch at " + touchPoint.x + "," + touchPoint.y);
 
         if (pauseButton.contains(touchPoint)) {
-            Gdx.app.log("ANGRY", "Pause touched");
             AngryWirds.pushPage(new Pause());
             return true;
         }
 
         boolean actionHandled = scenery.handleTouchDown(touchPoint);
 
-        // We don't want to move the bird if the user wanted to display a Pig
-        if (!actionHandled
+        if (!actionHandled // We don't want to move the bird if the user wanted to display a Pig
                 && aimingzone.contains(touchPoint)) {
             bird.startAim(touchPoint);
         }
@@ -314,7 +264,6 @@ public class Play extends Game implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
-        Gdx.app.log("ANGRY", "Touch up at " + touchPoint.x + "," + touchPoint.y);
 
         scenery.handleTouchUp(touchPoint);
 
@@ -333,22 +282,5 @@ public class Play extends Game implements InputProcessor {
             bird.drag(touchPoint);
         }
         return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
-    // convert screen coordinates to camera coordinates
-    protected Vector2 convertCoordinates(int screenX, int screenY) {
-        Vector3 point = new Vector3(screenX, screenY, 0);
-        camera.unproject(point);
-        return new Vector2(point.x, point.y);
     }
 }

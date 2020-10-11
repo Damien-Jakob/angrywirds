@@ -1,16 +1,10 @@
 package ch.cpnv.angrybirds.activities;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import java.util.HashMap;
 
@@ -21,7 +15,7 @@ import ch.cpnv.angrybirds.ui.IconButton;
 
 // TODO find better icons (should take 100% of width and height of the png)
 
-public class VocSelection extends Game implements InputProcessor {
+public class VocSelection extends BaseActivity implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
     private static final int LINE_SIZE = 3;
@@ -31,8 +25,6 @@ public class VocSelection extends Game implements InputProcessor {
     private static final float VOC_POSITION_X = 200;
     private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
     private static final float VOC_MARGIN = 50f;
-
-    private Texture background;
 
     private BitmapFont titleFont;
     private float titlePositionX;
@@ -48,22 +40,7 @@ public class VocSelection extends Game implements InputProcessor {
     private HashMap<IconButton, Vocabulary> vocDetailButtons;
     private float vocDetailX;
 
-    private SpriteBatch batch;
-
-    private OrthographicCamera camera;
-
     public VocSelection() {
-        batch = new SpriteBatch();
-
-        Gdx.input.setInputProcessor(this);
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Play.WORLD_WIDTH, Play.WORLD_HEIGHT);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        camera.update();
-
-        background = new Texture(Gdx.files.internal("background.jpg"));
-
         titleFont = new BitmapFont();
         titleFont.setColor(Color.GOLD);
         titleFont.getData().setScale(TITLE_SIZE);
@@ -118,21 +95,10 @@ public class VocSelection extends Game implements InputProcessor {
     }
 
     @Override
-    public void create() {
-
-    }
-
-    public void update() {
-        float dt = Gdx.graphics.getDeltaTime();
-    }
-
-    @Override
     public void render() {
-        update();
+        super.render();
 
-        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, TITLE_POSITION_Y);
         randomVocButton.draw(batch);
         randomVocFont.draw(batch, "Random", vocTextX, randomVocButton.getYTop() + textOffsetY);
@@ -148,27 +114,6 @@ public class VocSelection extends Game implements InputProcessor {
             button.draw(batch);
         }
         batch.end();
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-    }
-
-    // InputProcessor interface implementation
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
     }
 
     @Override
@@ -194,32 +139,5 @@ public class VocSelection extends Game implements InputProcessor {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
-    // convert screen coordinates to camera coordinates
-    protected Vector2 convertCoordinates(int screenX, int screenY) {
-        Vector3 point = new Vector3(screenX, screenY, 0);
-        camera.unproject(point);
-        return new Vector2(point.x, point.y);
     }
 }
