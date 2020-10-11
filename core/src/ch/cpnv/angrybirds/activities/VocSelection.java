@@ -19,6 +19,8 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 import ch.cpnv.angrybirds.ui.IconButton;
 
+// TODO find better icons (should take 100% of width and height of the png)
+
 public class VocSelection extends Game implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
@@ -29,8 +31,6 @@ public class VocSelection extends Game implements InputProcessor {
     private static final float VOC_POSITION_X = 200;
     private static final float VOC_START_Y = Play.WORLD_HEIGHT - 200;
     private static final float VOC_MARGIN = 50f;
-    // used to align the text with the buttons
-    private static final float TEXT_OFFSET_Y = -30f;
 
     private Texture background;
 
@@ -40,6 +40,8 @@ public class VocSelection extends Game implements InputProcessor {
     private BitmapFont vocabularyFont;
     private BitmapFont randomVocFont;
     private float vocTextX;
+    // used to align the text with the buttons, using the center
+    private float textOffsetY;
 
     private IconButton randomVocButton;
     private HashMap<IconButton, Vocabulary> vocSelectionButtons;
@@ -101,14 +103,18 @@ public class VocSelection extends Game implements InputProcessor {
             vocDetailButtons.put(
                     new IconButton(
                             new Vector2(vocDetailX, buttonY),
-                            100, 100,
-                            "details-icon.png"
+                            BUTTON_DIMENSION, BUTTON_DIMENSION,
+                            "detail-icon.png"
                     ),
                     vocabulary
             );
-
             buttonY -= BUTTON_DIMENSION + VOC_MARGIN;
         }
+
+        GlyphLayout vocGlyphLayout = new GlyphLayout();
+        vocGlyphLayout.setText(vocabularyFont, TITLE);
+        // We want to align the center of the button with the center of the text
+        textOffsetY = vocGlyphLayout.height / 2f - BUTTON_DIMENSION / 2f;
     }
 
     @Override
@@ -129,13 +135,13 @@ public class VocSelection extends Game implements InputProcessor {
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         titleFont.draw(batch, TITLE, titlePositionX, TITLE_POSITION_Y);
         randomVocButton.draw(batch);
-        randomVocFont.draw(batch, "Random", vocTextX, randomVocButton.getYTop() + TEXT_OFFSET_Y);
+        randomVocFont.draw(batch, "Random", vocTextX, randomVocButton.getYTop() + textOffsetY);
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
             IconButton button = entry.getKey();
             button.draw(batch);
 
             Vocabulary voc = entry.getValue();
-            vocabularyFont.draw(batch, voc.getName(), vocTextX, button.getYTop() + TEXT_OFFSET_Y);
+            vocabularyFont.draw(batch, voc.getName(), vocTextX, button.getYTop() + textOffsetY);
         }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocDetailButtons.entrySet()) {
             IconButton button = entry.getKey();
