@@ -122,7 +122,6 @@ public class Play extends BaseActivity implements InputProcessor {
         AngryWirds.voc.deallocateAll();
         int pigsLeft = PIGS_QUANTITY;
         boolean firstPig = true;
-        // TODO throw error if all words are allocated -> better performance
         while (pigsLeft > 0) {
             try {
                 Word word;
@@ -178,7 +177,7 @@ public class Play extends BaseActivity implements InputProcessor {
         if (dt < MAX_DT) { // Ignore big lapses, like the ones at the start of the game
             // --------- Bird
             // Apply changes to the bird. The magnitude of the changes depend on the time elapsed since last update !!!
-            if (bird.getState() == Bird.BirdState.FLYING) {
+            if (bird.getState() == Bird.State.FLYING) {
                 bird.move(dt);
                 bird.accelerate(dt);
 
