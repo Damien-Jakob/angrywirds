@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class MovingObject extends PhysicalObject {
     // Gravity, for objects that fall
-    public final static float GRAVITY = 100f;
+    public final static float GRAVITY = -100f;
 
     protected Vector2 speed;
 

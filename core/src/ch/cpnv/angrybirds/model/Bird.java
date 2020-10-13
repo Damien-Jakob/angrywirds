@@ -69,6 +69,6 @@ public final class Bird extends MovingObject {
     @Override
     public void accelerate(float dt) {
         // y = y0 - g * t
-        speed.y -= GRAVITY * dt;
+        speed.y += GRAVITY * dt;
     }
 }
