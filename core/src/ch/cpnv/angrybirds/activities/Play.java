@@ -25,7 +25,6 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO draw slingshot
 // TODO add rubber once implemented
 
 public class Play extends BaseActivity implements InputProcessor {
@@ -36,6 +35,7 @@ public class Play extends BaseActivity implements InputProcessor {
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
     private static final int SLINGSHOT_WIDTH = 75;
+    private static final int SLINGSHOT_HEIGHT = BIRD_START_Y + Bird.HEIGHT - FLOOR_HEIGHT;
 
     private static final int WASP_QUANTITY = 2;
     private static final int PIGS_QUANTITY = 5;
@@ -242,7 +242,9 @@ public class Play extends BaseActivity implements InputProcessor {
         }
         scenery.draw(batch);
         questionPanel.draw(batch);
+        batch.draw(slingshot1, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
         bird.draw(batch);
+        batch.draw(slingshot2, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
         pauseButton.draw(batch);
         drawGameInfo();
         batch.end();
