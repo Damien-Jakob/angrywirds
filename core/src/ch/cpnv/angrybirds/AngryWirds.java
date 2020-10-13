@@ -23,7 +23,6 @@ public class AngryWirds extends Game {
     protected static Stack<Game> pages;
 
     public static Vocabulary voc;
-    public static ArrayList<Word> foundWords;
 
     public static int score = 0;
 
@@ -43,7 +42,7 @@ public class AngryWirds extends Game {
     public static void start(Vocabulary voc) {
         AngryWirds.score = 0;
         AngryWirds.voc = voc;
-        AngryWirds.foundWords = new ArrayList<Word>();
+        voc.resetFoundWords();
         AngryWirds.pushPage(new Play());
     }
 

@@ -118,31 +118,31 @@ public class Play extends BaseActivity implements InputProcessor {
             }
         }
 
-        int pigsLeft = Math.min(PIGS_QUANTITY, AngryWirds.voc.size());
-        ArrayList<Word> selectedWords = new ArrayList<Word>();
+        AngryWirds.voc.deallocateAll();
+        int pigsLeft = PIGS_QUANTITY;
         boolean firstPig = true;
-        while (pigsLeft > 0) {
+        // TODO throw error if all words are allocated -> better performance
+        while (pigsLeft > 0
+                && AngryWirds.voc.hasNotAllocatedWord()
+        ) {
             try {
                 Word word;
                 // The first pig will have a word that has never been found
                 // It will be the word of the question panel
                 if (firstPig) {
-                    word = AngryWirds.voc.pickAWord(AngryWirds.foundWords);
+                    word = AngryWirds.voc.pickNotAllocatedWord();
 
                     questionPanel = new Panel(word);
 
                     firstPig = false;
                 } else {
-                    do {
-                        word = AngryWirds.voc.pickAWord();
-                    } while (selectedWords.contains(word));
+                    word = AngryWirds.voc.pickNotAllocatedWord();
                 }
-                selectedWords.add(word);
 
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
-                        0
-                ), word);
+                        0),
+                        word);
                 scenery.addElement(pig);
                 pigsLeft--;
             } catch (OutOfSceneryException exception) {
@@ -197,9 +197,9 @@ public class Play extends BaseActivity implements InputProcessor {
                         if (pig.getWord() == questionPanel.getWord()) {
                             AngryWirds.score -= pig.getPoints();
                             AngryWirds.score += SUCCESS_POINTS;
-                            AngryWirds.foundWords.add(questionPanel.getWord());
+                            questionPanel.getWord().setFound(true);
                             AngryWirds.popPage();
-                            if (AngryWirds.foundWords.size() < AngryWirds.voc.size()) {
+                            if (AngryWirds.voc.hasNotFoundWord()) {
                                 AngryWirds.pushPage(new Play());
                             } else {
                                 AngryWirds.pushPage(new GameOver());

@@ -20,6 +20,7 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
     public Pig(Vector2 position, Word word) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getSolution());
         this.word = word;
+        word.setAllocated(true);
     }
 
     @Override
