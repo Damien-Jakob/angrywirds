@@ -31,7 +31,7 @@ public class Vocabulary {
 
     public boolean hasNotFoundWord() {
         for (Word word : words) {
-            if(!word.isFound()) {
+            if (!word.isFound()) {
                 return true;
             }
         }
@@ -40,7 +40,7 @@ public class Vocabulary {
 
     public boolean hasNotAllocatedWord() {
         for (Word word : words) {
-            if(!word.isAllocated()) {
+            if (!word.isAllocated()) {
                 return true;
             }
         }
@@ -59,23 +59,25 @@ public class Vocabulary {
         }
     }
 
-    ;
-
-    public Word pickWord() {
+    public Word pickWord() throws NoPickableWordException {
         return pickWord(words);
     }
 
-    public Word pickNotAllocatedWord() {
+    public Word pickNotAllocatedWord() throws NoPickableWordException {
         return pickWord(notAllocatedWords());
     }
 
-    public Word pickNotFoundWord() {
+    public Word pickNotFoundWord() throws NoPickableWordException {
         return pickWord(notAllocatedWords());
     }
 
-    private Word pickWord(ArrayList<Word> words) {
+    private Word pickWord(ArrayList<Word> words) throws NoPickableWordException {
+        int wordsCount = words.size();
+
+        if( wordsCount <= 0) {
+            throw new NoPickableWordException();
+        }
         return words.get(AngryWirds.alea.nextInt(words.size()));
-
     }
 
     private ArrayList<Word> notAllocatedWords() {

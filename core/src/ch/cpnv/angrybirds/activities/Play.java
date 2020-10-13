@@ -22,6 +22,7 @@ import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
+import ch.cpnv.angrybirds.model.data.NoPickableWordException;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
@@ -122,9 +123,7 @@ public class Play extends BaseActivity implements InputProcessor {
         int pigsLeft = PIGS_QUANTITY;
         boolean firstPig = true;
         // TODO throw error if all words are allocated -> better performance
-        while (pigsLeft > 0
-                && AngryWirds.voc.hasNotAllocatedWord()
-        ) {
+        while (pigsLeft > 0) {
             try {
                 Word word;
                 // The first pig will have a word that has never been found
@@ -149,6 +148,9 @@ public class Play extends BaseActivity implements InputProcessor {
                 Gdx.app.log("EXCEPTION", "Pig out of bounds: " + exception.getMessage());
             } catch (SceneCollapseException exception) {
                 Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
+            } catch (NoPickableWordException exception) {
+                Gdx.app.log("EXCEPTION", "No more available words: " + exception.getMessage());
+                break;
             }
         }
 
