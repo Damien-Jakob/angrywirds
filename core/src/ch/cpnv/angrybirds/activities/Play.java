@@ -130,7 +130,7 @@ public class Play extends BaseActivity implements InputProcessor {
                 // The first pig will have a word that has never been found
                 // It will be the word of the question panel
                 if (firstPig) {
-                    word = AngryWirds.voc.pickNotAllocatedWord();
+                    word = AngryWirds.voc.pickNotFoundWord();
 
                     questionPanel = new Panel(word);
 
