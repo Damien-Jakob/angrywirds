@@ -25,14 +25,15 @@ public final class Wasp extends MovingObject implements ScoreInfluencer {
     }
 
     private void accelerateToCenter(float dt) {
-        // update the speed by a random acceleration
-        // note : that 0 <= nextFloat() < 1
-        // note : that the more the wasp is far from the center, the more it will be attracted to it
-        // -0.5 <= nextFloat - 0.5 < 0.5, in this case the acceleration in all directions is equally probable
-        // getX()/AngryWirds.WORLD_WIDTH == 0.5 if the wasp is at the center
-        float acc_x_update = AngryWirds.alea.nextFloat() - getX() / Play.WORLD_WIDTH;
-        float acc_y_update = AngryWirds.alea.nextFloat() - getY() / Play.WORLD_HEIGHT;
-        speed.add(new Vector2(acc_x_update, acc_y_update).scl(dt * AGITATION));
+        // update the speed by a random acceleration, that tends to keep it in the middle
+        // note : 0 <= nextFloat() < 1
+        // note : the more the wasp is far from the center, the more it will be attracted to it
+        // note : -0.5 <= nextFloat - 0.5 < 0.5, in this case the acceleration in all directions is equally probable
+        // note : getX()/AngryWirds.WORLD_WIDTH == 0.5 if the wasp is at the center
+        Vector2 folly = new Vector2(
+                AngryWirds.alea.nextFloat() - getX() / Play.WORLD_WIDTH,
+                AngryWirds.alea.nextFloat() - getY() / Play.WORLD_HEIGHT);
+        speed.add(folly.scl(dt * AGITATION));
     }
 
     // It was a good thought experiment, but it's not really useful
