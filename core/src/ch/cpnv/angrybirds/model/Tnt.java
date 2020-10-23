@@ -10,11 +10,8 @@ public final class Tnt extends PhysicalObject implements ScoreInfluencer {
 
     private static final String PICTURE_NAME = "tnt.png";
 
-    private int negativePoints;
-
-    public Tnt(Vector2 position, int negativePoints) {
+    public Tnt(Vector2 position) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME);
-        this.negativePoints = negativePoints;
     }
 
     @Override

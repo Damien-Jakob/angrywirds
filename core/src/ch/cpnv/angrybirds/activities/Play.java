@@ -108,8 +108,7 @@ public class Play extends BaseActivity implements InputProcessor {
             try {
                 Tnt tnt = new Tnt(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
-                        0
-                ), 5);
+                        0));
                 scenery.dropElement(tnt);
                 tntLeft--;
             } catch (OutOfSceneryException exception) {
