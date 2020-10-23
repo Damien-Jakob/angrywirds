@@ -30,7 +30,7 @@ public final class Scenery {
         scene = new ArrayList<>();
         decoy = new ArrayList<>();
     }
-    
+
     /**
      * Add one piece of scenery, and fit its y position
      *

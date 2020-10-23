@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import ch.cpnv.angrybirds.AngryWirds;
+import ch.cpnv.angrybirds.model.RubberBand;
 import ch.cpnv.angrybirds.model.Scenery;
 import ch.cpnv.angrybirds.model.Bird;
 import ch.cpnv.angrybirds.model.Block;
@@ -73,8 +74,8 @@ public class Play extends BaseActivity implements InputProcessor {
 
     private Texture slingshot1;
     private Texture slingshot2;
-    // private RubberBand rubberBand1;
-    // private RubberBand rubberBand2;
+    private RubberBand rubberBand1;
+    private RubberBand rubberBand2;
 
     public Play() {
         bird = new Bird();
@@ -164,13 +165,14 @@ public class Play extends BaseActivity implements InputProcessor {
 
         slingshot1 = new Texture(Gdx.files.internal("slingshot1.png"));
         slingshot2 = new Texture(Gdx.files.internal("slingshot2.png"));
+        rubberBand1 = new RubberBand();
+        rubberBand2 = new RubberBand();
 
         infoFont = new BitmapFont();
         infoFont.setColor(Color.BLACK);
         infoFont.getData().setScale(2);
 
         aimingzone = new Rectangle(0, 0, AIMING_ZONE_X, AIMING_ZONE_Y);
-
     }
 
     public void update() {
@@ -229,6 +231,24 @@ public class Play extends BaseActivity implements InputProcessor {
                 wasp.move(dt);
                 wasp.accelerate(dt);
             }
+
+            // --------- RubberBand
+            // TODO use constants
+            Vector2 rubberBandOrigin = new Vector2(
+                    bird.getX() + 20,
+                    bird.getY() + 10);
+            Vector2 rubberband1Destination = new Vector2(
+                    BIRD_START_X + SLINGSHOT_WIDTH - 10,
+                    FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
+            Vector2 rubberband2Destination = new Vector2(
+                    BIRD_START_X + 15,
+                    FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
+            rubberBand1.putBetween(
+                    rubberBandOrigin,
+                    rubberband1Destination);
+            rubberBand2.putBetween(
+                    rubberBandOrigin,
+                    rubberband2Destination);
         }
     }
 
@@ -247,7 +267,13 @@ public class Play extends BaseActivity implements InputProcessor {
         scenery.draw(batch);
         questionPanel.draw(batch);
         batch.draw(slingshot1, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
+        if (bird.getState() == Bird.State.AIMING) {
+            rubberBand1.draw(batch);
+        }
         bird.draw(batch);
+        if (bird.getState() == Bird.State.AIMING) {
+            rubberBand2.draw(batch);
+        }
         batch.draw(slingshot2, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
         pauseButton.draw(batch);
         drawGameInfo();
