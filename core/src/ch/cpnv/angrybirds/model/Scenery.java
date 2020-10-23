@@ -2,6 +2,7 @@ package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -33,14 +34,32 @@ public final class Scenery {
     /**
      * Add one piece of scenery
      *
-     * @param newObject element to add to the scenery
+     * @param newElement element to add to the scenery
      */
-    public void addElement(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
-        if (newObject.getXLeft() < MIN_X || newObject.getXRight() > MAX_X) {
-            throw new OutOfSceneryException();
+    public void dropElement(PhysicalObject newElement) throws OutOfSceneryException, SceneCollapseException {
+        // Check horizontal placement
+        if (newElement.getXLeft() < MIN_X || newElement.getXRight() > MAX_X) {
+            throw new OutOfSceneryException(newElement.toString());
         }
-        fitY(newObject);
-        scene.add(newObject);
+        Rectangle fallPath = new Rectangle(
+                newElement.getX(), 0,
+                newElement.getWidth(), Play.WORLD_HEIGHT);
+        newElement.setY(MIN_Y);
+        for (PhysicalObject element : scene) {
+            if (element.getBoundingRectangle().overlaps(fallPath)
+                    && newElement.getYBottom() < element.getYTop()) {
+                // Check if the new element can stand
+                if (newElement.getXCenter() < element.getXLeft()
+                        || newElement.getXCenter() > element.getXRight()) {
+                    throw new SceneCollapseException(newElement.toString());
+                }
+                newElement.setY(element.getYTop());
+                if (newElement.getYTop() > MAX_Y) {
+                    throw new OutOfSceneryException(newElement.toString());
+                }
+            }
+        }
+        scene.add(newElement);
     }
 
     public void removeElement(PhysicalObject objectToRemove) {
@@ -54,21 +73,6 @@ public final class Scenery {
         for (float x = MIN_X; x < MAX_X; x += Block.WIDTH) {
             scene.add(new Block(new Vector2(x, Play.FLOOR_HEIGHT)));
         }
-    }
-
-    // TODO test stability of objects
-    protected void fitY(PhysicalObject newObject) throws OutOfSceneryException, SceneCollapseException {
-        float minAvailableAltitude = MIN_Y;
-        for (PhysicalObject object : scene) {
-            if (!(object.getXRight() < newObject.getXLeft() || newObject.getXRight() < object.getXLeft())
-                    && minAvailableAltitude < object.getYTop()) {
-                minAvailableAltitude = object.getYTop();
-            }
-        }
-        if (minAvailableAltitude + newObject.getHeight() > MAX_Y) {
-            throw new OutOfSceneryException();
-        }
-        newObject.setY(minAvailableAltitude);
     }
 
     /**

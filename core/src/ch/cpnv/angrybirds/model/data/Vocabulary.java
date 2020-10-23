@@ -1,5 +1,7 @@
 package ch.cpnv.angrybirds.model.data;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 
 import ch.cpnv.angrybirds.AngryWirds;
@@ -68,35 +70,44 @@ public class Vocabulary {
     }
 
     public Word pickNotFoundWord() throws NoPickableWordException {
-        return pickWord(notAllocatedWords());
+        return pickWord(notFoundWords());
+    }
+
+    public void print() {
+        for (Word word : words) {
+            Gdx.app.log("EXCEPTION", "Voc: ");
+            Gdx.app.log("EXCEPTION",
+                    word.getQuestion() + " / " + word.getSolution() + " :: "
+            + "Allocated : " + word.isAllocated() + ", Found : " + word.isFound());
+        }
     }
 
     private Word pickWord(ArrayList<Word> words) throws NoPickableWordException {
         int wordsCount = words.size();
 
-        if( wordsCount <= 0) {
+        if (wordsCount <= 0) {
             throw new NoPickableWordException();
         }
         return words.get(AngryWirds.alea.nextInt(words.size()));
     }
 
     private ArrayList<Word> notAllocatedWords() {
-        ArrayList<Word> unallocatedWords = new ArrayList<>();
+        ArrayList<Word> notAllocatedWords = new ArrayList<>();
         for (Word word : words) {
             if (!word.isAllocated()) {
-                unallocatedWords.add(word);
+                notAllocatedWords.add(word);
             }
         }
-        return unallocatedWords;
+        return notAllocatedWords;
     }
 
     private ArrayList<Word> notFoundWords() {
-        ArrayList<Word> unallocatedWords = new ArrayList<>();
+        ArrayList<Word> notFoundWords = new ArrayList<>();
         for (Word word : words) {
             if (!word.isFound()) {
-                unallocatedWords.add(word);
+                notFoundWords.add(word);
             }
         }
-        return unallocatedWords;
+        return notFoundWords;
     }
 }

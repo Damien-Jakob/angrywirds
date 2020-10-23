@@ -94,7 +94,7 @@ public class Play extends BaseActivity implements InputProcessor {
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Block.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ));
-                scenery.addElement(block);
+                scenery.dropElement(block);
                 blocksLeft--;
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "Block out of bounds: " + exception.getMessage());
@@ -110,7 +110,7 @@ public class Play extends BaseActivity implements InputProcessor {
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Tnt.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0
                 ), 5);
-                scenery.addElement(tnt);
+                scenery.dropElement(tnt);
                 tntLeft--;
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "TNT out of bounds: " + exception.getMessage());
@@ -132,7 +132,7 @@ public class Play extends BaseActivity implements InputProcessor {
 
                     questionPanel = new Panel(word);
 
-                    firstPig = false;
+
                 } else {
                     word = AngryWirds.voc.pickNotAllocatedWord();
                 }
@@ -141,8 +141,12 @@ public class Play extends BaseActivity implements InputProcessor {
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0),
                         word);
-                scenery.addElement(pig);
+                scenery.dropElement(pig);
+
+                // Update the data now that the pig has been constructed without error
+                firstPig = false;
                 pigsLeft--;
+                pig.getWord().setAllocated(true);
             } catch (OutOfSceneryException exception) {
                 Gdx.app.log("EXCEPTION", "Pig out of bounds: " + exception.getMessage());
             } catch (SceneCollapseException exception) {
