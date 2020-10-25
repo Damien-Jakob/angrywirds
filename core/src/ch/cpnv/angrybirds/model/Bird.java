@@ -18,7 +18,7 @@ public final class Bird extends MovingObject {
     private State state = State.READY;
     // Remember where the aiming started
     private Vector2 aimOrigin;
-    // Touch location "within" the bird, used to help keep the dragging animation clean
+    // Touch location "within" the bird, used to help keeping the dragging animation clean
     private Vector2 dragOffset;
 
     public Bird() {
