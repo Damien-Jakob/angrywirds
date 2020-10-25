@@ -40,9 +40,13 @@ public abstract class BaseActivity extends Game implements InputProcessor {
     @Override
     public void render() {
         batch.setProjectionMatrix(camera.combined);
+
+        // We don't need blending for the background, disabling it should improve performance
+        batch.disableBlending();
         batch.begin();
         batch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         batch.end();
+        batch.enableBlending();
     }
 
     @Override
