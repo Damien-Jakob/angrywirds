@@ -12,19 +12,21 @@ public final class Bubble extends TextualObject {
     // Used to center the spike on the head
     private static final int OFFSET = 20;
 
-    // Text position
+    // Text position inside the bubble
     private static final int TEXT_OFFSET_X = 40;
     private static final int TEXT_OFFSET_Y = 100;
+
+    private static final int FONT_SCALE = 2;
 
     private BitmapFont font;
 
     public Bubble(Pig pig) {
         super(new Vector2(pig.getX(), pig.getY()), WIDTH, HEIGHT, PICTURE_NAME, pig.getText());
-        setBounds(getX() - WIDTH / 2 - OFFSET, getY() + HEIGHT / 2, WIDTH, HEIGHT);
-        font = new BitmapFont();
+        setBounds(getX() - WIDTH / 2f - OFFSET, getY() + HEIGHT / 2f, WIDTH, HEIGHT);
 
+        font = new BitmapFont();
         font.setColor(Color.BLACK);
-        font.getData().setScale(2);
+        font.getData().setScale(FONT_SCALE);
     }
 
     public void draw(Batch batch) {

@@ -2,30 +2,37 @@ package ch.cpnv.angrybirds.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.activities.Play;
 
 public final class Bird extends MovingObject {
-    public enum BirdState {READY, AIMING, FLYING}
+    public enum State {
+        READY,
+        AIMING,
+        FLYING
+    }
 
     private static final String PICTURE_NAME = "bird.png";
     public static final int WIDTH = 60;
     public static final int HEIGHT = WIDTH;
 
-    private BirdState state = BirdState.READY;
+    private State state = State.READY;
     // Remember where the aiming started
     private Vector2 aimOrigin;
-    private Vector2 dragOffset; // Touch location "within" the bird, used to help keep the dragging animation clean
+    // Touch location "within" the bird, used to help keep the dragging animation clean
+    private Vector2 dragOffset;
 
     public Bird() {
-        super(new Vector2(Play.BIRD_START_X, Play.BIRD_START_Y), WIDTH, HEIGHT, PICTURE_NAME, new Vector2(0, 0));
+        super(new Vector2(Play.BIRD_START_X, Play.BIRD_START_Y),
+                WIDTH, HEIGHT,
+                PICTURE_NAME,
+                new Vector2(0, 0));
     }
 
     public Bird(Vector2 position, int width, int height, Vector2 speed) {
         super(position, width, height, PICTURE_NAME, speed);
     }
 
-    public BirdState getState() {
+    public State getState() {
         return state;
     }
 
@@ -38,23 +45,23 @@ public final class Bird extends MovingObject {
     }
 
     public void startAim(Vector2 position) {
-        if (state == BirdState.READY) {
+        if (state == State.READY) {
             aimOrigin = position.cpy();
             // Attention : copy the position before modifying it
             dragOffset = position.sub(getX(), getY());
-            state = BirdState.AIMING;
+            state = State.AIMING;
         }
     }
 
     public void drag(Vector2 position) {
-        if (state == BirdState.AIMING) {
+        if (state == State.AIMING) {
             setPosition(position.x - dragOffset.x, position.y - dragOffset.y);
         }
     }
 
     public void launchFrom(Vector2 position) {
-        if (state == BirdState.AIMING) {
-            state = BirdState.FLYING;
+        if (state == State.AIMING) {
+            state = State.FLYING;
             speed = aimOrigin.sub(position).scl(Play.SLINGSHOT_POWER);
         }
     }
@@ -62,6 +69,6 @@ public final class Bird extends MovingObject {
     @Override
     public void accelerate(float dt) {
         // y = y0 - g * t
-        speed.y -= GRAVITY * dt;
+        speed.y += GRAVITY * dt;
     }
 }

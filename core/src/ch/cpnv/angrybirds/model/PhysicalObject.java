@@ -15,6 +15,10 @@ public abstract class PhysicalObject extends Sprite {
         return getX();
     }
 
+    public float getXCenter() {
+        return getX() + getWidth() / 2;
+    }
+
     public float getXRight() {
         return getX() + getWidth();
     }
@@ -23,12 +27,15 @@ public abstract class PhysicalObject extends Sprite {
         return getY();
     }
 
+    public float getYCenter() {
+        return getY() + getHeight() / 2;
+    }
+
     public float getYTop() {
         return getY() + getHeight();
     }
 
-    public boolean collidesWith(PhysicalObject o)
-    {
+    public boolean collidesWith(PhysicalObject o) {
         return this.getRectangle().overlaps(o.getRectangle());
     }
 

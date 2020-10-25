@@ -22,4 +22,20 @@ public class Word {
     public String getSolution() {
         return solution;
     }
+
+    public boolean isAllocated() {
+        return allocated;
+    }
+
+    public void setAllocated(boolean allocated) {
+        this.allocated = allocated;
+    }
+
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+    }
 }

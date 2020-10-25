@@ -22,6 +22,8 @@ public class Panel extends Sprite {
     private static final int TEXT_OFFSET_X = 50;
     private static final int TEXT_OFFSET_Y = 50;
 
+    private static final int FONT_SCALE = 2;
+
     private BitmapFont font;
     private Word word;
 
@@ -31,7 +33,7 @@ public class Panel extends Sprite {
         this.word = word;
         font = new BitmapFont();
         font.setColor(Color.BLACK);
-        font.getData().setScale(2);
+        font.getData().setScale(FONT_SCALE);
     }
 
     @Override

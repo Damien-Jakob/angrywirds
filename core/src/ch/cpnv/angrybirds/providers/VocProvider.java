@@ -12,7 +12,7 @@ public class VocProvider {
 
     public static VocProvider getInstance() {
         if (single_instance == null) {
-            single_instance = new VocProvider(false);
+            single_instance = new VocProvider(true);
         }
         return single_instance;
     }

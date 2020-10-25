@@ -8,7 +8,7 @@ import ch.cpnv.angrybirds.AngryWirds;
 
 public class Welcome extends BaseActivity {
     private static final String TITLE = "AngryWirds";
-    private static final int TITLE_SIZE = 6;
+    private static final int TITLE_SCALE = 6;
 
     private BitmapFont titleFont;
     private float titlePositionX;
@@ -17,7 +17,7 @@ public class Welcome extends BaseActivity {
     public Welcome() {
         titleFont = new BitmapFont();
         titleFont.setColor(Color.ROYAL);
-        titleFont.getData().setScale(TITLE_SIZE);
+        titleFont.getData().setScale(TITLE_SCALE);
         GlyphLayout titleGlyphLayout = new GlyphLayout();
         titleGlyphLayout.setText(titleFont, TITLE);
         titlePositionX = Play.WORLD_WIDTH / 2f - titleGlyphLayout.width / 2f;
