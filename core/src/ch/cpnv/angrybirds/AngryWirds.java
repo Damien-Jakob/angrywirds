@@ -4,14 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
 import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.activities.Welcome;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
-import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
 // TODO try to improve performance by not reusing textures
@@ -29,7 +27,7 @@ public class AngryWirds extends Game {
     public void create() {
         alea = new Random();
 
-        pages = new Stack<Game>();
+        pages = new Stack<>();
         pages.push(new Welcome());
     }
 
