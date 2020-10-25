@@ -13,7 +13,8 @@ public class RubberBand extends Sprite {
     }
 
     public void putBetween(Vector2 origin, Vector2 destination) {
-        Vector2 difference = destination.sub(origin);
+        // sub is done in place, and we don't want to modify the destination vector
+        Vector2 difference = destination.cpy().sub(origin);
         setBounds(origin.x, origin.y, difference.len(), THICKNESS);
         setOrigin(0, 0);
         setRotation(difference.angle());

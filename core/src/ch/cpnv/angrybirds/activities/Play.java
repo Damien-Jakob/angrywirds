@@ -27,38 +27,46 @@ import ch.cpnv.angrybirds.model.data.NoPickableWordException;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.ui.IconButton;
 
-// TODO add rubber once implemented
-
 public class Play extends BaseActivity implements InputProcessor {
-    private static final float MAX_DT = 0.5f;
-
     public static final int FLOOR_HEIGHT = 120;
 
     public static final int BIRD_START_X = 200;
     public static final int BIRD_START_Y = 200;
+
+    public static final int SUCCESS_POINTS = 100;
+
+    public static final float SLINGSHOT_POWER = 3f;
+
+    private static final int PIGS_QUANTITY = 5;
+    private static final int WASP_QUANTITY = 2;
+    private static final int TNT_QUANTITY = 3;
+    private static final int BLOCKS_QUANTITY = 50;
+
     private static final int SLINGSHOT_WIDTH = 75;
     private static final int SLINGSHOT_HEIGHT = BIRD_START_Y + Bird.HEIGHT - FLOOR_HEIGHT;
 
-    private static final int WASP_QUANTITY = 2;
-    private static final int PIGS_QUANTITY = 5;
-    private static final int TNT_QUANTITY = 3;
-    private static final int BLOCKS_QUANTITY = 50;
+    private static final int PAUSE_BUTTON_DIMENSIONS = 100;
+    private static final int PAUSE_BUTTON_X = WORLD_WIDTH - PAUSE_BUTTON_DIMENSIONS - 10;
+    private static final int PAUSE_BUTTON_Y = WORLD_HEIGHT - PAUSE_BUTTON_DIMENSIONS - 10;
 
     private static final int SCORE_POSITION_X = WORLD_WIDTH / 2;
     private static final int SCORE_POSITION_Y = WORLD_HEIGHT - 50;
     private static final int VOC_POSITION_X = SCORE_POSITION_X;
     private static final int VOC_POSITION_Y = WORLD_HEIGHT - 10;
 
-    public static final int SUCCESS_POINTS = 100;
-
-    public static final float SLINGSHOT_POWER = 3f;
-
     private static final int AIMING_ZONE_X = BIRD_START_X + Bird.WIDTH;
     private static final int AIMING_ZONE_Y = BIRD_START_Y + Bird.HEIGHT;
 
-    public static final int PAUSE_BUTTON_DIMENSIONS = 100;
-    public static final int PAUSE_BUTTON_X = WORLD_WIDTH - PAUSE_BUTTON_DIMENSIONS - 10;
-    public static final int PAUSE_BUTTON_Y = WORLD_HEIGHT - PAUSE_BUTTON_DIMENSIONS - 10;
+    private static final int RUBBER_BAND_ORIGIN_OFFSET_X = 20;
+    private static final int RUBBER_BAND_ORIGIN_OFFSET_Y = 10;
+    private static final Vector2 RUBBER_BAND_1_DESTINATION = new Vector2(
+            BIRD_START_X + SLINGSHOT_WIDTH - 10,
+            FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
+    private static final Vector2 RUBBER_BAND_2_DESTINATION = new Vector2(
+            BIRD_START_X + 15,
+            FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
+
+    private static final float MAX_DT = 0.5f;
 
     private Bird bird;
     private ArrayList<Wasp> wasps;
@@ -70,7 +78,7 @@ public class Play extends BaseActivity implements InputProcessor {
 
     private Panel questionPanel;
 
-    private Rectangle aimingzone;
+    private Rectangle aimingZone;
 
     private Texture slingshot1;
     private Texture slingshot2;
@@ -172,7 +180,7 @@ public class Play extends BaseActivity implements InputProcessor {
         infoFont.setColor(Color.BLACK);
         infoFont.getData().setScale(2);
 
-        aimingzone = new Rectangle(0, 0, AIMING_ZONE_X, AIMING_ZONE_Y);
+        aimingZone = new Rectangle(0, 0, AIMING_ZONE_X, AIMING_ZONE_Y);
     }
 
     public void update() {
@@ -233,22 +241,15 @@ public class Play extends BaseActivity implements InputProcessor {
             }
 
             // --------- RubberBand
-            // TODO use constants
             Vector2 rubberBandOrigin = new Vector2(
-                    bird.getX() + 20,
-                    bird.getY() + 10);
-            Vector2 rubberband1Destination = new Vector2(
-                    BIRD_START_X + SLINGSHOT_WIDTH - 10,
-                    FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
-            Vector2 rubberband2Destination = new Vector2(
-                    BIRD_START_X + 15,
-                    FLOOR_HEIGHT + SLINGSHOT_HEIGHT - 30);
+                    bird.getX() + RUBBER_BAND_ORIGIN_OFFSET_X,
+                    bird.getY() + RUBBER_BAND_ORIGIN_OFFSET_Y);
             rubberBand1.putBetween(
                     rubberBandOrigin,
-                    rubberband1Destination);
+                    RUBBER_BAND_1_DESTINATION);
             rubberBand2.putBetween(
                     rubberBandOrigin,
-                    rubberband2Destination);
+                    RUBBER_BAND_2_DESTINATION);
         }
     }
 
@@ -297,7 +298,7 @@ public class Play extends BaseActivity implements InputProcessor {
         boolean actionHandled = scenery.handleTouchDown(touchPoint);
 
         if (!actionHandled
-                && aimingzone.contains(touchPoint)) {
+                && aimingZone.contains(touchPoint)) {
             bird.startAim(touchPoint);
         }
         return true;
@@ -309,7 +310,7 @@ public class Play extends BaseActivity implements InputProcessor {
 
         scenery.handleTouchUp(touchPoint);
 
-        if (aimingzone.contains(touchPoint)) {
+        if (aimingZone.contains(touchPoint)) {
             bird.launchFrom(touchPoint);
         }
         return true;
@@ -320,7 +321,7 @@ public class Play extends BaseActivity implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         Gdx.app.log("ANGRY", "Drag at " + touchPoint.x + "," + touchPoint.y);
 
-        if (aimingzone.contains(touchPoint)) {
+        if (aimingZone.contains(touchPoint)) {
             bird.drag(touchPoint);
         }
         return true;
