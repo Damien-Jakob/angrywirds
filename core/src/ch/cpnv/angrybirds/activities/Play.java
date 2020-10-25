@@ -271,10 +271,10 @@ public class Play extends BaseActivity implements InputProcessor {
             rubberBand1.draw(batch);
         }
         bird.draw(batch);
+        batch.draw(slingshot2, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
         if (bird.getState() == Bird.State.AIMING) {
             rubberBand2.draw(batch);
         }
-        batch.draw(slingshot2, BIRD_START_X, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
         pauseButton.draw(batch);
         drawGameInfo();
         batch.end();
