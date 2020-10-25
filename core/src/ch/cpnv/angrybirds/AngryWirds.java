@@ -14,8 +14,7 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.model.data.Word;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
-// TODO update compatibility with EXA code
-// - model
+// TODO try to improve performance by not reusing textures
 
 public class AngryWirds extends Game {
     public static Random alea;
