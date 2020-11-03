@@ -35,8 +35,8 @@ public final class Scenery {
      * Add one piece of scenery, and fit its y position
      *
      * @param newElement Element to add to the scenery
-     * @throws OutOfSceneryException
-     * @throws SceneCollapseException
+     * @throws OutOfSceneryException  if the element cannot fit in the scenery
+     * @throws SceneCollapseException if the element cannot pile over another element in a realistic way
      */
     public void dropElement(PhysicalObject newElement) throws OutOfSceneryException, SceneCollapseException {
         // Check horizontal placement
