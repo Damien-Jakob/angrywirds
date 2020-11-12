@@ -26,6 +26,7 @@ import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.NoPickableWordException;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 public class Play extends BaseActivity implements InputProcessor {
@@ -166,6 +167,9 @@ public class Play extends BaseActivity implements InputProcessor {
                 Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
             } catch (NoPickableWordException exception) {
                 Gdx.app.log("EXCEPTION", "No more available words: " + exception.getMessage());
+                break;
+            } catch (TranslationDoesNotExistException exception) {
+                Gdx.app.log("EXCEPTION", "Translation not found");
                 break;
             }
         }

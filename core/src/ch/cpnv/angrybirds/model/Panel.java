@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
 
 public class Panel extends Sprite {
     private static final String PICTURE_NAME = "panel.png";
@@ -42,7 +43,11 @@ public class Panel extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        font.draw(batch, word.getValue(language), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        try {
+            font.draw(batch, word.getValue(language), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        } catch (TranslationDoesNotExistException e) {
+            e.printStackTrace();
+        }
     }
 
     public SemanticWord getWord() {

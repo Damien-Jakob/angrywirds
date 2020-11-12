@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
 
 public final class Pig extends TextualObject implements ScoreInfluencer {
     private static final String PICTURE_NAME = "pig.png";
@@ -18,7 +19,7 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
 
     private SemanticWord word;
 
-    public Pig(Vector2 position, SemanticWord word, Language language) {
+    public Pig(Vector2 position, SemanticWord word, Language language) throws TranslationDoesNotExistException {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getValue(language));
         this.word = word;
     }

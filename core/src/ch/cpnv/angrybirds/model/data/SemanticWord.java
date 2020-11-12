@@ -15,13 +15,17 @@ public class SemanticWord {
         found = false;
     }
 
-    // TODO add exception
-    public String getValue(Language language) {
+    public String getValue(Language language) throws TranslationDoesNotExistException {
+        if (!values.containsKey(language)) {
+            throw new TranslationDoesNotExistException();
+        }
         return values.get(language);
     }
 
-    // TODO add exception
-    public void addTranslation(Language language, String value) {
+    public void addTranslation(Language language, String value) throws TranslationExistsException {
+        if (values.containsKey(language)) {
+            throw new TranslationExistsException();
+        }
         values.put(language, value);
     }
 
