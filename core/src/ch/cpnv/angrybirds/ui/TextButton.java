@@ -1,5 +1,6 @@
 package ch.cpnv.angrybirds.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,6 +23,6 @@ public class TextButton extends TextualObject {
     }
 
     public void draw(Batch batch) {
-        font.draw(batch, text, getX(), getY());
+        font.draw(batch, text, getX(), getY() + getHeight() / 2);
     }
 }

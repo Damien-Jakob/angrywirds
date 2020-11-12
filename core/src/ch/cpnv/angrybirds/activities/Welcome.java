@@ -22,7 +22,7 @@ public class Welcome extends BaseActivity {
 
     private static final int COLUMN_1_X = 100;
     private static final int COLUMN_2_X = Play.WORLD_WIDTH / 2;
-    private static final int START_Y = Play.WORLD_HEIGHT - 200;
+    private static final int START_Y = Play.WORLD_HEIGHT - 300;
     private static final int LANGUAGE_OFFSET_Y = 100;
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 100;
