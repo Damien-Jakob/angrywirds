@@ -1,5 +1,7 @@
 package ch.cpnv.angrybirds.model.data;
 
+import java.util.HashMap;
+
 public class SemanticWord {
     private String question;
     private String solution;
@@ -8,6 +10,8 @@ public class SemanticWord {
     // tells if the player has already solved the translation
     private boolean found;
 
+    private HashMap<Language, String> values = new HashMap<>();
+
     public SemanticWord(String solution, String question) {
         this.question = question;
         this.solution = solution;
@@ -15,10 +19,20 @@ public class SemanticWord {
         found = false;
     }
 
+    // TODO add exception
+    public String getValue(Language language) {
+        return values.get(language);
+    }
+
+    // TODO add exception
+    public void addTranslation(Language language, String value) {
+        values.put(language, value);
+    }
+
+    // TODO remove deprecated
     public String getQuestion() {
         return question;
     }
-
     public String getSolution() {
         return solution;
     }
