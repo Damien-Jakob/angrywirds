@@ -27,6 +27,8 @@ public class Welcome extends BaseActivity {
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 100;
 
+    private static final int PLAY_BUTTON_DIMENSION = 100;
+
     private BitmapFont titleFont;
     private float titlePositionX;
     private float titlePositionY;
@@ -37,6 +39,8 @@ public class Welcome extends BaseActivity {
 
     private HashMap<TextButton, Language> languagesFrom = new HashMap<>();
     private HashMap<TextButton, Language> languagesTo = new HashMap<>();
+
+    private IconButton playButton;
 
     private Language languageFrom;
     private Language languageTo;
@@ -71,6 +75,8 @@ public class Welcome extends BaseActivity {
             );
             positionY -= LANGUAGE_OFFSET_Y;
         }
+
+        playButton = new IconButton(new Vector2(Play.WORLD_WIDTH / 2f, Play.WORLD_HEIGHT / 2f), PLAY_BUTTON_DIMENSION, PLAY_BUTTON_DIMENSION, "play-icon.png");
     }
 
     @Override
@@ -92,6 +98,11 @@ public class Welcome extends BaseActivity {
             TextButton button = entry.getKey();
             button.draw(batch);
         }
+
+        if (languagesSelected()) {
+            playButton.draw(batch);
+        }
+
         batch.end();
     }
 
@@ -114,6 +125,13 @@ public class Welcome extends BaseActivity {
                 return true;
             }
         }
+        if (languagesSelected() && playButton.contains(touchPoint)) {
+            // TODO go to next page
+        }
         return true;
+    }
+
+    private boolean languagesSelected() {
+        return languageFrom != null && languageTo != null;
     }
 }
