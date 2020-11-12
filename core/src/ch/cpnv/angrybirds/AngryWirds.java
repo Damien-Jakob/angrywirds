@@ -41,7 +41,7 @@ public class AngryWirds extends Game {
         AngryWirds.score = 0;
         AngryWirds.voc = voc;
         voc.resetFoundWords();
-        AngryWirds.pushPage(new Play());
+        AngryWirds.pushPage(new Play(languageFrom, languageTo));
     }
 
     public static void start(Language languageFrom, Language languageTo) {

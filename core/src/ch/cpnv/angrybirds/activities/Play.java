@@ -23,6 +23,7 @@ import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
+import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.NoPickableWordException;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
 import ch.cpnv.angrybirds.ui.IconButton;
@@ -85,7 +86,13 @@ public class Play extends BaseActivity implements InputProcessor {
     private RubberBand rubberBand1;
     private RubberBand rubberBand2;
 
-    public Play() {
+    private Language languageFrom;
+    private Language languageTo;
+
+    public Play(Language languageFrom, Language languageTo) {
+        this.languageFrom = languageFrom;
+        this.languageTo = languageTo;
+
         bird = new Bird();
 
         wasps = new ArrayList<>();
@@ -214,7 +221,7 @@ public class Play extends BaseActivity implements InputProcessor {
                             questionPanel.getWord().setFound(true);
                             AngryWirds.popPage();
                             if (AngryWirds.voc.hasNotFoundWord()) {
-                                AngryWirds.pushPage(new Play());
+                                AngryWirds.pushPage(new Play(languageFrom, languageTo));
                             } else {
                                 AngryWirds.pushPage(new GameOver());
                             }
