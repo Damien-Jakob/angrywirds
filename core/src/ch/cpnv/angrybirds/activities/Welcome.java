@@ -21,6 +21,7 @@ public class Welcome extends BaseActivity {
     private static final int SUB_TITLE_SCALE = 4;
 
     private static final int COLUMN_1_X = 100;
+    private static final int COLUMN_2_X = Play.WORLD_WIDTH / 2;
     private static final int START_Y = Play.WORLD_HEIGHT - 200;
     private static final int LANGUAGE_OFFSET_Y = 100;
     private static final int BUTTON_WIDTH = 300;
@@ -62,6 +63,10 @@ public class Welcome extends BaseActivity {
                     new TextButton(new Vector2(COLUMN_1_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
                     language
             );
+            languagesTo.put(
+                    new TextButton(new Vector2(COLUMN_2_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
+                    language
+            );
             positionY -= LANGUAGE_OFFSET_Y;
         }
     }
@@ -74,6 +79,10 @@ public class Welcome extends BaseActivity {
         titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
         subTitleFont.draw(batch, "blabla", subTitlePositionX, subTitlePositionY);
         for (HashMap.Entry<TextButton, Language> entry : languagesFrom.entrySet()) {
+            TextButton button = entry.getKey();
+            button.draw(batch);
+        }
+        for (HashMap.Entry<TextButton, Language> entry : languagesTo.entrySet()) {
             TextButton button = entry.getKey();
             button.draw(batch);
         }
