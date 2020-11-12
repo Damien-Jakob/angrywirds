@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,8 +12,9 @@ import ch.cpnv.angrybirds.model.TextualObject;
 
 public class Button extends TextualObject {
 
-    protected int textOffsetX = 10;
-    protected int textOffsetY = 10;
+    protected static final int TEXT_OFFSET_X = 10;
+
+    protected float textOffsetY;
 
     protected BitmapFont font;
 
@@ -26,6 +28,10 @@ public class Button extends TextualObject {
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.setColor(Color.OLIVE);
+
+        GlyphLayout glyphLayout = new GlyphLayout();
+        glyphLayout.setText(font, text);
+        textOffsetY = (height - glyphLayout.height) / 2;
     }
 
     public boolean contains(Vector2 point) {
@@ -40,6 +46,11 @@ public class Button extends TextualObject {
         shapeRenderer.end();
 
         batch.begin();
-        font.draw(batch, text, getX() + textOffsetX, getY() + getHeight() - textOffsetY);
+        Vector2 textPosition = textPosition();
+        font.draw(batch, text, textPosition.x, textPosition.y);
+    }
+
+    protected Vector2 textPosition() {
+        return new Vector2(getX() + TEXT_OFFSET_X, getY() + getHeight() - textOffsetY);
     }
 }
