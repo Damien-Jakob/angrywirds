@@ -17,7 +17,7 @@ public abstract class BaseActivity extends Game implements InputProcessor {
 
     protected SpriteBatch batch;
 
-    private OrthographicCamera camera;
+    protected OrthographicCamera camera;
 
     public BaseActivity() {
         batch = new SpriteBatch();
