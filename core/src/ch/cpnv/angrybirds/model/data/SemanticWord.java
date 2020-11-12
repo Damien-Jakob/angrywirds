@@ -8,7 +8,7 @@ public class SemanticWord {
     // tells if the player has already solved the translation
     private boolean found;
 
-    private HashMap<Language, String> values = new HashMap<>();
+    private HashMap<String, String> values = new HashMap<>();
 
     public SemanticWord() {
         allocated = false;
@@ -16,20 +16,28 @@ public class SemanticWord {
     }
 
     public String getValue(Language language) throws TranslationDoesNotExistException {
-        if (!values.containsKey(language)) {
+        return getValue(language.getShortname());
+    }
+
+    public String getValue(String languageShortName) throws TranslationDoesNotExistException {
+        if (!values.containsKey(languageShortName)) {
             throw new TranslationDoesNotExistException();
         }
-        return values.get(language);
+        return values.get(languageShortName);
     }
 
     public void addTranslation(Language language, String value) throws TranslationExistsException {
-        if (values.containsKey(language)) {
-            throw new TranslationExistsException();
-        }
-        values.put(language, value);
+        addTranslation(language.getShortname(), value);
     }
 
-    // TODO remove deprecated
+    public void addTranslation(String languageShortName, String value) throws TranslationExistsException {
+        if (values.containsKey(languageShortName)) {
+            throw new TranslationExistsException();
+        }
+        values.put(languageShortName, value);
+    }
+
+    // TODO remove deprecated methods
     public String getQuestion() {
         return "";
     }
