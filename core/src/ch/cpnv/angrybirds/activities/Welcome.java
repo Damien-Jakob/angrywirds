@@ -11,6 +11,7 @@ import java.util.HashMap;
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.providers.VocProvider;
+import ch.cpnv.angrybirds.test.SemanticWordTest;
 import ch.cpnv.angrybirds.ui.IconButton;
 import ch.cpnv.angrybirds.ui.Button;
 
@@ -45,6 +46,10 @@ public class Welcome extends BaseActivity {
     private Language languageTo;
 
     public Welcome() {
+        SemanticWordTest.addTranslationTest();
+        SemanticWordTest.getValueTest();
+
+
         titleFont = new BitmapFont();
         titleFont.setColor(Color.ROYAL);
         titleFont.getData().setScale(TITLE_SCALE);

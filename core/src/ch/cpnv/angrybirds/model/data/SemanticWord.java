@@ -21,7 +21,7 @@ public class SemanticWord {
 
     public String getValue(String languageShortName) throws TranslationDoesNotExistException {
         if (!values.containsKey(languageShortName)) {
-            throw new TranslationDoesNotExistException();
+            throw new TranslationDoesNotExistException("No " + languageShortName + " translation for " + this);
         }
         return values.get(languageShortName);
     }
