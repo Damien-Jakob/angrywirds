@@ -27,7 +27,6 @@ public class Welcome extends BaseActivity {
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 100;
 
-
     private BitmapFont titleFont;
     private float titlePositionX;
     private float titlePositionY;
@@ -38,6 +37,9 @@ public class Welcome extends BaseActivity {
 
     private HashMap<TextButton, Language> languagesFrom = new HashMap<>();
     private HashMap<TextButton, Language> languagesTo = new HashMap<>();
+
+    private Language languageFrom;
+    private Language languageTo;
 
     public Welcome() {
         titleFont = new BitmapFont();
@@ -77,7 +79,11 @@ public class Welcome extends BaseActivity {
 
         batch.begin();
         titleFont.draw(batch, TITLE, titlePositionX, titlePositionY);
-        subTitleFont.draw(batch, "blabla", subTitlePositionX, subTitlePositionY);
+        String languageFromText = languageFrom != null ? languageFrom.getName() : "(choisir)";
+        String languageToText = languageTo != null ? languageTo.getName() : "(choisir)";
+        String subtitleText = "Exercice de " + languageFromText + " en " + languageToText;
+
+        subTitleFont.draw(batch, subtitleText, subTitlePositionX, subTitlePositionY);
         for (HashMap.Entry<TextButton, Language> entry : languagesFrom.entrySet()) {
             TextButton button = entry.getKey();
             button.draw(batch);
@@ -91,7 +97,23 @@ public class Welcome extends BaseActivity {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        AngryWirds.pushPage(new VocSelection());
+        Vector2 touchPoint = convertCoordinates(screenX, screenY);
+        for (HashMap.Entry<TextButton, Language> entry : languagesFrom.entrySet()) {
+            TextButton textButton = entry.getKey();
+            if (textButton.contains(touchPoint)) {
+                languageFrom = entry.getValue();
+                languagesFrom = new HashMap<>();
+                return true;
+            }
+        }
+        for (HashMap.Entry<TextButton, Language> entry : languagesTo.entrySet()) {
+            TextButton textButton = entry.getKey();
+            if (textButton.contains(touchPoint)) {
+                languageTo = entry.getValue();
+                languagesTo = new HashMap<>();
+                return true;
+            }
+        }
         return true;
     }
 }
