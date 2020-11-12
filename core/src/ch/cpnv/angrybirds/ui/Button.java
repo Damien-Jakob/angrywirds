@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.model.TextualObject;
 
-public class TextButton extends TextualObject {
+public class Button extends TextualObject {
     protected BitmapFont font;
 
-    public TextButton(Vector2 position, float width, float height, String text) {
+    public Button(Vector2 position, float width, float height, String text) {
         super(position, width, height, "bird.png", text);
         font = new BitmapFont();
         font.setColor(Color.GREEN);

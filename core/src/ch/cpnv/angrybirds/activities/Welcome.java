@@ -8,12 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Language;
-import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 import ch.cpnv.angrybirds.ui.IconButton;
-import ch.cpnv.angrybirds.ui.TextButton;
+import ch.cpnv.angrybirds.ui.Button;
 
 public class Welcome extends BaseActivity {
     private static final String TITLE = "AngryWirds";
@@ -37,8 +35,8 @@ public class Welcome extends BaseActivity {
     private float subTitlePositionX = 100;
     private float subTitlePositionY = 150;
 
-    private HashMap<TextButton, Language> languagesFrom = new HashMap<>();
-    private HashMap<TextButton, Language> languagesTo = new HashMap<>();
+    private HashMap<Button, Language> languagesFrom = new HashMap<>();
+    private HashMap<Button, Language> languagesTo = new HashMap<>();
 
     private IconButton playButton;
 
@@ -66,11 +64,11 @@ public class Welcome extends BaseActivity {
         int positionY = START_Y;
         for (Language language : languages) {
             languagesFrom.put(
-                    new TextButton(new Vector2(COLUMN_1_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
+                    new Button(new Vector2(COLUMN_1_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
                     language
             );
             languagesTo.put(
-                    new TextButton(new Vector2(COLUMN_2_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
+                    new Button(new Vector2(COLUMN_2_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
                     language
             );
             positionY -= LANGUAGE_OFFSET_Y;
@@ -90,12 +88,12 @@ public class Welcome extends BaseActivity {
         String subtitleText = "Exercice de " + languageFromText + " en " + languageToText;
 
         subTitleFont.draw(batch, subtitleText, subTitlePositionX, subTitlePositionY);
-        for (HashMap.Entry<TextButton, Language> entry : languagesFrom.entrySet()) {
-            TextButton button = entry.getKey();
+        for (HashMap.Entry<Button, Language> entry : languagesFrom.entrySet()) {
+            Button button = entry.getKey();
             button.draw(batch);
         }
-        for (HashMap.Entry<TextButton, Language> entry : languagesTo.entrySet()) {
-            TextButton button = entry.getKey();
+        for (HashMap.Entry<Button, Language> entry : languagesTo.entrySet()) {
+            Button button = entry.getKey();
             button.draw(batch);
         }
 
@@ -109,16 +107,16 @@ public class Welcome extends BaseActivity {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
-        for (HashMap.Entry<TextButton, Language> entry : languagesFrom.entrySet()) {
-            TextButton textButton = entry.getKey();
+        for (HashMap.Entry<Button, Language> entry : languagesFrom.entrySet()) {
+            Button textButton = entry.getKey();
             if (textButton.contains(touchPoint)) {
                 languageFrom = entry.getValue();
                 languagesFrom = new HashMap<>();
                 return true;
             }
         }
-        for (HashMap.Entry<TextButton, Language> entry : languagesTo.entrySet()) {
-            TextButton textButton = entry.getKey();
+        for (HashMap.Entry<Button, Language> entry : languagesTo.entrySet()) {
+            Button textButton = entry.getKey();
             if (textButton.contains(touchPoint)) {
                 languageTo = entry.getValue();
                 languagesTo = new HashMap<>();
