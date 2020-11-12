@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ch.cpnv.angrybirds.activities.Play;
+import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
 
 public class Panel extends Sprite {
@@ -26,10 +27,13 @@ public class Panel extends Sprite {
     private BitmapFont font;
     private SemanticWord word;
 
-    public Panel(SemanticWord word) {
+    private Language language;
+
+    public Panel(SemanticWord word, Language language) {
         super(new Texture(PICTURE_NAME));
         setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
         this.word = word;
+        this.language = language;
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         font.getData().setScale(FONT_SCALE);
@@ -38,7 +42,7 @@ public class Panel extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        font.draw(batch, word.getQuestion(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        font.draw(batch, word.getValue(language), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
     }
 
     public SemanticWord getWord() {

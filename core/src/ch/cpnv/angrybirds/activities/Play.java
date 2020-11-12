@@ -145,7 +145,7 @@ public class Play extends BaseActivity implements InputProcessor {
                 if (firstPig) {
                     word = AngryWirds.voc.pickNotFoundWord();
 
-                    questionPanel = new Panel(word);
+                    questionPanel = new Panel(word, languageFrom);
 
 
                 } else {
