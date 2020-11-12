@@ -9,13 +9,7 @@ import java.util.ArrayList;
 
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.activities.Play;
-import ch.cpnv.angrybirds.model.Block;
-import ch.cpnv.angrybirds.model.MovingObject;
-import ch.cpnv.angrybirds.model.OutOfSceneryException;
-import ch.cpnv.angrybirds.model.PhysicalObject;
-import ch.cpnv.angrybirds.model.Pig;
-import ch.cpnv.angrybirds.model.SceneCollapseException;
-import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
 
 public final class Scenery {
     public static final int MIN_X = Play.BIRD_START_X + 100;
@@ -132,7 +126,7 @@ public final class Scenery {
      *
      * @return the word of one of the pigs
      */
-    public Word pickAWord() {
+    public SemanticWord pickAWord() {
         ArrayList<Pig> pigs = new ArrayList<Pig>();
         for (PhysicalObject pigCandidate : scene) {
             if (pigCandidate instanceof Pig) {

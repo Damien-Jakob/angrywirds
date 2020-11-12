@@ -24,7 +24,7 @@ import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
 import ch.cpnv.angrybirds.model.data.NoPickableWordException;
-import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
 import ch.cpnv.angrybirds.ui.IconButton;
 
 public class Play extends BaseActivity implements InputProcessor {
@@ -132,7 +132,7 @@ public class Play extends BaseActivity implements InputProcessor {
         boolean firstPig = true;
         while (pigsLeft > 0) {
             try {
-                Word word;
+                SemanticWord word;
                 // The first pig will have a word that has never been found
                 // It will be the word of the question panel
                 if (firstPig) {

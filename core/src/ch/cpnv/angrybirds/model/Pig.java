@@ -3,7 +3,7 @@ package ch.cpnv.angrybirds.model;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
-import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
 
 public final class Pig extends TextualObject implements ScoreInfluencer {
     private static final String PICTURE_NAME = "pig.png";
@@ -15,9 +15,9 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
 
     private Bubble bubble = null;
 
-    private Word word;
+    private SemanticWord word;
 
-    public Pig(Vector2 position, Word word) {
+    public Pig(Vector2 position, SemanticWord word) {
         super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getSolution());
         this.word = word;
     }
@@ -30,7 +30,7 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
         }
     }
 
-    public Word getWord() {
+    public SemanticWord getWord() {
         return word;
     }
 

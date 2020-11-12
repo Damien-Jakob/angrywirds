@@ -1,6 +1,6 @@
 package ch.cpnv.angrybirds.model.data;
 
-public class Word {
+public class SemanticWord {
     private String question;
     private String solution;
     // tells if the word has been given to a Pig
@@ -8,7 +8,7 @@ public class Word {
     // tells if the player has already solved the translation
     private boolean found;
 
-    public Word(String solution, String question) {
+    public SemanticWord(String solution, String question) {
         this.question = question;
         this.solution = solution;
         allocated = false;
