@@ -10,6 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import ch.cpnv.angrybirds.model.TextualObject;
 
 public class Button extends TextualObject {
+
+    protected int textOffsetX = 10;
+    protected int textOffsetY = 10;
+
     protected BitmapFont font;
 
     protected ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -36,6 +40,6 @@ public class Button extends TextualObject {
         shapeRenderer.end();
 
         batch.begin();
-        font.draw(batch, text, getX(), getY() + getHeight() / 2);
+        font.draw(batch, text, getX() + textOffsetX, getY() + getHeight() - textOffsetY);
     }
 }
