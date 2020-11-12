@@ -3,8 +3,6 @@ package ch.cpnv.angrybirds.model.data;
 import java.util.HashMap;
 
 public class SemanticWord {
-    private String question;
-    private String solution;
     // tells if the word has been given to a Pig
     private boolean allocated;
     // tells if the player has already solved the translation
@@ -12,9 +10,7 @@ public class SemanticWord {
 
     private HashMap<Language, String> values = new HashMap<>();
 
-    public SemanticWord(String solution, String question) {
-        this.question = question;
-        this.solution = solution;
+    public SemanticWord() {
         allocated = false;
         found = false;
     }
@@ -31,10 +27,10 @@ public class SemanticWord {
 
     // TODO remove deprecated
     public String getQuestion() {
-        return question;
+        return "";
     }
     public String getSolution() {
-        return solution;
+        return "";
     }
 
     public boolean isAllocated() {

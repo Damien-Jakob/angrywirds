@@ -27,7 +27,7 @@ public class Vocabulary {
         return words.size();
     }
 
-    public void addWord(SemanticWord word) {
+    public void addSemanticWord(SemanticWord word) {
         words.add(word);
     }
 
@@ -78,7 +78,7 @@ public class Vocabulary {
             Gdx.app.log("EXCEPTION", "Voc: ");
             Gdx.app.log("EXCEPTION",
                     word.getQuestion() + " / " + word.getSolution() + " :: "
-            + "Allocated : " + word.isAllocated() + ", Found : " + word.isFound());
+                            + "Allocated : " + word.isAllocated() + ", Found : " + word.isFound());
         }
     }
 
