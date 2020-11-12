@@ -27,7 +27,7 @@ import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.NoPickableWordException;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
 import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
-import ch.cpnv.angrybirds.ui.IconButton;
+import ch.cpnv.angrybirds.model.ui.IconButton;
 
 public class Play extends BaseActivity implements InputProcessor {
     public static final int FLOOR_HEIGHT = 120;

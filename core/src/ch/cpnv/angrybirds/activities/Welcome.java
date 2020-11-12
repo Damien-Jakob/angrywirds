@@ -12,8 +12,8 @@ import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.providers.VocProvider;
 import ch.cpnv.angrybirds.test.SemanticWordTest;
-import ch.cpnv.angrybirds.ui.IconButton;
-import ch.cpnv.angrybirds.ui.Button;
+import ch.cpnv.angrybirds.model.ui.IconButton;
+import ch.cpnv.angrybirds.model.ui.Button;
 
 public class Welcome extends BaseActivity {
     private static final String TITLE = "AngryWirds";
@@ -25,7 +25,7 @@ public class Welcome extends BaseActivity {
     private static final int START_Y = Play.WORLD_HEIGHT - 300;
     private static final int LANGUAGE_OFFSET_Y = 100;
     private static final int BUTTON_WIDTH = 300;
-    private static final int BUTTON_HEIGHT = 100;
+    private static final int BUTTON_HEIGHT = 50;
 
     private static final int PLAY_BUTTON_DIMENSION = 100;
 
@@ -34,8 +34,8 @@ public class Welcome extends BaseActivity {
     private float titlePositionY;
 
     private BitmapFont subTitleFont;
-    private float subTitlePositionX = 100;
-    private float subTitlePositionY = 150;
+    private float subTitlePositionX;
+    private float subTitlePositionY;
 
     private HashMap<Button, Language> languagesFrom = new HashMap<>();
     private HashMap<Button, Language> languagesTo = new HashMap<>();
@@ -70,11 +70,11 @@ public class Welcome extends BaseActivity {
         int positionY = START_Y;
         for (Language language : languages) {
             languagesFrom.put(
-                    new Button(new Vector2(COLUMN_1_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
+                    new Button(new Vector2(COLUMN_1_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName(), camera),
                     language
             );
             languagesTo.put(
-                    new Button(new Vector2(COLUMN_2_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName()),
+                    new Button(new Vector2(COLUMN_2_X, positionY), BUTTON_WIDTH, BUTTON_HEIGHT, language.getName(), camera),
                     language
             );
             positionY -= LANGUAGE_OFFSET_Y;

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
-import ch.cpnv.angrybirds.ui.IconButton;
+import ch.cpnv.angrybirds.model.ui.IconButton;
 
 // TODO switch languages
 

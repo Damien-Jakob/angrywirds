@@ -1,4 +1,4 @@
-package ch.cpnv.angrybirds.ui;
+package ch.cpnv.angrybirds.model.ui;
 
 import com.badlogic.gdx.math.Vector2;
 
