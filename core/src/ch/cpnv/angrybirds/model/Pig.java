@@ -3,7 +3,9 @@ package ch.cpnv.angrybirds.model;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
-import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.model.data.Language;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
 
 public final class Pig extends TextualObject implements ScoreInfluencer {
     private static final String PICTURE_NAME = "pig.png";
@@ -15,10 +17,10 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
 
     private Bubble bubble = null;
 
-    private Word word;
+    private SemanticWord word;
 
-    public Pig(Vector2 position, Word word) {
-        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getSolution());
+    public Pig(Vector2 position, SemanticWord word, Language language) throws TranslationDoesNotExistException {
+        super(position, WIDTH, HEIGHT, PICTURE_NAME, word.getValue(language));
         this.word = word;
     }
 
@@ -30,7 +32,7 @@ public final class Pig extends TextualObject implements ScoreInfluencer {
         }
     }
 
-    public Word getWord() {
+    public SemanticWord getWord() {
         return word;
     }
 

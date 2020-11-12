@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.activities.Play;
-import ch.cpnv.angrybirds.model.data.Word;
+import ch.cpnv.angrybirds.model.data.Language;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
 
 public class Panel extends Sprite {
     private static final String PICTURE_NAME = "panel.png";
@@ -25,12 +26,15 @@ public class Panel extends Sprite {
     private static final int FONT_SCALE = 2;
 
     private BitmapFont font;
-    private Word word;
+    private SemanticWord word;
 
-    public Panel(Word word) {
+    private Language language;
+
+    public Panel(SemanticWord word, Language language) {
         super(new Texture(PICTURE_NAME));
         setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
         this.word = word;
+        this.language = language;
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         font.getData().setScale(FONT_SCALE);
@@ -39,10 +43,14 @@ public class Panel extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        font.draw(batch, word.getQuestion(), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        try {
+            font.draw(batch, word.getValue(language), getX() + TEXT_OFFSET_X, getY() + TEXT_OFFSET_Y);
+        } catch (TranslationDoesNotExistException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Word getWord() {
+    public SemanticWord getWord() {
         return word;
     }
 }

@@ -11,12 +11,13 @@ import java.util.HashMap;
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
-import ch.cpnv.angrybirds.ui.IconButton;
+import ch.cpnv.angrybirds.model.ui.IconButton;
 
 // TODO switch languages
 
 // TODO find better icons (should take 100% of width and height of the png)
 
+// TODO use it again
 public class VocSelection extends BaseActivity implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;
@@ -123,14 +124,16 @@ public class VocSelection extends BaseActivity implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         if (randomVocButton.contains(touchPoint)) {
             AngryWirds.popPage();
-            AngryWirds.start();
+            // TODO adapt to language selection
+            // AngryWirds.start();
         }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
             IconButton iconButton = entry.getKey();
             if (iconButton.contains(touchPoint)) {
                 Vocabulary selectedVoc = entry.getValue();
                 AngryWirds.popPage();
-                AngryWirds.start(selectedVoc);
+                // TODO adapt to language selection
+                // AngryWirds.start(selectedVoc);
             }
         }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocDetailButtons.entrySet()) {

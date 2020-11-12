@@ -8,9 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.ui.IconButton;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.ui.IconButton;
 
+// TODO adapt to word refactor
 public class VocDetail extends BaseActivity implements InputProcessor {
     private static final int TITLE_SIZE = 6;
     private static final int WORD_SIZE = 2;
@@ -75,7 +76,7 @@ public class VocDetail extends BaseActivity implements InputProcessor {
         titleFont.draw(batch, title, titlePositionX, TITLE_POSITION_Y);
         returnButton.draw(batch);
         float wordY = vocStartY + scrollOffset;
-        for (Word word : voc.getWords()) {
+        for (SemanticWord word : voc.getWords()) {
             if (0 <= wordY && wordY <= vocStartY) {
                 wordFont.draw(batch, word.getQuestion(), COLUMN1_X, wordY);
                 wordFont.draw(batch, word.getSolution(), COLUMN2_X, wordY);

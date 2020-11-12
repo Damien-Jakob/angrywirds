@@ -23,9 +23,11 @@ import ch.cpnv.angrybirds.model.SceneCollapseException;
 import ch.cpnv.angrybirds.model.ScoreInfluencer;
 import ch.cpnv.angrybirds.model.Tnt;
 import ch.cpnv.angrybirds.model.Wasp;
+import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.NoPickableWordException;
-import ch.cpnv.angrybirds.model.data.Word;
-import ch.cpnv.angrybirds.ui.IconButton;
+import ch.cpnv.angrybirds.model.data.SemanticWord;
+import ch.cpnv.angrybirds.model.data.TranslationDoesNotExistException;
+import ch.cpnv.angrybirds.model.ui.IconButton;
 
 public class Play extends BaseActivity implements InputProcessor {
     public static final int FLOOR_HEIGHT = 120;
@@ -85,7 +87,13 @@ public class Play extends BaseActivity implements InputProcessor {
     private RubberBand rubberBand1;
     private RubberBand rubberBand2;
 
-    public Play() {
+    private Language languageFrom;
+    private Language languageTo;
+
+    public Play(Language languageFrom, Language languageTo) {
+        this.languageFrom = languageFrom;
+        this.languageTo = languageTo;
+
         bird = new Bird();
 
         wasps = new ArrayList<>();
@@ -132,15 +140,12 @@ public class Play extends BaseActivity implements InputProcessor {
         boolean firstPig = true;
         while (pigsLeft > 0) {
             try {
-                Word word;
+                SemanticWord word;
                 // The first pig will have a word that has never been found
                 // It will be the word of the question panel
                 if (firstPig) {
                     word = AngryWirds.voc.pickNotFoundWord();
-
-                    questionPanel = new Panel(word);
-
-
+                    questionPanel = new Panel(word, languageFrom);
                 } else {
                     word = AngryWirds.voc.pickNotAllocatedWord();
                 }
@@ -148,7 +153,8 @@ public class Play extends BaseActivity implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0),
-                        word);
+                        word,
+                        languageTo);
                 scenery.dropElement(pig);
 
                 // Update the data now that the pig has been constructed without error
@@ -161,6 +167,9 @@ public class Play extends BaseActivity implements InputProcessor {
                 Gdx.app.log("EXCEPTION", "Unstable pig: " + exception.getMessage());
             } catch (NoPickableWordException exception) {
                 Gdx.app.log("EXCEPTION", "No more available words: " + exception.getMessage());
+                break;
+            } catch (TranslationDoesNotExistException exception) {
+                Gdx.app.log("EXCEPTION", "Translation not found");
                 break;
             }
         }
@@ -214,7 +223,7 @@ public class Play extends BaseActivity implements InputProcessor {
                             questionPanel.getWord().setFound(true);
                             AngryWirds.popPage();
                             if (AngryWirds.voc.hasNotFoundWord()) {
-                                AngryWirds.pushPage(new Play());
+                                AngryWirds.pushPage(new Play(languageFrom, languageTo));
                             } else {
                                 AngryWirds.pushPage(new GameOver());
                             }
