@@ -33,9 +33,9 @@ public class VocProvider {
     private VocProvider() {
         vocabularies = new ArrayList<>();
         languages = new ArrayList<>();
-        Language fr = new Language("fr", "français");
-        Language en = new Language("en", "anglais");
-        Language es = new Language("es", "espagnol");
+        Language fr = new Language("fr", "Français");
+        Language en = new Language("en", "Anglais");
+        Language es = new Language("es", "Espagnol");
         languages.add(fr);
         languages.add(en);
         languages.add(es);
