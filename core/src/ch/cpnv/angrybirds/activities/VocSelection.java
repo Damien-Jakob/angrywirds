@@ -17,6 +17,7 @@ import ch.cpnv.angrybirds.model.ui.IconButton;
 
 // TODO find better icons (should take 100% of width and height of the png)
 
+// TODO use it again
 public class VocSelection extends BaseActivity implements InputProcessor {
     private static final String TITLE = "Vocabulaires";
     private static final int TITLE_SIZE = 6;

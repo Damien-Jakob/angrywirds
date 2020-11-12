@@ -11,6 +11,7 @@ import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.model.data.SemanticWord;
 import ch.cpnv.angrybirds.model.ui.IconButton;
 
+// TODO adapt to word refactor
 public class VocDetail extends BaseActivity implements InputProcessor {
     private static final int TITLE_SIZE = 6;
     private static final int WORD_SIZE = 2;
