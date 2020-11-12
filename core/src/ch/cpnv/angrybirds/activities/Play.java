@@ -144,10 +144,7 @@ public class Play extends BaseActivity implements InputProcessor {
                 // It will be the word of the question panel
                 if (firstPig) {
                     word = AngryWirds.voc.pickNotFoundWord();
-
                     questionPanel = new Panel(word, languageFrom);
-
-
                 } else {
                     word = AngryWirds.voc.pickNotAllocatedWord();
                 }
@@ -155,7 +152,8 @@ public class Play extends BaseActivity implements InputProcessor {
                 Pig pig = new Pig(new Vector2(
                         AngryWirds.alea.nextFloat() * (Scenery.MAX_X - Pig.WIDTH - Scenery.MIN_X) + Scenery.MIN_X,
                         0),
-                        word);
+                        word,
+                        languageTo);
                 scenery.dropElement(pig);
 
                 // Update the data now that the pig has been constructed without error
