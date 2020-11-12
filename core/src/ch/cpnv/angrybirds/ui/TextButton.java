@@ -11,9 +11,10 @@ public class TextButton extends TextualObject {
     protected BitmapFont font;
 
     public TextButton(Vector2 position, float width, float height, String text) {
-        super(position, width, height, null, text);
+        super(position, width, height, "bird.png", text);
         font = new BitmapFont();
         font.setColor(Color.GREEN);
+        font.getData().setScale(2);
     }
 
     public boolean contains(Vector2 point) {
