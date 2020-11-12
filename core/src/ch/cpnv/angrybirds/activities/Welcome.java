@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ch.cpnv.angrybirds.AngryWirds;
 import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.providers.VocProvider;
 import ch.cpnv.angrybirds.ui.IconButton;
@@ -124,7 +125,7 @@ public class Welcome extends BaseActivity {
             }
         }
         if (languagesSelected() && playButton.contains(touchPoint)) {
-            // TODO go to next page
+            AngryWirds.start(languageFrom, languageTo);
         }
         return true;
     }

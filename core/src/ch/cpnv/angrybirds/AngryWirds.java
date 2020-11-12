@@ -9,6 +9,7 @@ import java.util.Stack;
 
 import ch.cpnv.angrybirds.activities.Play;
 import ch.cpnv.angrybirds.activities.Welcome;
+import ch.cpnv.angrybirds.model.data.Language;
 import ch.cpnv.angrybirds.model.data.Vocabulary;
 import ch.cpnv.angrybirds.providers.VocProvider;
 
@@ -36,15 +37,15 @@ public class AngryWirds extends Game {
         pages.peek().render();
     }
 
-    public static void start(Vocabulary voc) {
+    public static void start(Vocabulary voc, Language languageFrom, Language languageTo) {
         AngryWirds.score = 0;
         AngryWirds.voc = voc;
         voc.resetFoundWords();
         AngryWirds.pushPage(new Play());
     }
 
-    public static void start() {
-        start(VocProvider.getInstance().pickAVoc());
+    public static void start(Language languageFrom, Language languageTo) {
+        start(VocProvider.getInstance().pickAVoc(), languageFrom, languageTo);
     }
 
     public static void pushPage(Game game) {

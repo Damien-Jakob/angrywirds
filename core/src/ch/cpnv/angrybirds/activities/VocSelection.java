@@ -123,14 +123,16 @@ public class VocSelection extends BaseActivity implements InputProcessor {
         Vector2 touchPoint = convertCoordinates(screenX, screenY);
         if (randomVocButton.contains(touchPoint)) {
             AngryWirds.popPage();
-            AngryWirds.start();
+            // TODO adapt to language selection
+            // AngryWirds.start();
         }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocSelectionButtons.entrySet()) {
             IconButton iconButton = entry.getKey();
             if (iconButton.contains(touchPoint)) {
                 Vocabulary selectedVoc = entry.getValue();
                 AngryWirds.popPage();
-                AngryWirds.start(selectedVoc);
+                // TODO adapt to language selection
+                // AngryWirds.start(selectedVoc);
             }
         }
         for (HashMap.Entry<IconButton, Vocabulary> entry : vocDetailButtons.entrySet()) {
