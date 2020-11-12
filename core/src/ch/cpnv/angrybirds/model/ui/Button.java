@@ -21,11 +21,11 @@ public class Button extends TextualObject {
     public Button(Vector2 position, float width, float height, String text, OrthographicCamera camera) {
         super(position, width, height, "bird.png", text);
         font = new BitmapFont();
-        font.setColor(Color.RED);
+        font.setColor(Color.WHITE);
         font.getData().setScale(2);
 
         shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.setColor(Color.OLIVE);
     }
 
     public boolean contains(Vector2 point) {
